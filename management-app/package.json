@@ -20,7 +20,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "npx eslint --config ./.eslintrc.json --ext .js,.ts,.tsx src",
+    "lint:fix": "npm run lint -- --fix",
+    "prettier": "prettier --config ./.prettierrc.json --ignore-path ./.prettierignore --write src/*",
+    "prepare": "cd.. && husky install management-app/.husky"
   },
   "browserslist": {
     "production": [
@@ -46,6 +50,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.5.0",
+    "husky": "^7.0.0",
     "prettier": "2.6.2"
   }
 }
