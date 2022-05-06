@@ -36,7 +36,7 @@ export class BaseAPI {
   }
 
   put(route: string, body = {}, headers: { [key: string]: string } = {}) {
-    return fetch(`${this.url}${route}`, {
+    return fetch(`${this.url}/${route}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',

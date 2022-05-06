@@ -6,6 +6,6 @@ export const USERS_API_ERRORS: TAPIErrorsMap = {
   [StatusCodes.NOT_FOUND]: 'User not found.',
   [StatusCodes.BAD_REQUEST]: 'Bad request.',
   [StatusCodes.FORBIDDEN]: 'Incorrect e-mail or password',
-
+  [StatusCodes.CONFLICT]: 'User login already exists',
   [StatusCodes.INTERNAL_SERVER_ERROR]: 'Internal Server Error.',
 };
