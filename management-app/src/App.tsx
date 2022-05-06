@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useEffect } from 'react';
 import { TUser, TUserBase } from './api/types';
-import userAPI from './api/userAPI';
+import userAPI from './api/usersAPI';
 
 import './App.css';
 
