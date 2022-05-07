@@ -9,3 +9,9 @@ export const USERS_API_ERRORS: TAPIErrorsMap = {
   [StatusCodes.CONFLICT]: 'User login already exists',
   [StatusCodes.INTERNAL_SERVER_ERROR]: 'Internal Server Error.',
 };
+
+export const BOARDS_API_ERRORS: TAPIErrorsMap = {
+  [StatusCodes.UNAUTHORIZED]: 'Access token is missing or invalid.',
+  [StatusCodes.NOT_FOUND]: 'Board not found.',
+  [StatusCodes.INTERNAL_SERVER_ERROR]: 'Internal Server Error.',
+};

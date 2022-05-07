@@ -1,23 +1,30 @@
 /* eslint-disable no-console */
 import React, { useEffect } from 'react';
-import { TUser, TUserBase } from './api/types';
+import boardsAPI from './api/boardsAPI';
+import { TBoard, TUser, TUserBase } from './api/types';
 import userAPI from './api/usersAPI';
 
 import './App.css';
 
-/*  const userId = 'de4e23bf-f372-4176-89d8-9bb9c240b5c3';
+const userId = 'de4e23bf-f372-4176-89d8-9bb9c240b5c3';
 const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkZTRlMjNiZi1mMzcyLTQxNzYtODlkOC05YmI5YzI0MGI1YzMiLCJsb2dpbiI6InVzZXIwMDEiLCJpYXQiOjE2NTE4NjgyODh9.MvSfPRXcVYG4mxMDreYZSuUH_LeO-uGgaqU8UwGQE_Y';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkZTRlMjNiZi1mMzcyLTQxNzYtODlkOC05YmI5YzI0MGI1YzMiLCJsb2dpbiI6InVzZXIwMDEiLCJpYXQiOjE2NTE5MjM5NTl9.zoCBaZmGrQq2bC4GdrjG0g0VcJQAYXSIHjN0AEdIe_Q';
 const body = {
-  name: 'Vasyaaa',
-  login: 'user001aa',
-  password: 'userpass@123aa',
+  name: 'Vasya',
+  login: 'user001',
+  password: 'userpass@123',
 };
 
 const base = {
   login: 'user001',
   password: 'userpass@123',
-};  */
+};
+
+const title = {
+  title: 'New board',
+};
+
+const boardId = 'cf750520-22ed-4663-ac0c-599701d9ee2d';
 
 function App() {
   /*  useEffect(() => {
@@ -45,6 +52,12 @@ function App() {
   /*  useEffect(() => {
     userAPI.createAccount(body, (data: TUser) =>
       console.log('createAccount: ', data)
+    );
+  }, []);  */
+
+  /*  useEffect(() => {
+    boardsAPI.createBoard(title, token, (data: TBoard) =>
+      console.log('createBoard: ', data)
     );
   }, []);  */
 
