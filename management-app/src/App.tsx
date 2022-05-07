@@ -20,7 +20,7 @@ const base = {
 };  */
 
 function App() {
- /*  useEffect(() => {
+  /*  useEffect(() => {
     userAPI.updateUser(userId, token, body, (data: TUser) =>
       console.log('updateUser: ', data)
     );
