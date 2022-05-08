@@ -27,3 +27,16 @@ export type TColumnBase = {
 export type TColumn = TColumnBase & {
   columnId: string;
 };
+
+export type TTaskBase = {
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+};
+
+export type TTask = TTaskBase & {
+  taskId: string;
+  boardId: string;
+  columnId: string;
+};
