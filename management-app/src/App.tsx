@@ -5,13 +5,13 @@ import userAPI from './api/usersAPI';
 
 import './App.css';
 
-/*  const userId = 'de4e23bf-f372-4176-89d8-9bb9c240b5c3';
+/*  const userId = 'e374d67e-365f-467c-8481-853a0895fff0';
 const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkZTRlMjNiZi1mMzcyLTQxNzYtODlkOC05YmI5YzI0MGI1YzMiLCJsb2dpbiI6InVzZXIwMDEiLCJpYXQiOjE2NTE4NjgyODh9.MvSfPRXcVYG4mxMDreYZSuUH_LeO-uGgaqU8UwGQE_Y';
-const body = {
-  name: 'Vasyaaa',
-  login: 'user001aa',
-  password: 'userpass@123aa',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkZTRlMjNiZi1mMzcyLTQxNzYtODlkOC05YmI5YzI0MGI1YzMiLCJsb2dpbiI6InVzZXIwMDEiLCJpYXQiOjE2NTIwMjQ2MTl9.TnMC2aJjXAwvhnCM2bDs8dOGDFtvoU8aeMdZsfsc7qQ';
+const user = {
+  name: 'Vasya',
+  login: 'user001',
+  password: 'userpass@123',
 };
 
 const base = {
@@ -20,32 +20,16 @@ const base = {
 };  */
 
 function App() {
- /*  useEffect(() => {
-    userAPI.updateUser(userId, token, body, (data: TUser) =>
-      console.log('updateUser: ', data)
-    );
+  /*  useEffect(() => {
+    userAPI
+      .updateUser(userId, token, user)
+      .then((result) => console.log(result));
   }, []);
 
   useEffect(() => {
-    userAPI.getUser(userId, token, (data: TUser) =>
-      console.log('getUser: ', data)
-    );
-  }, []);
-
-  useEffect(() => {
-    userAPI.getUsers(token, (data: TUser[]) => console.log('getUsers: ', data));
-  }, []);
-
-  /*  useEffect(() => {
-    userAPI.createToken(base, (data: TUserBase) =>
-      console.log('createToken: ', data)
-    );
-  }, []);  */
-
-  /*  useEffect(() => {
-    userAPI.createAccount(body, (data: TUser) =>
-      console.log('createAccount: ', data)
-    );
+    userAPI
+      .createAccount(user)
+      .then((data) => console.log('createAccount: ', data));
   }, []);  */
 
   return (
