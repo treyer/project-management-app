@@ -20,45 +20,17 @@ const base = {
   password: 'userpass@123',
 };
 
-const title = {
-  title: 'New board',
-};
-
-const boardId = 'cf750520-22ed-4663-ac0c-599701d9ee2d';
-
 function App() {
   /*  useEffect(() => {
-    userAPI.updateUser(userId, token, body, (data: TUser) =>
-      console.log('updateUser: ', data)
-    );
+    userAPI
+      .updateUser(userId, token, user)
+      .then((result) => console.log(result));
   }, []);
 
   useEffect(() => {
-    userAPI.getUser(userId, token, (data: TUser) =>
-      console.log('getUser: ', data)
-    );
-  }, []);
-
-  useEffect(() => {
-    userAPI.getUsers(token, (data: TUser[]) => console.log('getUsers: ', data));
-  }, []);
-
-  /*  useEffect(() => {
-    userAPI.createToken(base, (data: TUserBase) =>
-      console.log('createToken: ', data)
-    );
-  }, []);  */
-
-  /*  useEffect(() => {
-    userAPI.createAccount(body, (data: TUser) =>
-      console.log('createAccount: ', data)
-    );
-  }, []);  */
-
-  /*  useEffect(() => {
-    boardsAPI.createBoard(title, token, (data: TBoard) =>
-      console.log('createBoard: ', data)
-    );
+    userAPI
+      .createAccount(user)
+      .then((data) => console.log('createAccount: ', data));
   }, []);  */
 
   return (
