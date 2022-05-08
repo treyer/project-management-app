@@ -18,3 +18,12 @@ export type TBoardBase = {
 export type TUser = TUserBase & {
   name: string;
 };
+
+export type TColumnBase = {
+  title: string;
+  order: number;
+};
+
+export type TColumn = TColumnBase & {
+  columnId: string;
+};
