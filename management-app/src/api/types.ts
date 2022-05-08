@@ -8,11 +8,13 @@ export type TUserBase = {
 };
 
 export type TBoard = TBoardBase & {
-  idBoard: string;
+  boardId: string;
 };
 
 export type TBoardBase = {
   title: string;
+};
+
 export type TUser = TUserBase & {
   name: string;
 };
