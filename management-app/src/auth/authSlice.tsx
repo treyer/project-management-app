@@ -39,7 +39,6 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setIsLoggedIn: (state) => {
-      // eslint-disable-next-line no-param-reassign
       state.isLoggedIn = true;
     },
   },
@@ -47,31 +46,21 @@ const authSlice = createSlice({
     builder
       .addCase(signUp.fulfilled, (state, action) => {
         const { name, id, login } = action.payload;
-        // eslint-disable-next-line no-param-reassign
         state.userData = { name, id, login };
-        // eslint-disable-next-line no-param-reassign
         state.isLoading = false;
-        // eslint-disable-next-line no-param-reassign
         state.signUpError = '';
       })
       .addCase(signUp.rejected, (state, action) => {
-        // eslint-disable-next-line no-param-reassign
         state.isLoading = false;
-        // eslint-disable-next-line no-param-reassign
         state.signUpError = action.error as string;
       })
       .addCase(signUp.pending, (state) => {
-        // eslint-disable-next-line no-param-reassign
         state.isLoading = true;
       })
       .addCase(signIn.fulfilled, (state, action) => {
-        // eslint-disable-next-line no-param-reassign
         state.token = action.payload.token;
-        // eslint-disable-next-line no-param-reassign
         state.isLoading = false;
-        // eslint-disable-next-line no-param-reassign
         state.isLoggedIn = true;
-        // eslint-disable-next-line no-param-reassign
         state.signInError = '';
       });
   },
