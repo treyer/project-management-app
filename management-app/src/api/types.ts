@@ -40,3 +40,8 @@ export type TTask = TTaskBase & {
   boardId: string;
   columnId: string;
 };
+
+export type TFile = {
+  taskId: string;
+  file: FileList;
+};

@@ -15,3 +15,15 @@ export const BOARDS_API_ERRORS: TAPIErrorsMap = {
   [StatusCodes.NOT_FOUND]: 'Board not found.',
   [StatusCodes.INTERNAL_SERVER_ERROR]: 'Internal Server Error.',
 };
+
+export const TASKS_API_ERRORS: TAPIErrorsMap = {
+  [StatusCodes.UNAUTHORIZED]: 'Access token is missing or invalid.',
+  [StatusCodes.NOT_FOUND]: 'Task not found.',
+  [StatusCodes.INTERNAL_SERVER_ERROR]: 'Internal Server Error.',
+};
+
+export const FILE_API_ERRORS: TAPIErrorsMap = {
+  [StatusCodes.UNAUTHORIZED]: 'Access token is missing or invalid.',
+  [StatusCodes.NOT_FOUND]: 'File not found.',
+  [StatusCodes.INTERNAL_SERVER_ERROR]: 'Internal Server Error.',
+};

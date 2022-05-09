@@ -1,5 +1,5 @@
 import { BaseAPI } from './baseAPI';
-import { BOARDS_API_ERRORS } from './errors';
+import { TASKS_API_ERRORS } from './errors';
 import { TTask, TTaskBase } from './types';
 
 class TasksAPI extends BaseAPI {
@@ -12,7 +12,7 @@ class TasksAPI extends BaseAPI {
     return this.post(`boards/${boardId}/columns/${columnId}/tasks`, task, {
       Authorization: `Bearer ${token}`,
     }).then((result) => {
-      BaseAPI.handleError(result, BOARDS_API_ERRORS);
+      BaseAPI.handleError(result, TASKS_API_ERRORS);
       return result.json();
     });
   }
@@ -21,7 +21,7 @@ class TasksAPI extends BaseAPI {
     return this.get(`boards/${boardId}/columns/${columnId}/tasks`, {
       Authorization: `Bearer ${token}`,
     }).then((result) => {
-      BaseAPI.handleError(result, BOARDS_API_ERRORS);
+      BaseAPI.handleError(result, TASKS_API_ERRORS);
       return result.json();
     });
   }
@@ -35,7 +35,7 @@ class TasksAPI extends BaseAPI {
     return this.get(`boards/${boardId}/columns/${columnId}/tasks/${taskId}`, {
       Authorization: `Bearer ${token}`,
     }).then((result) => {
-      BaseAPI.handleError(result, BOARDS_API_ERRORS);
+      BaseAPI.handleError(result, TASKS_API_ERRORS);
       return result.json();
     });
   }
@@ -52,7 +52,7 @@ class TasksAPI extends BaseAPI {
         Authorization: `Bearer ${token}`,
       }
     ).then((result) => {
-      BaseAPI.handleError(result, BOARDS_API_ERRORS);
+      BaseAPI.handleError(result, TASKS_API_ERRORS);
       return result.json();
     });
   }
@@ -66,7 +66,7 @@ class TasksAPI extends BaseAPI {
     return this.put(`boards/${boardId}/columns/${columnId}/tasks/${taskId}`, {
       Authorization: `Bearer ${token}`,
     }).then((result) => {
-      BaseAPI.handleError(result, BOARDS_API_ERRORS);
+      BaseAPI.handleError(result, TASKS_API_ERRORS);
       return result.json();
     });
   }
