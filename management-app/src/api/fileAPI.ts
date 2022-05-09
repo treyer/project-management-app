@@ -1,5 +1,5 @@
 import { BaseAPI } from './baseAPI';
-import { FILE_API_ERRORS, USERS_API_ERRORS } from './errors';
+import { FILE_API_ERRORS } from './errors';
 import { TFile } from './types';
 
 class FileAPI extends BaseAPI {
