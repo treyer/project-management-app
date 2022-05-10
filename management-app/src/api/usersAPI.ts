@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { BaseAPI } from './baseAPI';
 import { USERS_API_ERRORS } from './errors';
-import { TUser, TUserBase } from './types';
+import { TUser, TUserBase, TUserData, TToken } from './types';
 
 class UsersAPI extends BaseAPI {
   updateUser(userId: string, token: string, user: TUser): Promise<TUser> {
@@ -39,14 +39,14 @@ class UsersAPI extends BaseAPI {
     });
   }
 
-  createToken(dataBase: TUserBase): Promise<TUserBase> {
+  createToken(dataBase: TUserBase): Promise<TToken> {
     return this.post('signin', dataBase).then((result) => {
       BaseAPI.handleError(result, USERS_API_ERRORS);
       return result.json();
     });
   }
 
-  createAccount(dataUser: TUser): Promise<TUser> {
+  createAccount(dataUser: TUser): Promise<TUserData> {
     return this.post('signup', dataUser).then((result) => {
       BaseAPI.handleError(result, USERS_API_ERRORS);
       return result.json();
