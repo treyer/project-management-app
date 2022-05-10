@@ -43,5 +43,5 @@ export type TTask = TTaskBase & {
 
 export type TFile = {
   taskId: string;
-  file: FileList;
+  file: string;
 };
