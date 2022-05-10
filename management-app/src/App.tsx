@@ -1,7 +1,14 @@
 /* eslint-disable no-console */
 import React, { useEffect } from 'react';
+import { Routes, Route, NavLink } from 'react-router-dom';
 import { TUser, TUserBase } from './api/types';
 import userAPI from './api/usersAPI';
+import WelcomePage from './pages/WelcomePage';
+import MainPage from './pages/MainPage';
+import BoardPage from './pages/BoardPage';
+import NotFoundPage from './pages/NotFoundPage';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 
 import './App.css';
 
@@ -34,19 +41,18 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <header className="App-header" />
+      <Header />
+      <NavLink to="/">Welcome</NavLink>
+      <NavLink to="/main">Main</NavLink>
+      <NavLink to="/board">Board</NavLink>
+      <Routes>
+        <Route path="/" element={<WelcomePage />} />
+        <Route path="/main" element={<MainPage />} />
+        <Route path="/board" element={<BoardPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+      <Footer />
     </div>
   );
 }
