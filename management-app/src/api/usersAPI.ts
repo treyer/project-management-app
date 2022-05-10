@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { BaseAPI } from './baseAPI';
 import { USERS_API_ERRORS } from './errors';
 import { TUser, TUserBase, TUserData, TToken } from './types';
