@@ -3,11 +3,15 @@ import { BOARDS_API_ERRORS } from './errors';
 import { TColumn, TColumnBase } from './types';
 
 class ColumnsAPI extends BaseAPI {
-  createColumn(
-    boardId: string,
-    token: string,
-    column: TColumnBase
-  ): Promise<TColumn> {
+  createColumn({
+    boardId,
+    token,
+    column,
+  }: {
+    boardId: string;
+    token: string;
+    column: TColumnBase;
+  }): Promise<TColumn> {
     return this.post(`boards/${boardId}/columns`, column, {
       Authorization: `Bearer ${token}`,
     }).then((result) => {
@@ -25,11 +29,15 @@ class ColumnsAPI extends BaseAPI {
     });
   }
 
-  getColumn(
-    boardId: string,
-    columnId: string,
-    token: string
-  ): Promise<TColumn[]> {
+  getColumn({
+    boardId,
+    columnId,
+    token,
+  }: {
+    boardId: string;
+    columnId: string;
+    token: string;
+  }): Promise<TColumn[]> {
     return this.get(`boards/${boardId}/columns/${columnId}`, {
       Authorization: `Bearer ${token}`,
     }).then((result) => {
@@ -38,12 +46,17 @@ class ColumnsAPI extends BaseAPI {
     });
   }
 
-  updateColumn(
-    boardId: string,
-    columnId: string,
-    token: string,
-    column: TColumnBase
-  ): Promise<TColumn> {
+  updateColumn({
+    boardId,
+    columnId,
+    token,
+    column,
+  }: {
+    boardId: string;
+    columnId: string;
+    token: string;
+    column: TColumnBase;
+  }): Promise<TColumn> {
     return this.put(`boards/${boardId}/columns/${columnId}`, column, {
       Authorization: `Bearer ${token}`,
     }).then((result) => {
@@ -52,11 +65,15 @@ class ColumnsAPI extends BaseAPI {
     });
   }
 
-  deleteColumn(
-    boardId: string,
-    columnId: string,
-    token: string
-  ): Promise<void> {
+  deleteColumn({
+    boardId,
+    columnId,
+    token,
+  }: {
+    boardId: string;
+    columnId: string;
+    token: string;
+  }): Promise<void> {
     return this.delete(`boards/${boardId}/columns/${columnId}`, {
       Authorization: `Bearer ${token}`,
     }).then((result) => {

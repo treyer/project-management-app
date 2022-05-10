@@ -30,11 +30,15 @@ class BoardsAPI extends BaseAPI {
     });
   }
 
-  updateBoard(
-    boardId: string,
-    token: string,
-    board: TBoardBase
-  ): Promise<TBoard> {
+  updateBoard({
+    boardId,
+    token,
+    board,
+  }: {
+    boardId: string;
+    token: string;
+    board: TBoardBase;
+  }): Promise<TBoard> {
     return this.put(`boards/${boardId}`, board, {
       Authorization: `Bearer ${token}`,
     }).then((result) => {
