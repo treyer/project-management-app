@@ -45,3 +45,13 @@ export type TFile = {
   taskId: string;
   file: string;
 };
+
+export type TUserData = {
+  id: string;
+  name: string;
+  login: string;
+};
+
+export type TToken = {
+  token: string;
+};
