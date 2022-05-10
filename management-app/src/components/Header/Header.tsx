@@ -1,22 +1,20 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { ROUTES } from '../../constants';
+import { RouteID } from '../../types';
 import './Header.css';
 
 function Header() {
   return (
     <header className="App-header">
       <nav className="nav-links">
-        {ROUTES.map((el) => {
-          if (el.id !== 5) {
-            return (
-              <NavLink key={el.id} to={el.routePath}>
-                {el.title}
-              </NavLink>
-            );
-          }
-          return '';
-        })}
+        {ROUTES.filter(
+          (el) => el.id !== RouteID.Board && el.id !== RouteID.NotFound
+        ).map((el) => (
+          <NavLink key={el.id} to={el.routePath}>
+            {el.title}
+          </NavLink>
+        ))}
       </nav>
     </header>
   );
