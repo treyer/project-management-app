@@ -16,15 +16,14 @@ function MainPage() {
       maxWidth="1200px"
       width="100%"
     >
-      <Box
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        direction="column"
+        width="230px"
+        height="170px"
         sx={{
-          width: '230px',
-          height: '170px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          textAlign: 'center',
-          alignItems: 'center',
           border: '1px dashed grey',
           borderRadius: '5px',
           backgroundColor: '#d2d6de',
@@ -43,7 +42,40 @@ function MainPage() {
         >
           Add board
         </Typography>
-      </Box>
+      </Grid>
+      <Grid
+        direction="column"
+        justifyContent="flex-start"
+        width="230px"
+        height="370px"
+        sx={{
+          border: '1px solid grey',
+          borderRadius: '5px',
+        }}
+      >
+        <Typography
+          component="p"
+          sx={{
+            fontSize: '20px',
+            textTransform: 'uppercase',
+            color: '#808080',
+            borderBottom: '1px solid',
+          }}
+        >
+          Add board
+        </Typography>
+        <Box
+          sx={{
+            width: '190px',
+            height: '115px',
+            backgroundColor: '#d2d6de',
+            borderRadius: '5px',
+            margin: '7px auto',
+          }}
+        >
+          <img src="./assets/svg/board.svg" alt="board" />
+        </Box>
+      </Grid>
     </Grid>
   );
 }
