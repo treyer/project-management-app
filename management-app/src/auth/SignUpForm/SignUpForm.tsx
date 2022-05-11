@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { Box, Stack, TextField, Typography } from '@mui/material';
+import { Alert, Box, Stack, TextField, Typography, Fade } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 // import { useNavigate } from 'react-router-dom';
 import { SignUpFormValues } from './SignUpForm.types';
 import { signUpFields } from './SignUpForm.utils';
-import { useAppDispatch, useAppSelector } from '../store';
-import { signUp, signIn } from './authSlice';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { signUp, signIn } from '../authSlice';
 
-const RegisterValidationSchema = yup.object({
+const registerValidationSchema = yup.object({
   name: yup.string().required('Name is required'),
   login: yup
     .string()
@@ -33,9 +33,10 @@ const initialValues: SignUpFormValues = {
   confirmPassword: '',
 };
 
-export function SignUpForm() {
+function SignUpForm() {
   const { isLoading } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const [signUpError, setSignUpError] = useState('');
   // const navigate = useNavigate();
 
   // useEffect(() => {
@@ -46,28 +47,38 @@ export function SignUpForm() {
 
   const formik = useFormik({
     initialValues,
-    validationSchema: RegisterValidationSchema,
+    validationSchema: registerValidationSchema,
     onSubmit: ({ name, login, password }) => {
-      dispatch(signUp({ name, login, password })).then(
-        () => dispatch(signIn({ login, password })),
-        // eslint-disable-next-line no-console
-        (e) => console.error(e)
-      );
+      dispatch(signUp({ name, login, password }))
+        .unwrap()
+        .then(() => {
+          setSignUpError('');
+          dispatch(signIn({ login, password }));
+        })
+        .catch((e) => setSignUpError(e.message));
     },
   });
 
   return (
     <Stack alignItems="center" justifyContent="center" sx={{ height: '100%' }}>
-      <Box component="form" onSubmit={formik.handleSubmit} sx={{ Width: 600 }}>
+      <Box component="form" onSubmit={formik.handleSubmit} sx={{ width: 600 }}>
         <Typography variant="h3" gutterBottom>
           Sign Up
         </Typography>
+
+        <Box sx={{ m: 2 }}>
+          <Fade in={!!signUpError}>
+            <Alert severity="warning">{signUpError}</Alert>
+          </Fade>
+        </Box>
+
         <Stack spacing={2}>
           {/* TODO: create FormField component instead of mapping below */}
           {signUpFields.map((elem) => (
             <TextField
               fullWidth
               variant="outlined"
+              key={elem.fieldName}
               id={elem.fieldName}
               name={elem.fieldName}
               type={elem.type}
@@ -96,3 +107,5 @@ export function SignUpForm() {
     </Stack>
   );
 }
+
+export { SignUpForm };
