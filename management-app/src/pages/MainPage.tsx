@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { FormEvent, useCallback } from 'react';
 import Box from '@mui/material/Box';
-import { Grid, Typography } from '@mui/material';
+import { Button, Grid, TextField, Typography } from '@mui/material';
 
 function MainPage() {
+  const handleSubmitBoard = useCallback((event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  }, []);
+
   return (
     <Grid
       container
@@ -44,6 +48,7 @@ function MainPage() {
         </Typography>
       </Grid>
       <Grid
+        padding={2}
         direction="column"
         justifyContent="flex-start"
         width="230px"
@@ -75,6 +80,21 @@ function MainPage() {
         >
           <img src="./assets/svg/board.svg" alt="board" />
         </Box>
+        <Box component="form" onSubmit={handleSubmitBoard} sx={{ Width: 600 }}>
+          <Typography component="p" gutterBottom>
+            Board name
+          </Typography>
+          <TextField
+            id="outlined-basic"
+            label="Add board name"
+            variant="outlined"
+            size="small"
+            sx={{ marginBottom: '7px' }}
+          />
+        </Box>
+        <Button variant="outlined" size="medium">
+          Add board
+        </Button>
       </Grid>
     </Grid>
   );
