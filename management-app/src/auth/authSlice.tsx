@@ -14,7 +14,7 @@ const initialState: TAuthState = {
   userData: {} as TUserData,
   signInError: '',
   isLoading: false,
-  isLoggedIn: false,
+  isLoggedIn: !!localStorage.getItem('token'),
 };
 
 export const signUp = createAsyncThunk('auth/signUp', (userData: TUser) =>
@@ -31,6 +31,11 @@ const authSlice = createSlice({
   reducers: {
     setIsLoggedIn: (state) => {
       state.isLoggedIn = true;
+    },
+    logOut: (state) => {
+      state.isLoggedIn = false;
+      state.userData = {} as TUserData;
+      localStorage.removeItem('token');
     },
   },
   extraReducers: (builder) => {
@@ -65,5 +70,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setIsLoggedIn } = authSlice.actions;
+export const { setIsLoggedIn, logOut } = authSlice.actions;
 export default authSlice.reducer;
