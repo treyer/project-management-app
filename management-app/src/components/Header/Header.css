@@ -1,0 +1,17 @@
+.nav-links {
+  display: flex;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #ffffff;
+  margin-right: 20px;
+}
+
+.nav-links a:hover {
+  opacity: 0.8;
+}
+
+.nav-links .active {
+  color: aqua;
+}

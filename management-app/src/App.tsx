@@ -1,22 +1,24 @@
+/* eslint-disable no-console */
 import React from 'react';
-import { Provider } from 'react-redux';
-// eslint-disable-next-line import/extensions
-import { SignUpForm } from './auth/SignUpForm';
-// eslint-disable-next-line import/extensions
-import { SignInForm } from './auth/SignInForm';
-import { store } from './store';
+import { Routes, Route } from 'react-router-dom';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 
 import './App.css';
+import { ROUTES } from './constants';
 
 function App() {
   return (
     <div className="App">
-      <Provider store={store}>
-        <header className="App-header" />
-        <SignUpForm />
-        <SignInForm />
-        <main className="main" />
-      </Provider>
+      <Header />
+      <main className="main">
+        <Routes>
+          {ROUTES.map((el) => (
+            <Route key={el.id} path={el.routePath} element={el.element} />
+          ))}
+        </Routes>
+      </main>
+      <Footer />
     </div>
   );
 }
