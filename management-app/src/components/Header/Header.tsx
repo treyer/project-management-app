@@ -27,10 +27,7 @@ function Header() {
               </NavLink>
             ))
           : ROUTES.filter(
-              (el) =>
-                !el.isShownWhenLoggedIn &&
-                el.id !== RouteID.NotFound &&
-                el.id !== RouteID.Welcome
+              (el) => !el.isShownWhenLoggedIn && el.id !== RouteID.NotFound
             ).map((el) => (
               <NavLink key={el.id} to={el.routePath}>
                 {el.title}
