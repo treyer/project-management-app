@@ -20,19 +20,14 @@ function Header() {
   return (
     <header className="App-header">
       <nav className="nav-links">
-        {isLoggedIn
-          ? ROUTES.filter((el) => el.isShownWhenLoggedIn).map((el) => (
-              <NavLink key={el.id} to={el.routePath}>
-                {el.title}
-              </NavLink>
-            ))
-          : ROUTES.filter(
-              (el) => !el.isShownWhenLoggedIn && el.id !== RouteID.NotFound
-            ).map((el) => (
-              <NavLink key={el.id} to={el.routePath}>
-                {el.title}
-              </NavLink>
-            ))}
+        {ROUTES.filter(
+          (el) =>
+            el.isShownWhenLoggedIn === isLoggedIn && el.id !== RouteID.NotFound
+        ).map((el) => (
+          <NavLink key={el.id} to={el.routePath}>
+            {el.title}
+          </NavLink>
+        ))}
         {isLoggedIn && <Button onClick={handleLogOut}>Log out</Button>}
       </nav>
     </header>

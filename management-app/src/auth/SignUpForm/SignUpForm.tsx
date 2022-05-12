@@ -4,7 +4,6 @@ import { useFormik } from 'formik';
 import { Alert, Box, Stack, TextField, Typography, Fade } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-// import { useNavigate } from 'react-router-dom';
 import { SignUpFormValues } from './SignUpForm.types';
 import { signUpFields } from './SignUpForm.utils';
 import { useAppDispatch, useAppSelector } from '../../store';
@@ -36,14 +35,7 @@ const initialValues: SignUpFormValues = {
 function SignUpForm() {
   const { isLoading } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const [signUpError, setSignUpError] = useState('');
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     navigate('/');
-  //   }
-  // }, [isLoggedIn]);
+  const [error, setError] = useState('');
 
   const formik = useFormik({
     initialValues,
@@ -51,11 +43,15 @@ function SignUpForm() {
     onSubmit: ({ name, login, password }) => {
       dispatch(signUp({ name, login, password }))
         .unwrap()
-        .then(() => {
-          setSignUpError('');
-          dispatch(signIn({ login, password }));
-        })
-        .catch((e) => setSignUpError(e.message));
+        .then(
+          () => {
+            setError('');
+            return dispatch(signIn({ login, password }))
+              .unwrap()
+              .catch((e) => setError(e.message));
+          },
+          (e) => setError(e.message)
+        );
     },
   });
 
@@ -67,8 +63,8 @@ function SignUpForm() {
         </Typography>
 
         <Box sx={{ m: 2 }}>
-          <Fade in={!!signUpError}>
-            <Alert severity="warning">{signUpError}</Alert>
+          <Fade in={!!error}>
+            <Alert severity="warning">{error}</Alert>
           </Fade>
         </Box>
 

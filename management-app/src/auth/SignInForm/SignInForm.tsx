@@ -36,7 +36,7 @@ function SignInForm() {
     if (isLoggedIn) {
       navigate('/main');
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, navigate]);
 
   const formik = useFormik({
     initialValues,
@@ -44,7 +44,12 @@ function SignInForm() {
     onSubmit: ({ login, password }) => {
       dispatch(signIn({ login, password }))
         .unwrap()
-        .catch((e) => setSignInError(e.message));
+        .then(() => setSignInError(''))
+        .catch((e) => {
+          setSignInError(
+            typeof e.message === 'string' ? e.message : 'Unknown Error'
+          );
+        });
     },
   });
 

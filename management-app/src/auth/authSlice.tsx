@@ -5,14 +5,12 @@ import UsersAPI from '../api/usersAPI';
 
 type TAuthState = {
   userData: TUserData;
-  signInError: string;
   isLoading: boolean;
   isLoggedIn: boolean;
 };
 
 const initialState: TAuthState = {
   userData: {} as TUserData,
-  signInError: '',
   isLoading: false,
   isLoggedIn: !!localStorage.getItem('token'),
 };
@@ -54,15 +52,10 @@ const authSlice = createSlice({
       .addCase(signIn.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLoggedIn = true;
-        state.signInError = '';
         localStorage.setItem('token', action.payload.token);
       })
-      .addCase(signIn.rejected, (state, action) => {
+      .addCase(signIn.rejected, (state) => {
         state.isLoading = false;
-        state.signInError =
-          action.payload instanceof Error
-            ? action.payload.message
-            : 'Unknown Error';
       })
       .addCase(signIn.pending, (state) => {
         state.isLoading = true;
