@@ -1,6 +1,11 @@
+import { MouseEvent } from 'react';
 import { Grid, Typography } from '@mui/material';
 
-function AddBoardBtn() {
+type TProps = {
+  onClick: () => void;
+};
+
+function AddBoardBtn({ onClick }: TProps) {
   return (
     <Grid
       container
@@ -13,11 +18,13 @@ function AddBoardBtn() {
         border: '1px dashed grey',
         borderRadius: '5px',
         backgroundColor: '#d2d6de',
+        cursor: 'pointer',
         '&:hover': {
           backgroundColor: '#d2d6de',
           opacity: [0.9, 0.8, 0.7],
         },
       }}
+      onClick={onClick}
     >
       <Typography
         component="p"

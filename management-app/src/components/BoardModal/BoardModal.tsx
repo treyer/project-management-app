@@ -1,14 +1,27 @@
-import { FormEvent, useCallback } from 'react';
+import { FormEvent, useCallback, MouseEvent } from 'react';
 
-import { Grid, Typography, Box, TextField, Button } from '@mui/material';
+import {
+  Grid,
+  Typography,
+  Box,
+  TextField,
+  Button,
+  IconButton,
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
-function BoardModal() {
+type TProps = {
+  onClose: () => void;
+};
+
+function BoardModal({ onClose }: TProps) {
   const handleSubmitBoard = useCallback((event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   }, []);
 
   return (
     <Grid
+      container
       padding={2}
       direction="column"
       justifyContent="flex-start"
@@ -17,8 +30,17 @@ function BoardModal() {
       sx={{
         border: '1px solid grey',
         borderRadius: '5px',
+        position: 'relative',
       }}
     >
+      <IconButton
+        aria-label="close"
+        size="small"
+        sx={{ position: 'absolute', top: '0', right: '0' }}
+        onClick={onClose}
+      >
+        <CloseIcon fontSize="inherit" />
+      </IconButton>
       <Typography
         component="p"
         sx={{

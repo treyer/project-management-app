@@ -1,9 +1,20 @@
 import { Grid } from '@mui/material';
+import { useState, MouseEvent, useCallback } from 'react';
 
 import AddBoardBtn from '../components/AddBoardBtn/AddBoardBtn';
 import BoardModal from '../components/BoardModal/BoardModal';
 
 function MainPage() {
+  const [isModalCardOpen, setIsModalCardOpen] = useState(false);
+
+  const handleOpenCardModal = useCallback(() => {
+    setIsModalCardOpen(true);
+  }, []);
+
+  const handleCloseCardModel = useCallback(() => {
+    setIsModalCardOpen(false);
+  }, []);
+
   return (
     <Grid
       container
@@ -17,8 +28,8 @@ function MainPage() {
       maxWidth="1200px"
       width="100%"
     >
-      <AddBoardBtn />
-      <BoardModal />
+      <AddBoardBtn onClick={handleOpenCardModal} />
+      {isModalCardOpen && <BoardModal onClose={handleCloseCardModel} />}
     </Grid>
   );
 }
