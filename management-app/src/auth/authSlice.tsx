@@ -1,37 +1,26 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TUser, TUserBase, TUserData } from '../api/types';
 import UsersAPI from '../api/usersAPI';
 
 type TAuthState = {
   userData: TUserData;
-  token: string;
-  signInError: string;
-  signUpError: string;
   isLoading: boolean;
   isLoggedIn: boolean;
 };
 
 const initialState: TAuthState = {
   userData: {} as TUserData,
-  token: '',
-  signInError: '',
-  signUpError: '',
   isLoading: false,
-  isLoggedIn: false,
+  isLoggedIn: !!localStorage.getItem('token'),
 };
 
-export const signUp = createAsyncThunk(
-  'auth/signUp',
-  async (userData: TUser): Promise<TUserData> => {
-    return UsersAPI.createAccount(userData);
-  }
+export const signUp = createAsyncThunk('auth/signUp', (userData: TUser) =>
+  UsersAPI.createAccount(userData)
 );
 
-export const signIn = createAsyncThunk(
-  'auth/signIn',
-  async (userBase: TUserBase) => {
-    return UsersAPI.createToken(userBase);
-  }
+export const signIn = createAsyncThunk('auth/signIn', (userBase: TUserBase) =>
+  UsersAPI.createToken(userBase)
 );
 
 const authSlice = createSlice({
@@ -41,6 +30,11 @@ const authSlice = createSlice({
     setIsLoggedIn: (state) => {
       state.isLoggedIn = true;
     },
+    logOut: (state) => {
+      state.isLoggedIn = false;
+      state.userData = {} as TUserData;
+      localStorage.removeItem('token');
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -48,23 +42,26 @@ const authSlice = createSlice({
         const { name, id, login } = action.payload;
         state.userData = { name, id, login };
         state.isLoading = false;
-        state.signUpError = '';
       })
-      .addCase(signUp.rejected, (state, action) => {
+      .addCase(signUp.rejected, (state) => {
         state.isLoading = false;
-        state.signUpError = action.error as string;
       })
       .addCase(signUp.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(signIn.fulfilled, (state, action) => {
-        state.token = action.payload.token;
         state.isLoading = false;
         state.isLoggedIn = true;
-        state.signInError = '';
+        localStorage.setItem('token', action.payload.token);
+      })
+      .addCase(signIn.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(signIn.pending, (state) => {
+        state.isLoading = true;
       });
   },
 });
 
-export const { setIsLoggedIn } = authSlice.actions;
+export const { setIsLoggedIn, logOut } = authSlice.actions;
 export default authSlice.reducer;

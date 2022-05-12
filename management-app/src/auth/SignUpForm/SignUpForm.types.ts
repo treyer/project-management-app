@@ -4,4 +4,5 @@ type SignUpFormValues = {
   password: string;
   confirmPassword: string;
 };
+
 export type { SignUpFormValues };

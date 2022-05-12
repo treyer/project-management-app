@@ -3,12 +3,15 @@ export type TPath = {
   routePath: string;
   title: string;
   element: JSX.Element;
+  isShownWhenLoggedIn: boolean;
 };
 
 export enum RouteID {
   Welcome,
   Main,
   Board,
-  Auth,
+  LogIn,
+  SignUp,
+  EditProfile,
   NotFound,
 }
