@@ -16,7 +16,7 @@ function App() {
     if (isLoggedIn) {
       navigate('/main');
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, navigate]);
 
   return (
     <div className="App">
