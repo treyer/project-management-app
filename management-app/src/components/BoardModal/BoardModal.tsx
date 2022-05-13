@@ -9,15 +9,23 @@ import {
   IconButton,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { addBoard } from '../../redux/slice/mainSlice';
 
 type TProps = {
   onClose: () => void;
 };
 
 function BoardModal({ onClose }: TProps) {
-  const handleSubmitBoard = useCallback((event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  }, []);
+  const { title } = useAppSelector((state) => state.main);
+  const dispatch = useAppDispatch();
+  const handleSubmitBoard = useCallback(
+    (event: MouseEvent | FormEvent) => {
+      event.preventDefault();
+      dispatch(addBoard(title));
+    },
+    [title, dispatch]
+  );
 
   return (
     <Grid
@@ -75,7 +83,7 @@ function BoardModal({ onClose }: TProps) {
           sx={{ marginBottom: '7px' }}
         />
       </Box>
-      <Button variant="outlined" size="medium">
+      <Button variant="outlined" size="medium" onClick={handleSubmitBoard}>
         Add board
       </Button>
     </Grid>

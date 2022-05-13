@@ -1,8 +1,72 @@
 import { BaseAPI } from './baseAPI';
-import { BOARDS_API_ERRORS } from './errors';
-import { TBoard, TBoardBase } from './types';
 
-class BoardsAPI extends BaseAPI {
+import { BOARDS_API_ERRORS } from './errors';
+import { TAPIErrorsMap, TBoard, TBoardBase } from './types';
+
+class BoardsAPI {
+  url: string;
+
+  constructor(url?: string) {
+    const defaultUrl = process.env.REACT_APP_SERVER_URL || '';
+
+    if (!defaultUrl) {
+      throw new Error('URL for BE service is not provided!');
+    }
+    this.url = defaultUrl;
+  }
+
+  get(route: string, headers: { [key: string]: string } = {}) {
+    return fetch(`${this.url}/${route}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        ...headers,
+      },
+    });
+  }
+
+  post(route: string, body = {}, headers: { [key: string]: string } = {}) {
+    return fetch(`${this.url}/${route}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        ...headers,
+      },
+      body: JSON.stringify(body),
+    });
+  }
+
+  put(route: string, body = {}, headers: { [key: string]: string } = {}) {
+    return fetch(`${this.url}/${route}`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        ...headers,
+      },
+      body: JSON.stringify(body),
+    });
+  }
+
+  delete(route: string, headers: { [key: string]: string } = {}) {
+    return fetch(`${this.url}/${route}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        ...headers,
+      },
+    });
+  }
+
+  static handleError(result: Response, errorsMap: TAPIErrorsMap) {
+    if (result.ok) {
+      return;
+    }
+    const { status } = result;
+    throw new Error(errorsMap[status] || 'Unknown error!');
+  }
+
   createBoard(title: TBoardBase, token: string): Promise<TBoard> {
     return this.post('boards', title, {
       Authorization: `Bearer ${token}`,

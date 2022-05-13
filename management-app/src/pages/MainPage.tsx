@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import { useState, MouseEvent, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 import AddBoardBtn from '../components/AddBoardBtn/AddBoardBtn';
 import BoardModal from '../components/BoardModal/BoardModal';
