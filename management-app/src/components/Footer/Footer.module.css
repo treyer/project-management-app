@@ -1,0 +1,16 @@
+.footer {
+  background-color: #026aa7;
+  font-size: 14px;
+}
+
+.container {
+  min-height: 56px;
+}
+
+.logo {
+  width: 90px;
+  height: 30px;
+  background-size: 90px auto;
+  background-repeat: no-repeat;
+  margin-top: 10px;
+}
