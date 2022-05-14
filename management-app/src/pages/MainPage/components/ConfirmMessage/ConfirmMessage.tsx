@@ -6,17 +6,22 @@ import {
   DialogContentText,
   DialogActions,
 } from '@mui/material';
+import { useCallback } from 'react';
 
 import { NavLink } from 'react-router-dom';
 
-import { useAppSelector } from '../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../store';
+import { closeDialog } from '../../slice/mainSlice';
 
 function ConfirmMessage() {
-  const boardId = useAppSelector((state) => state.main.boardData.boardId);
+  const boardId = useAppSelector((state) => state.main.boardData.id);
   const isDialogOpen = useAppSelector((state) => state.main.isDialogOpen);
+  const dispatch = useAppDispatch();
 
-  // eslint-disable-next-line no-console
-  console.log(boardId);
+  const handleClose = useCallback(() => {
+    dispatch(closeDialog());
+  }, [dispatch]);
+
   return (
     <Dialog aria-labelledby="responsive-dialog-title" open={isDialogOpen}>
       <DialogTitle id="responsive-dialog-title">Confirm message</DialogTitle>
@@ -29,7 +34,9 @@ function ConfirmMessage() {
         <NavLink to={`/board/${boardId}`}>
           <Button autoFocus>Yes</Button>
         </NavLink>
-        <Button autoFocus>No</Button>
+        <Button autoFocus onClick={handleClose}>
+          No
+        </Button>
       </DialogActions>
     </Dialog>
   );
