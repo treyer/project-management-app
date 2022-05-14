@@ -16,17 +16,19 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch, useAppSelector } from '../../../../store';
-import { createBoard, openDialog } from '../../slice/mainSlice';
+import { createBoard } from '../../slice/mainSlice';
 import ConfirmMessage from '../ConfirmMessage/ConfirmMessage';
 
 type TProps = {
   onClose: () => void;
 };
 
+const initialState = {
+  titleBoard: '',
+};
+
 function BoardModal({ onClose }: TProps) {
-  const { isDialogOpen, boardData } = useAppSelector((state) => state.main);
-  // eslint-disable-next-line no-console
-  console.log(isDialogOpen, boardData.boardId);
+  const { isDialogOpen } = useAppSelector((state) => state.main);
   const dispatch = useAppDispatch();
 
   const [titleBoard, setTitleBoard] = useState<string>('');
@@ -35,16 +37,18 @@ function BoardModal({ onClose }: TProps) {
     (event: MouseEvent | FormEvent) => {
       event.preventDefault();
       dispatch(createBoard({ title: titleBoard }));
-      dispatch(openDialog());
     },
     [titleBoard, dispatch]
   );
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const target = event.target as HTMLInputElement;
-    const value = target.value as string;
-    setTitleBoard(value);
-  };
+  const handleInputChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const target = event.target as HTMLInputElement;
+      const value = target.value as string;
+      setTitleBoard(value);
+    },
+    []
+  );
 
   return (
     <>

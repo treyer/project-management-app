@@ -1,11 +1,22 @@
 import { Grid } from '@mui/material';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../store';
 
 import AddBoardBtn from './components/AddBoardBtn/AddBoardBtn';
+import Board from './components/Board/Board';
+
 import BoardModal from './components/BoardModal/BoardModal';
+import { getBoards } from './slice/mainSlice';
 
 function MainPage() {
+  const boards = useAppSelector((state) => state.main.boards);
+  const dispatch = useAppDispatch();
+
   const [isModalCardOpen, setIsModalCardOpen] = useState(false);
+
+  useEffect(() => {
+    dispatch(getBoards());
+  }, [dispatch]);
 
   const handleOpenCardModal = useCallback(() => {
     setIsModalCardOpen(true);
@@ -28,6 +39,9 @@ function MainPage() {
       maxWidth="1200px"
       width="100%"
     >
+      {boards.map(() => (
+        <Board />
+      ))}
       <AddBoardBtn onClick={handleOpenCardModal} />
       {isModalCardOpen && <BoardModal onClose={handleCloseCardModel} />}
     </Grid>
