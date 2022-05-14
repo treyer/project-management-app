@@ -1,4 +1,3 @@
-import { MouseEvent } from 'react';
 import { Grid, Typography } from '@mui/material';
 
 type TProps = {

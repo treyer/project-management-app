@@ -1,8 +1,8 @@
 import { Grid } from '@mui/material';
 import { useState, useCallback } from 'react';
 
-import AddBoardBtn from '../components/AddBoardBtn/AddBoardBtn';
-import BoardModal from '../components/BoardModal/BoardModal';
+import AddBoardBtn from './components/AddBoardBtn/AddBoardBtn';
+import BoardModal from './components/BoardModal/BoardModal';
 
 function MainPage() {
   const [isModalCardOpen, setIsModalCardOpen] = useState(false);
