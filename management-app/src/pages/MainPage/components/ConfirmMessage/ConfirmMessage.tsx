@@ -31,7 +31,7 @@ function ConfirmMessage() {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <NavLink to={`/board/${boardId}`}>
+        <NavLink to={`/main/${boardId}`} style={{ textDecoration: 'none' }}>
           <Button autoFocus>Yes</Button>
         </NavLink>
         <Button autoFocus onClick={handleClose}>

@@ -37,6 +37,14 @@ export const getBoards = createAsyncThunk(
   }
 );
 
+export const deleteBoard = createAsyncThunk(
+  'main/deleteBoard',
+  async (id: string, { dispatch }): Promise<void> => {
+    await BoardsAPI.deleteBoard(id, token);
+    dispatch(getBoards());
+  }
+);
+
 /* TODO: write all action  */
 
 const mainSlice = createSlice({

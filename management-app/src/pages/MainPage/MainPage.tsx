@@ -39,8 +39,8 @@ function MainPage() {
       maxWidth="1200px"
       width="100%"
     >
-      {boards.map(() => (
-        <Board />
+      {boards.map(({ id, title }) => (
+        <Board key={id} id={id} titleBoard={title} />
       ))}
       <AddBoardBtn onClick={handleOpenCardModal} />
       {isModalCardOpen && <BoardModal onClose={handleCloseCardModel} />}
