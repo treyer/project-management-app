@@ -3,10 +3,9 @@ import React from 'react';
 import { SignInForm } from './auth/SignInForm';
 // eslint-disable-next-line import/extensions
 import { SignUpForm } from './auth/SignUpForm';
-// import AuthPage from './pages/AuthPage';
 import BoardPage from './pages/BoardPage';
-import EditProfile from './pages/EditProfile.jsx';
-import MainPage from './pages/MainPage/MainPage';
+import EditProfile from './pages/EditProfile';
+import MainPage from './pages/MainPage';
 import NotFoundPage from './pages/NotFoundPage';
 import WelcomePage from './pages/WelcomePage';
 import { RouteID, TPath } from './types';
