@@ -15,6 +15,12 @@ export type TBoardBase = {
   title: string;
 };
 
+export type TBoardResponse = {
+  id: string;
+  title: string;
+  columns: TColumResponse[];
+};
+
 export type TUser = TUserBase & {
   name: string;
 };
