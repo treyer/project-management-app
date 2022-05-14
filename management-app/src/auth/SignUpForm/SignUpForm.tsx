@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { Alert, Box, Stack, TextField, Typography, Fade } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { useNavigate } from 'react-router-dom';
 
 import { SignUpFormValues } from './SignUpForm.types';
 import { signUpFields } from './SignUpForm.utils';
@@ -33,9 +34,16 @@ const initialValues: SignUpFormValues = {
 };
 
 function SignUpForm() {
-  const { isLoading } = useAppSelector((state) => state.auth);
+  const { isLoading, isLoggedIn } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/main');
+    }
+  }, [isLoggedIn, navigate]);
 
   const formik = useFormik({
     initialValues,
