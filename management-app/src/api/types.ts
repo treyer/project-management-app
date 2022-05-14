@@ -8,7 +8,7 @@ export type TUserBase = {
 };
 
 export type TBoard = TBoardBase & {
-  boardId: string;
+  id: string;
 };
 
 export type TBoardBase = {
@@ -25,7 +25,7 @@ export type TColumnBase = {
 };
 
 export type TColumn = TColumnBase & {
-  columnId: string;
+  id: string;
 };
 
 export type TTaskBase = {
@@ -54,4 +54,32 @@ export type TUserData = {
 
 export type TToken = {
   token: string;
+};
+
+export type TFileResponse = {
+  filename: string;
+  fileSize: number;
+};
+
+export type TTaskResponse = {
+  id: string;
+  title: string;
+  order: number;
+  done: boolean;
+  description: string;
+  userId: string;
+  files: TFileResponse[];
+};
+
+export type TColumnResponse = {
+  id: string;
+  title: string;
+  order: number;
+  tasks: TTaskResponse[];
+};
+
+export type TBoardResponse = {
+  id: string;
+  title: string;
+  columns: TColumnResponse[];
 };
