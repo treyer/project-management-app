@@ -7,6 +7,7 @@ type TMainState = {
   boardData: TBoard;
   boards: TBoard[];
   isLoading: boolean;
+  isError: boolean;
   isDialogOpen: boolean;
   isBoardModalOpen: boolean;
 };
@@ -15,6 +16,7 @@ const initialState: TMainState = {
   boardData: {} as TBoard,
   boards: [],
   isLoading: false,
+  isError: false,
   isDialogOpen: false,
   isBoardModalOpen: false,
 };
@@ -72,23 +74,37 @@ const mainSlice = createSlice({
         const { title, id } = action.payload;
         state.boardData = { title, id };
         state.isLoading = false;
+        state.isError = false;
       })
       .addCase(createBoard.rejected, (state) => {
         state.isLoading = false;
+        state.isError = true;
       })
       .addCase(createBoard.pending, (state) => {
         state.isLoading = true;
+        state.isError = false;
       })
       .addCase(getBoards.fulfilled, (state, action) => {
         const boards = action.payload;
         state.boards = boards;
         state.isLoading = false;
+        state.isError = false;
       })
       .addCase(getBoards.rejected, (state) => {
         state.isLoading = false;
+        state.isError = true;
       })
       .addCase(getBoards.pending, (state) => {
         state.isLoading = true;
+        state.isError = false;
+      })
+      .addCase(deleteBoard.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+      })
+      .addCase(deleteBoard.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
       });
   },
 });

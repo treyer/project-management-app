@@ -1,4 +1,4 @@
-import { CircularProgress, Grid } from '@mui/material';
+import { Alert, CircularProgress, Grid } from '@mui/material';
 import { useCallback, useEffect } from 'react';
 
 import AddBoardBtn from './components/AddBoardBtn/AddBoardBtn';
@@ -14,6 +14,7 @@ function MainPage() {
     (state) => state.main.isBoardModalOpen
   );
   const isLoading = useAppSelector((state) => state.main.isLoading);
+  const isError = useAppSelector((state) => state.main.isError);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -36,6 +37,7 @@ function MainPage() {
           sx={{ position: 'fixed', top: '50%' }}
         />
       )}
+      {isError && <Alert severity="error">Something went wrong!</Alert>}
       <Grid
         container
         spacing={3}

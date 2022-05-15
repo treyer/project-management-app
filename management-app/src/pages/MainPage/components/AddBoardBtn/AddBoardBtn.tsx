@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Grid, Typography } from '@mui/material';
 
 type TProps = {
@@ -38,4 +39,4 @@ function AddBoardBtn({ onClick }: TProps) {
   );
 }
 
-export default AddBoardBtn;
+export default memo(AddBoardBtn);
