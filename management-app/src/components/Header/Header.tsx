@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { logOut } from '../../auth/authSlice';
-import { ROUTES } from '../../constants';
+import { ROUTES } from '../../routes';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { RouteID } from '../../types';
 import './Header.css';

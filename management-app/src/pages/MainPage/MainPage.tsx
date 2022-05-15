@@ -1,11 +1,11 @@
 import { Grid } from '@mui/material';
 import { useState, useCallback, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store';
 
 import AddBoardBtn from './components/AddBoardBtn/AddBoardBtn';
 import Board from './components/Board/Board';
 
 import BoardModal from './components/BoardModal/BoardModal';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { getBoards } from './slice/mainSlice';
 
 function MainPage() {
