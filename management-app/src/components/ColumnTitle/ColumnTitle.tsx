@@ -1,0 +1,45 @@
+import React, { ChangeEvent, useState } from 'react';
+import { Box, ClickAwayListener, TextField, Typography } from '@mui/material';
+import { ColumnTitleProps } from './ColumnTitle.types';
+
+export function ColumnTitle({ title, handleClickAway }: ColumnTitleProps) {
+  const [titleInput, setTitleInput] = useState(title);
+  const [isTitleEditMode, setIsTitleEditMode] = useState(false);
+
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitleInput(e.target.value);
+  };
+
+  const toggleTitleEditMode = () => {
+    if (!isTitleEditMode) {
+      setIsTitleEditMode(true);
+    }
+  };
+
+  const onClickAway = () => {
+    if (isTitleEditMode) {
+      handleClickAway(titleInput);
+      setIsTitleEditMode(false);
+    }
+  };
+
+  return (
+    <Box>
+      <ClickAwayListener onClickAway={onClickAway}>
+        <Typography variant="h5">
+          {!isTitleEditMode ? (
+            <Box onClick={toggleTitleEditMode}>{title}</Box>
+          ) : (
+            <TextField
+              fullWidth
+              name="column title"
+              value={titleInput}
+              color="primary"
+              onChange={handleOnChange}
+            />
+          )}
+        </Typography>
+      </ClickAwayListener>
+    </Box>
+  );
+}
