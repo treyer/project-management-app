@@ -1,6 +1,6 @@
 import { BaseAPI } from './baseAPI';
 import { BOARDS_API_ERRORS } from './errors';
-import { TColumn, TColumnBase, TColumResponse } from './types';
+import { TColumn, TColumnBase, TColumnResponse } from './types';
 
 class ColumnsAPI extends BaseAPI {
   createColumn({
@@ -37,7 +37,7 @@ class ColumnsAPI extends BaseAPI {
     boardId: string;
     columnId: string;
     token: string;
-  }): Promise<TColumResponse> {
+  }): Promise<TColumnResponse> {
     return this.get(`boards/${boardId}/columns/${columnId}`, {
       Authorization: `Bearer ${token}`,
     }).then((result) => {

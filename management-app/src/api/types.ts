@@ -18,7 +18,7 @@ export type TBoardBase = {
 export type TBoardResponse = {
   id: string;
   title: string;
-  columns: TColumResponse[];
+  columns: TColumnResponse[];
 };
 
 export type TUser = TUserBase & {
@@ -49,7 +49,7 @@ export type TTaskResponse = {
   files: TFileResponse[];
 };
 
-export type TColumResponse = {
+export type TColumnResponse = {
   id: string;
   title: string;
   order: number;
