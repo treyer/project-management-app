@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import {
   FormEvent,
   useCallback,
@@ -5,6 +6,7 @@ import {
   ChangeEvent,
   useState,
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Grid,
@@ -16,16 +18,23 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch, useAppSelector } from '../../../../store';
-import { createBoard } from '../../slice/mainSlice';
-import ConfirmMessage from '../ConfirmMessage/ConfirmMessage';
+import {
+  closeBoardModal,
+  closeDialog,
+  createBoard,
+  getBoards,
+} from '../../slice/mainSlice';
+import ConfirmMessage from '../../../../components/ConfirmMessage/ConfirmMessage';
 
-type TProps = {
+type TBoardModalProps = {
   onClose: () => void;
 };
 
-function BoardModal({ onClose }: TProps) {
+function BoardModal({ onClose }: TBoardModalProps) {
+  const navigate = useNavigate();
   const { isDialogOpen } = useAppSelector((state) => state.main);
   const dispatch = useAppDispatch();
+  const boardId = useAppSelector((state) => state.main.boardData.id);
 
   const [titleBoard, setTitleBoard] = useState<string>('');
 
@@ -46,9 +55,27 @@ function BoardModal({ onClose }: TProps) {
     []
   );
 
+  const handleDecline = useCallback(() => {
+    dispatch(closeDialog());
+    dispatch(getBoards());
+    dispatch(closeBoardModal());
+  }, [dispatch]);
+
+  const handleConfirm = useCallback(() => {
+    navigate(`/board/${boardId}`);
+    handleDecline();
+  }, [boardId, handleDecline, navigate]);
+
   return (
     <>
-      {isDialogOpen && <ConfirmMessage />}
+      {isDialogOpen && (
+        <ConfirmMessage
+          openDialog={isDialogOpen}
+          text="Would you like go to the new board?"
+          onConfirm={handleConfirm}
+          onDecline={handleDecline}
+        />
+      )}
       <Grid
         container
         padding={2}

@@ -19,13 +19,24 @@ function MainPage() {
     dispatch(getBoards());
   }, [dispatch]);
 
-  const handleOpenCardModal = useCallback(() => {
+  const handleOpenBoardModal = useCallback(() => {
     dispatch(openBoardModal());
   }, [dispatch]);
 
-  const handleCloseCardModel = useCallback(() => {
+  const handleCloseBoardModel = useCallback(() => {
     dispatch(closeBoardModal());
   }, [dispatch]);
+
+  /*  const handleDecline = useCallback(() => {
+    dispatch(closeDialog());
+    dispatch(getBoards());
+    dispatch(closeBoardModal());
+  }, [dispatch]);
+
+  const handleConfirm = useCallback(() => {
+    navigate(`/board/${boardId}`);
+    handleDecline();
+  }, [boardId, handleDecline, navigate]);  */
 
   return (
     <Grid
@@ -43,8 +54,8 @@ function MainPage() {
       {boards.map(({ id, title }) => (
         <Board key={id} id={id} titleBoard={title} />
       ))}
-      <AddBoardBtn onClick={handleOpenCardModal} />
-      {isBoardModalOpen && <BoardModal onClose={handleCloseCardModel} />}
+      <AddBoardBtn onClick={handleOpenBoardModal} />
+      {isBoardModalOpen && <BoardModal onClose={handleCloseBoardModel} />}
     </Grid>
   );
 }
