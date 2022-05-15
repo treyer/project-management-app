@@ -8,6 +8,7 @@ type TMainState = {
   boards: TBoard[];
   isLoading: boolean;
   isDialogOpen: boolean;
+  isBoardModalOpen: boolean;
 };
 
 const initialState: TMainState = {
@@ -15,6 +16,7 @@ const initialState: TMainState = {
   boards: [],
   isLoading: false,
   isDialogOpen: false,
+  isBoardModalOpen: false,
 };
 
 const token = localStorage.getItem('token') as string;
@@ -57,6 +59,12 @@ const mainSlice = createSlice({
     closeDialog: (state) => {
       state.isDialogOpen = false;
     },
+    openBoardModal: (state) => {
+      state.isBoardModalOpen = true;
+    },
+    closeBoardModal: (state) => {
+      state.isBoardModalOpen = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -78,5 +86,6 @@ const mainSlice = createSlice({
   },
 });
 
-export const { openDialog, closeDialog } = mainSlice.actions;
+export const { openDialog, closeDialog, openBoardModal, closeBoardModal } =
+  mainSlice.actions;
 export default mainSlice.reducer;

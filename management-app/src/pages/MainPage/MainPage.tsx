@@ -1,30 +1,31 @@
 import { Grid } from '@mui/material';
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import AddBoardBtn from './components/AddBoardBtn/AddBoardBtn';
 import Board from './components/Board/Board';
 
 import BoardModal from './components/BoardModal/BoardModal';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { getBoards } from './slice/mainSlice';
+import { closeBoardModal, getBoards, openBoardModal } from './slice/mainSlice';
 
 function MainPage() {
   const boards = useAppSelector((state) => state.main.boards);
+  const isBoardModalOpen = useAppSelector(
+    (state) => state.main.isBoardModalOpen
+  );
   const dispatch = useAppDispatch();
-
-  const [isModalCardOpen, setIsModalCardOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getBoards());
   }, [dispatch]);
 
   const handleOpenCardModal = useCallback(() => {
-    setIsModalCardOpen(true);
-  }, []);
+    dispatch(openBoardModal());
+  }, [dispatch]);
 
   const handleCloseCardModel = useCallback(() => {
-    setIsModalCardOpen(false);
-  }, []);
+    dispatch(closeBoardModal());
+  }, [dispatch]);
 
   return (
     <Grid
@@ -43,7 +44,7 @@ function MainPage() {
         <Board key={id} id={id} titleBoard={title} />
       ))}
       <AddBoardBtn onClick={handleOpenCardModal} />
-      {isModalCardOpen && <BoardModal onClose={handleCloseCardModel} />}
+      {isBoardModalOpen && <BoardModal onClose={handleCloseCardModel} />}
     </Grid>
   );
 }
