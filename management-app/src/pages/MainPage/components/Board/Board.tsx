@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, MouseEvent } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Card, CardHeader, CardMedia, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -13,12 +13,16 @@ type TTypeProps = {
 function Board({ titleBoard, id }: TTypeProps) {
   const dispatch = useAppDispatch();
 
-  const handleDeleteBoard = useCallback(() => {
-    dispatch(deleteBoard(id));
-  }, [dispatch, id]);
+  const handleDeleteBoard = useCallback(
+    (event: MouseEvent) => {
+      event.preventDefault();
+      dispatch(deleteBoard(id));
+    },
+    [dispatch, id]
+  );
 
   return (
-    <NavLink to={`/main/${id}`} style={{ textDecoration: 'none' }}>
+    <NavLink to={`/board/${id}`} style={{ textDecoration: 'none' }}>
       <Card sx={{ width: 230, height: 170 }}>
         <CardHeader
           action={

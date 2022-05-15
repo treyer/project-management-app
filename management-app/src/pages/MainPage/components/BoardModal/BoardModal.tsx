@@ -23,10 +23,6 @@ type TProps = {
   onClose: () => void;
 };
 
-const initialState = {
-  titleBoard: '',
-};
-
 function BoardModal({ onClose }: TProps) {
   const { isDialogOpen } = useAppSelector((state) => state.main);
   const dispatch = useAppDispatch();

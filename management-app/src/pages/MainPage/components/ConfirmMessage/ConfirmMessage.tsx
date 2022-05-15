@@ -11,7 +11,7 @@ import { useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../../store';
-import { closeDialog } from '../../slice/mainSlice';
+import { closeDialog, getBoards } from '../../slice/mainSlice';
 
 function ConfirmMessage() {
   const boardId = useAppSelector((state) => state.main.boardData.id);
@@ -20,6 +20,7 @@ function ConfirmMessage() {
 
   const handleClose = useCallback(() => {
     dispatch(closeDialog());
+    dispatch(getBoards());
   }, [dispatch]);
 
   return (
@@ -31,7 +32,7 @@ function ConfirmMessage() {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <NavLink to={`/main/${boardId}`} style={{ textDecoration: 'none' }}>
+        <NavLink to={`/board/${boardId}`} style={{ textDecoration: 'none' }}>
           <Button autoFocus>Yes</Button>
         </NavLink>
         <Button autoFocus onClick={handleClose}>
