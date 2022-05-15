@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { CircularProgress, Grid } from '@mui/material';
 import { useCallback, useEffect } from 'react';
 
 import AddBoardBtn from './components/AddBoardBtn/AddBoardBtn';
@@ -13,6 +13,7 @@ function MainPage() {
   const isBoardModalOpen = useAppSelector(
     (state) => state.main.isBoardModalOpen
   );
+  const isLoading = useAppSelector((state) => state.main.isLoading);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -27,36 +28,33 @@ function MainPage() {
     dispatch(closeBoardModal());
   }, [dispatch]);
 
-  /*  const handleDecline = useCallback(() => {
-    dispatch(closeDialog());
-    dispatch(getBoards());
-    dispatch(closeBoardModal());
-  }, [dispatch]);
-
-  const handleConfirm = useCallback(() => {
-    navigate(`/board/${boardId}`);
-    handleDecline();
-  }, [boardId, handleDecline, navigate]);  */
-
   return (
-    <Grid
-      container
-      spacing={3}
-      gap={3}
-      direction="row"
-      alignContent="flex-start"
-      margin="0 auto"
-      padding="50px"
-      height="75vh"
-      maxWidth="1200px"
-      width="100%"
-    >
-      {boards.map(({ id, title }) => (
-        <Board key={id} id={id} titleBoard={title} />
-      ))}
-      <AddBoardBtn onClick={handleOpenBoardModal} />
-      {isBoardModalOpen && <BoardModal onClose={handleCloseBoardModel} />}
-    </Grid>
+    <>
+      {isLoading && (
+        <CircularProgress
+          color="inherit"
+          sx={{ position: 'fixed', top: '50%' }}
+        />
+      )}
+      <Grid
+        container
+        spacing={3}
+        gap={3}
+        direction="row"
+        alignContent="flex-start"
+        margin="0 auto"
+        padding="50px"
+        minHeight="75vh"
+        maxWidth="1200px"
+        width="100%"
+      >
+        {boards.map(({ id, title }) => (
+          <Board key={id} id={id} titleBoard={title} />
+        ))}
+        <AddBoardBtn onClick={handleOpenBoardModal} />
+        {isBoardModalOpen && <BoardModal onClose={handleCloseBoardModel} />}
+      </Grid>
+    </>
   );
 }
 

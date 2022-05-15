@@ -82,6 +82,13 @@ const mainSlice = createSlice({
       .addCase(getBoards.fulfilled, (state, action) => {
         const boards = action.payload;
         state.boards = boards;
+        state.isLoading = false;
+      })
+      .addCase(getBoards.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getBoards.pending, (state) => {
+        state.isLoading = true;
       });
   },
 });
