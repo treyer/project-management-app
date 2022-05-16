@@ -8,6 +8,7 @@ import { RouteID } from '../../types';
 import Logo from '../Logo/Logo';
 import style from './Header.module.css';
 import NavButton from '../NavButton/NavButton';
+import SearchBar from '../SearchBar/SearchBar';
 
 function Header() {
   const { isLoggedIn } = useAppSelector((state) => state.auth);
@@ -60,6 +61,10 @@ function Header() {
                 {isLoggedIn && <Button onClick={handleLogOut}>Log out</Button>}
               </Grid>
             </nav>
+          </Grid>
+
+          <Grid item>
+            <SearchBar />
           </Grid>
         </Grid>
       </div>

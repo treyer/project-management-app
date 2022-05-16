@@ -8,6 +8,9 @@ type TType = {
 
 const Item = styled(Button)({
   color: '#ffffff',
+  textTransform: 'none',
+  fontSize: '14px',
+  fontWeight: '400',
 });
 
 function NavButton({ title }: TType) {
