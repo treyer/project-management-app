@@ -1,6 +1,6 @@
 import { BaseAPI } from './baseAPI';
 import { TASKS_API_ERRORS } from './errors';
-import { TTask, TTaskBase } from './types';
+import { TCreateTaskResponse, TTask, TTaskBase } from './types';
 
 class TasksAPI extends BaseAPI {
   createTask({
@@ -13,7 +13,7 @@ class TasksAPI extends BaseAPI {
     columnId: string;
     token: string;
     task: TTaskBase;
-  }): Promise<TTask> {
+  }): Promise<TCreateTaskResponse> {
     return this.post(`boards/${boardId}/columns/${columnId}/tasks`, task, {
       Authorization: `Bearer ${token}`,
     }).then((result) => {
