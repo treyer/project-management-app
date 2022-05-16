@@ -1,0 +1,10 @@
+.logo {
+  padding-left: 30px;
+  cursor: pointer;
+}
+
+.image {
+  height: 36px;
+  width: auto;
+  padding: 6px;
+}

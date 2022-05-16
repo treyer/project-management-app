@@ -1,3 +1,16 @@
+.header {
+  background-color: #026aa7;
+}
+
+.links {
+  display: flex;
+  min-height: 44px;
+}
+
+.wrapper {
+  composes: wrapper from '../../App.css';
+}
+
 .nav-links {
   display: flex;
 }

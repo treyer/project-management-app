@@ -3,6 +3,10 @@
   font-size: 14px;
 }
 
+.wrapper {
+  composes: wrapper from '../../App.css';
+}
+
 .container {
   min-height: 56px;
 }
