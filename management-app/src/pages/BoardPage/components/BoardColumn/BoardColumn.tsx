@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
 
-import { BoardColumnProps } from './BoardColumn.types';
+import { TBoardColumnProps } from './BoardColumn.types';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { setColumnTitle, createTask } from '../../boardSlice';
 import { CreateTaskField } from '../CreateTaskField';
@@ -10,7 +10,7 @@ import { TColumnResponse, TTaskResponse } from '../../../../api/types';
 import { TaskCard } from '../TaskCard';
 import { ColumnTitle } from '../ColumnTitle';
 // TODO: use TColumn instead of BoardColumnProps?
-export function BoardColumn({ id, title, order }: BoardColumnProps) {
+export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
 
   const { id: boardId } = useAppSelector((state) => state.board);

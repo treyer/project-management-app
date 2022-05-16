@@ -1,11 +1,11 @@
 import React, { ChangeEvent, MouseEvent, useState } from 'react';
 import { Box, Button, ClickAwayListener, TextField } from '@mui/material';
-import { CreateTaskFieldProps } from './CreateTaskField.types';
+import { TCreateTaskFieldProps } from './CreateTaskField.types';
 
 export function CreateTaskField({
   createTask,
   onRequestClose,
-}: CreateTaskFieldProps) {
+}: TCreateTaskFieldProps) {
   const [taskTitleInput, setTaskTitleInput] = useState('');
 
   const addTask = (e: MouseEvent) => {

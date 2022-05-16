@@ -1,6 +1,6 @@
 import { Dispatch, DispatchWithoutAction } from 'react';
 
-export type CreateTaskFieldProps = {
+export type TCreateTaskFieldProps = {
   createTask: Dispatch<string>;
   onRequestClose: DispatchWithoutAction;
 };

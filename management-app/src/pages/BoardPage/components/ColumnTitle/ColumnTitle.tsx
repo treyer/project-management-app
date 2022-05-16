@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Box, ClickAwayListener, TextField, Typography } from '@mui/material';
-import { ColumnTitleProps } from './ColumnTitle.types';
+import { TColumnTitleProps } from './ColumnTitle.types';
 
-export function ColumnTitle({ title, handleClickAway }: ColumnTitleProps) {
+export function ColumnTitle({ title, handleClickAway }: TColumnTitleProps) {
   const [titleInput, setTitleInput] = useState(title);
   const [isTitleEditMode, setIsTitleEditMode] = useState(false);
 

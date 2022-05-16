@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 
-import { TaskCardProps } from './TaskCard.types';
+import { TTaskCardProps } from './TaskCard.types';
 
 // TODO: use TColumn instead of BoardColumnProps?
-export function TaskCard({ taskInfo }: TaskCardProps) {
+export function TaskCard({ taskInfo }: TTaskCardProps) {
   const { title } = taskInfo;
   return (
     <Box

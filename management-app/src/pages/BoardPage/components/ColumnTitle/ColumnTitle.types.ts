@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 
-export type ColumnTitleProps = {
+export type TColumnTitleProps = {
   title: string;
   handleClickAway: Dispatch<string>;
 };

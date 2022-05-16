@@ -1,5 +1,5 @@
 import { TTaskResponse } from '../../../../api/types';
 
-export type TaskCardProps = {
+export type TTaskCardProps = {
   taskInfo: TTaskResponse;
 };
