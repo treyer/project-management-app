@@ -8,11 +8,17 @@ export type TUserBase = {
 };
 
 export type TBoard = TBoardBase & {
-  boardId: string;
+  id: string;
 };
 
 export type TBoardBase = {
   title: string;
+};
+
+export type TBoardResponse = {
+  id: string;
+  title: string;
+  columns: TColumnResponse[];
 };
 
 export type TUser = TUserBase & {
@@ -25,7 +31,29 @@ export type TColumnBase = {
 };
 
 export type TColumn = TColumnBase & {
-  columnId: string;
+  id: string;
+};
+
+export type TFileResponse = {
+  filename: string;
+  fileSize: number;
+};
+
+export type TTaskResponse = {
+  id: string;
+  title: string;
+  order: number;
+  done: boolean;
+  description: string;
+  userId: string;
+  files: TFileResponse[];
+};
+
+export type TColumnResponse = {
+  id: string;
+  title: string;
+  order: number;
+  tasks: TTaskResponse[];
 };
 
 export type TTaskBase = {
@@ -36,7 +64,7 @@ export type TTaskBase = {
 };
 
 export type TTask = TTaskBase & {
-  taskId: string;
+  id: string;
   boardId: string;
   columnId: string;
 };

@@ -6,12 +6,10 @@ import { SignUpForm } from './auth/SignUpForm';
 // import AuthPage from './pages/AuthPage';
 import BoardPage from './pages/BoardPage';
 import EditProfile from './pages/EditProfile.jsx';
-import MainPage from './pages/MainPage';
+import MainPage from './pages/MainPage/MainPage';
 import NotFoundPage from './pages/NotFoundPage';
 import WelcomePage from './pages/WelcomePage';
 import { RouteID, TPath } from './types';
-
-export const SERVER_URL = process.env.REACT_APP_SERVER_URL || '';
 
 export const ROUTES: TPath[] = [
   {

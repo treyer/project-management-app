@@ -1,5 +1,5 @@
 import { SERVER_URL } from '../constants';
-import { TAPIErrorsMap } from './types';
+import type { TAPIErrorsMap } from './types';
 
 export class BaseAPI {
   url: string;
