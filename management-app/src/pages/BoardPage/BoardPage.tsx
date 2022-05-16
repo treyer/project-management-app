@@ -1,27 +1,57 @@
-import React, { useEffect } from 'react';
-import { Box, Grid } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Button, Grid } from '@mui/material';
 
 import { useParams } from 'react-router-dom';
-import { getBoard } from './boardSlice';
+import { createColumn, getBoard } from './boardSlice';
 import { RootState, useAppDispatch, useAppSelector } from '../../store';
 // eslint-disable-next-line import/extensions
 import { BoardColumn } from './components/BoardColumn';
 import { TColumnResponse } from '../../api/types';
+import { CreateColumnField } from './components/CreateColumnField';
 
 export function BoardPage() {
   const { boardId } = useParams();
+  const columns = useAppSelector(
+    (state: RootState) => state.board.columns ?? []
+  );
 
-  // const boardId = '9a111e19-24ec-43e1-b8c4-13776842b8d5';
+  const [isAddColumnFieldOpen, setIsAddColumnFieldOpen] = useState(false);
+  const [totalColumnsCount, setTotalColumnsCount] = useState(columns.length);
+
+  useEffect(() => {
+    setTotalColumnsCount(columns.length);
+  }, [columns]);
 
   const dispatch = useAppDispatch();
+  const addNewColumn = (columnTitleInput: string) => {
+    const columnOrder = totalColumnsCount + 1;
+    if (boardId) {
+      dispatch(
+        createColumn({
+          boardId,
+          column: {
+            title: columnTitleInput,
+            order: columnOrder,
+          },
+        })
+      );
+    }
+  };
 
   useEffect(() => {
     if (boardId) {
       dispatch(getBoard(boardId));
     }
-  }, [dispatch]);
+  }, [dispatch, boardId]);
 
-  const columns = useAppSelector((state: RootState) => state.board.columns);
+  const exitAddColumnField = () => {
+    setIsAddColumnFieldOpen(false);
+  };
+
+  const openAddColumnField = () => {
+    setIsAddColumnFieldOpen(true);
+  };
+
   return (
     <Box m={3}>
       <Grid container spacing={{ xs: 2 }} sx={{ height: '85vh' }}>
@@ -35,6 +65,16 @@ export function BoardPage() {
               />
             </Grid>
           ))}
+        {!isAddColumnFieldOpen ? (
+          <Button sx={{ height: 100 }} onClick={openAddColumnField}>
+            + Add a column
+          </Button>
+        ) : (
+          <CreateColumnField
+            createColumn={addNewColumn}
+            onRequestClose={exitAddColumnField}
+          />
+        )}
       </Grid>
     </Box>
   );

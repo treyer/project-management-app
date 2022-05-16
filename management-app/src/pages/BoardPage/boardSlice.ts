@@ -80,6 +80,38 @@ export const createTask = createAsyncThunk(
   }
 );
 
+// createColumn({
+//   boardId,
+//   token,
+//   column,
+// }: {
+//   boardId: string;
+//   token: string;
+//   column: TColumnBase;
+// }): Promise<TColumn> {
+//   return this.post(`boards/${boardId}/columns`, column, {
+//     Authorization: `Bearer ${token}`,
+//   }).then((result) => {
+//     BaseAPI.handleError(result, BOARDS_API_ERRORS);
+//     return result.json();
+//   });
+// }
+
+export const createColumn = createAsyncThunk(
+  'board/createColumn',
+  ({ boardId, column }: { boardId: string; column: TColumnBase }) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      return columnsAPI.createColumn({
+        boardId,
+        token,
+        column,
+      });
+    }
+    throw new Error();
+  }
+);
+
 export const setColumnTitle = createAsyncThunk(
   'board/setColumnTitle',
   ({
@@ -153,6 +185,15 @@ const boardSlice = createSlice({
             files: [],
           });
         }
+      })
+      .addCase(createColumn.fulfilled, (state, action) => {
+        const { id, title, order } = action.payload;
+        state.columns.push({
+          id,
+          title,
+          order,
+          tasks: [],
+        });
       });
   },
 });

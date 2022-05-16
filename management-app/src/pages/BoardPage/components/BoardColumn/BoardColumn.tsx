@@ -14,15 +14,17 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
 
   const { id: boardId } = useAppSelector((state) => state.board);
-  const { tasks } = useAppSelector((state) => {
-    const currentColumn = state.board.columns.find(
-      (column) => column.id === id
-    );
-    if (currentColumn) {
-      return currentColumn;
-    }
-    return {} as TColumnResponse;
-  });
+  const { id: userId } = useAppSelector((state) => state.auth.userData);
+  const { tasks } =
+    useAppSelector((state) => {
+      const currentColumn = state.board.columns.find(
+        (column) => column.id === id
+      );
+      if (currentColumn) {
+        return currentColumn;
+      }
+      return {} as TColumnResponse;
+    }) ?? [];
 
   const [isAddTaskFieldOpen, setIsAddTaskFieldOpen] = useState(false);
   const [totalTasksCount, setTotalTasksCount] = useState(tasks.length);
@@ -41,7 +43,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
           title: taskTitleInput,
           order: taskOrder,
           description: taskTitleInput,
-          userId: '1',
+          userId,
         },
       })
     );
