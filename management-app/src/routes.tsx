@@ -15,7 +15,7 @@ export const ROUTES: TPath[] = [
   {
     id: RouteID.Welcome,
     routePath: '/',
-    title: 'Welcome',
+    title: 'Home',
     element: <WelcomePage />,
     isShownWhenLoggedIn: false,
   },

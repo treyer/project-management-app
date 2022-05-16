@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { RouteID } from '../../types';
 import Logo from '../Logo/Logo';
 import style from './Header.module.css';
+import NavButton from '../NavButton/NavButton';
 
 function Header() {
   const { isLoggedIn } = useAppSelector((state) => state.auth);
@@ -26,27 +27,40 @@ function Header() {
           justifyContent="flex-start"
           alignItems="center"
           className={style.links}
+          spacing={1}
         >
-          <NavLink
-            key={ROUTES[RouteID.Welcome].id}
-            to={ROUTES[RouteID.Welcome].routePath}
-            style={{ textDecoration: 'none' }}
-          >
-            <Logo />
-          </NavLink>
+          <Grid item>
+            <NavLink
+              key={ROUTES[RouteID.Welcome].id}
+              to={ROUTES[RouteID.Welcome].routePath}
+              style={{ textDecoration: 'none' }}
+            >
+              <Logo />
+            </NavLink>
+          </Grid>
 
-          <nav className="nav-links">
-            {ROUTES.filter(
-              (el) =>
-                el.isShownWhenLoggedIn === isLoggedIn &&
-                el.id !== RouteID.NotFound
-            ).map((el) => (
-              <NavLink key={el.id} to={el.routePath}>
-                {el.title}
-              </NavLink>
-            ))}
-            {isLoggedIn && <Button onClick={handleLogOut}>Log out</Button>}
-          </nav>
+          <Grid item>
+            <nav className="nav-links">
+              <Grid container spacing={1}>
+                {ROUTES.filter(
+                  (el) =>
+                    el.isShownWhenLoggedIn === isLoggedIn &&
+                    el.id !== RouteID.NotFound
+                ).map((el) => (
+                  <Grid item key={el.id}>
+                    <NavLink
+                      key={el.id}
+                      to={el.routePath}
+                      style={{ textDecoration: 'none' }}
+                    >
+                      <NavButton title={el.title} />
+                    </NavLink>
+                  </Grid>
+                ))}
+                {isLoggedIn && <Button onClick={handleLogOut}>Log out</Button>}
+              </Grid>
+            </nav>
+          </Grid>
         </Grid>
       </div>
     </header>
