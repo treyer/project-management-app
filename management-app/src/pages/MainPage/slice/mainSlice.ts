@@ -49,8 +49,6 @@ export const deleteBoard = createAsyncThunk(
   }
 );
 
-/* TODO: write all action  */
-
 const mainSlice = createSlice({
   name: 'main',
   initialState,
