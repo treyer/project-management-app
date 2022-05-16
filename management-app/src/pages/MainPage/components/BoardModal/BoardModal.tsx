@@ -66,7 +66,7 @@ function BoardModal({ onClose }: TBoardModalProps) {
   }, [dispatch]);
 
   const handleConfirm = useCallback(() => {
-    navigate(`/board/${boardId}`);
+    navigate(`/boards/${boardId}`);
     handleDecline();
   }, [boardId, handleDecline, navigate]);
 

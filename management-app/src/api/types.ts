@@ -83,3 +83,13 @@ export type TUserData = {
 export type TToken = {
   token: string;
 };
+
+export type TCreateTaskResponse = {
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+  taskId: string;
+  boardId: string;
+  columnId: string;
+};

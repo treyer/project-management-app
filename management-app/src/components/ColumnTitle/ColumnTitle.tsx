@@ -26,9 +26,11 @@ export function ColumnTitle({ title, handleClickAway }: ColumnTitleProps) {
   return (
     <Box>
       <ClickAwayListener onClickAway={onClickAway}>
-        <Typography variant="h5">
+        <Typography variant="h6">
           {!isTitleEditMode ? (
-            <Box onClick={toggleTitleEditMode}>{title}</Box>
+            <Box onClick={toggleTitleEditMode} sx={{ cursor: 'pointer' }}>
+              {title}
+            </Box>
           ) : (
             <TextField
               fullWidth

@@ -27,7 +27,7 @@ export const ROUTES: TPath[] = [
   },
   {
     id: RouteID.Board,
-    routePath: '/board',
+    routePath: '/boards/:boardId',
     title: 'Board',
     element: <BoardPage />,
     isShownWhenLoggedIn: true,
