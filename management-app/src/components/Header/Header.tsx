@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Grid } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { logOut } from '../../auth/authSlice';
-import { ROUTES } from '../../constants';
+import { ROUTES } from '../../routes';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { RouteID } from '../../types';
 import Logo from '../Logo/Logo';

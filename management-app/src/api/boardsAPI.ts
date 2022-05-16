@@ -1,6 +1,7 @@
 import { BaseAPI } from './baseAPI';
+
 import { BOARDS_API_ERRORS } from './errors';
-import { TBoard, TBoardBase } from './types';
+import type { TBoard, TBoardBase, TBoardResponse } from './types';
 
 class BoardsAPI extends BaseAPI {
   createBoard(title: TBoardBase, token: string): Promise<TBoard> {
@@ -21,7 +22,7 @@ class BoardsAPI extends BaseAPI {
     });
   }
 
-  getBoard(boardId: string, token: string): Promise<TBoard> {
+  getBoard(boardId: string, token: string): Promise<TBoardResponse> {
     return this.get(`boards/${boardId}`, {
       Authorization: `Bearer ${token}`,
     }).then((result) => {
