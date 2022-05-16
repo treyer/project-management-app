@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { Box, Grid } from '@mui/material';
 
 import { useParams } from 'react-router-dom';
-import { getBoard } from '../features/boardSlice';
-import { RootState, useAppDispatch, useAppSelector } from '../store';
+import { getBoard } from './boardSlice';
+import { RootState, useAppDispatch, useAppSelector } from '../../store';
 // eslint-disable-next-line import/extensions
-import { BoardColumn } from '../components/BoardColumn';
-import { TColumnResponse } from '../api/types';
+import { BoardColumn } from './components/BoardColumn';
+import { TColumnResponse } from '../../api/types';
 
-function BoardPage() {
+export function BoardPage() {
   const { boardId } = useParams();
 
   // const boardId = '9a111e19-24ec-43e1-b8c4-13776842b8d5';
@@ -39,5 +39,3 @@ function BoardPage() {
     </Box>
   );
 }
-
-export default BoardPage;

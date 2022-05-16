@@ -3,7 +3,8 @@ import React from 'react';
 import { SignInForm } from './auth/SignInForm';
 // eslint-disable-next-line import/extensions
 import { SignUpForm } from './auth/SignUpForm';
-import BoardPage from './pages/BoardPage';
+// eslint-disable-next-line import/extensions
+import { BoardPage } from './pages/BoardPage';
 import EditProfile from './pages/EditProfile';
 import MainPage from './pages/MainPage';
 import NotFoundPage from './pages/NotFoundPage';

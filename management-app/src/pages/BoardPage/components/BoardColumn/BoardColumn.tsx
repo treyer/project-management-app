@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
 
 import { BoardColumnProps } from './BoardColumn.types';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { setColumnTitle, createTask } from '../../features/boardSlice';
+import { useAppDispatch, useAppSelector } from '../../../../store';
+import { setColumnTitle, createTask } from '../../boardSlice';
 import { CreateTaskField } from '../CreateTaskField';
-import { TColumnResponse } from '../../api/types';
+import { TColumnResponse, TTaskResponse } from '../../../../api/types';
 import { TaskCard } from '../TaskCard';
 import { ColumnTitle } from '../ColumnTitle';
 // TODO: use TColumn instead of BoardColumnProps?
@@ -72,8 +73,15 @@ export function BoardColumn({ id, title, order }: BoardColumnProps) {
 
           {tasks &&
             tasks.map(
-              // eslint-disable-next-line @typescript-eslint/no-shadow
-              ({ id, title, order, done, description, userId, files }) => (
+              ({
+                id,
+                title,
+                order,
+                done,
+                description,
+                userId,
+                files,
+              }: TTaskResponse) => (
                 <TaskCard
                   key={id}
                   taskInfo={{

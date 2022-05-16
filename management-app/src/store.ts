@@ -3,7 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 import authReducer from './auth/authSlice';
 import mainReducer from './pages/MainPage/slice/mainSlice';
-import boardReducer from './features/boardSlice';
+import boardReducer from './pages/BoardPage/boardSlice';
 
 export const store = configureStore({
   reducer: {

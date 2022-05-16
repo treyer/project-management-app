@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import boardsAPI from '../api/boardsAPI';
-import columnsAPI from '../api/columnsAPI';
-import tasksAPI from '../api/tasksAPI';
-import { TBoardResponse, TColumnBase, TTaskBase } from '../api/types';
-import { useAppSelector } from '../store';
+import boardsAPI from '../../api/boardsAPI';
+import columnsAPI from '../../api/columnsAPI';
+import tasksAPI from '../../api/tasksAPI';
+import { TBoardResponse, TColumnBase, TTaskBase } from '../../api/types';
+import { RootState, useAppSelector } from '../../store';
 
 // TODO: remove and use real backend instead
 // const currentBoard = {
@@ -157,6 +157,8 @@ const boardSlice = createSlice({
   },
 });
 
-export const useBoardSelector = () => useAppSelector(({ board }) => board);
+export const useBoardSelector = () => {
+  useAppSelector(({ board }: RootState) => board);
+};
 
 export default boardSlice.reducer;
