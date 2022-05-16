@@ -1,10 +1,10 @@
 /* eslint-disable max-len */
-import { useCallback, MouseEvent } from 'react';
+import { useCallback, MouseEvent, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Card, CardHeader, CardMedia, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useAppDispatch, useAppSelector } from '../../../../store';
-import { closeDialog, deleteBoard, openDialog } from '../../slice/mainSlice';
+import { useAppDispatch } from '../../../../store';
+import { closeDialog, deleteBoard } from '../../slice/mainSlice';
 import ConfirmMessage from '../../../../components/ConfirmMessage/ConfirmMessage';
 
 type TBoardProps = {
@@ -13,20 +13,19 @@ type TBoardProps = {
 };
 
 function Board({ titleBoard, id }: TBoardProps) {
-  const { isDialogOpen } = useAppSelector((state) => state.main);
+  const [isDialogOpen, setDialogOpen] = useState(false);
+
   const dispatch = useAppDispatch();
 
-  const handleDeleteBoard = useCallback(
-    (event: MouseEvent) => {
-      event.preventDefault();
-      dispatch(openDialog());
-    },
-    [dispatch]
-  );
+  const handleDeleteBoard = useCallback((event: MouseEvent) => {
+    event.preventDefault();
+
+    setDialogOpen(true);
+  }, []);
 
   const handleDecline = useCallback(() => {
-    dispatch(closeDialog());
-  }, [dispatch]);
+    setDialogOpen(false);
+  }, []);
 
   const handleConfirm = useCallback(() => {
     dispatch(deleteBoard(id));
