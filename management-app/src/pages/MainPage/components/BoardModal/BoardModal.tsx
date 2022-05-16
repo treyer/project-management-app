@@ -37,6 +37,7 @@ function BoardModal({ onClose }: TBoardModalProps) {
   const boardId = useAppSelector((state) => state.main.boardData.id);
 
   const [titleBoard, setTitleBoard] = useState<string>('');
+  const [isDisabled, setDisabled] = useState<boolean>(true);
 
   const handleSubmitBoard = useCallback(
     (event: MouseEvent | FormEvent) => {
@@ -50,6 +51,9 @@ function BoardModal({ onClose }: TBoardModalProps) {
     (event: ChangeEvent<HTMLInputElement>) => {
       const target = event.target as HTMLInputElement;
       const value = target.value as string;
+      if (value !== '') {
+        setDisabled(false);
+      }
       setTitleBoard(value);
     },
     []
@@ -114,7 +118,7 @@ function BoardModal({ onClose }: TBoardModalProps) {
             height: '115px',
             backgroundColor: '#d2d6de',
             borderRadius: '5px',
-            margin: '7px auto',
+            margin: '15px auto',
           }}
         >
           <img src="./assets/svg/board.svg" alt="board" />
@@ -128,11 +132,16 @@ function BoardModal({ onClose }: TBoardModalProps) {
             label="Add board name"
             variant="outlined"
             size="small"
-            sx={{ marginBottom: '7px' }}
+            sx={{ marginBottom: '20px' }}
             onChange={handleInputChange}
           />
         </Box>
-        <Button variant="outlined" size="medium" onClick={handleSubmitBoard}>
+        <Button
+          variant="contained"
+          size="medium"
+          onClick={handleSubmitBoard}
+          disabled={isDisabled}
+        >
           Add board
         </Button>
       </Grid>
