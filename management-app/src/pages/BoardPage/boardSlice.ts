@@ -6,56 +6,6 @@ import tasksAPI from '../../api/tasksAPI';
 import { TBoardResponse, TColumnBase, TTaskBase } from '../../api/types';
 import { RootState, useAppSelector } from '../../store';
 
-// TODO: remove and use real backend instead
-// const currentBoard = {
-//   id: '9a111e19-24ec-43e1-b8c4-13776842b8d5',
-//   title: 'Homework tasks',
-//   columns: [
-//     {
-//       id: '7b0b41b3-c01e-4139-998f-3ff25d20dc4f',
-//       title: 'Done',
-//       order: 1,
-//       tasks: [
-//         {
-//           id: '6e3abe9c-ceb1-40fa-9a04-eb2b2184daf9',
-//           title: 'Task: pet the cat',
-//           order: 1,
-//           done: false,
-//           description: 'Domestic cat needs to be stroked gently',
-//           userId: 'b2d92061-7d23-4641-af52-dd39f95b99f8',
-//           files: [
-//             {
-//               filename: 'foto.jpg',
-//               fileSize: 6105000,
-//             },
-//           ],
-//         },
-//       ],
-//     },
-//     {
-//       id: '7b0b41b3-c01e-4139-998f-3ff25d20dc4t',
-//       title: 'todo',
-//       order: 2,
-//       tasks: [
-//         {
-//           id: '6e3abe9c-ceb1-40fa-9a04-eb2b2184daf8',
-//           title: 'Task: pet the cat',
-//           order: 1,
-//           done: false,
-//           description: 'Domestic cat needs to be stroked gently',
-//           userId: 'b2d92061-7d23-4641-af52-dd39f95b99f8',
-//           files: [
-//             {
-//               filename: 'foto.jpg',
-//               fileSize: 6105000,
-//             },
-//           ],
-//         },
-//       ],
-//     },
-//   ],
-// };
-
 export const createTask = createAsyncThunk(
   'board/createTask',
   ({
@@ -74,6 +24,21 @@ export const createTask = createAsyncThunk(
         columnId,
         token,
         task,
+      });
+    }
+    throw new Error();
+  }
+);
+
+export const createColumn = createAsyncThunk(
+  'board/createColumn',
+  ({ boardId, column }: { boardId: string; column: TColumnBase }) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      return columnsAPI.createColumn({
+        boardId,
+        token,
+        column,
       });
     }
     throw new Error();
@@ -153,6 +118,15 @@ const boardSlice = createSlice({
             files: [],
           });
         }
+      })
+      .addCase(createColumn.fulfilled, (state, action) => {
+        const { id, title, order } = action.payload;
+        state.columns.push({
+          id,
+          title,
+          order,
+          tasks: [],
+        });
       });
   },
 });

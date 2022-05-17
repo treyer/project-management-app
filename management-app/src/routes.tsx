@@ -1,9 +1,6 @@
 import React from 'react';
-// eslint-disable-next-line import/extensions
 import { SignInForm } from './auth/SignInForm';
-// eslint-disable-next-line import/extensions
 import { SignUpForm } from './auth/SignUpForm';
-// eslint-disable-next-line import/extensions
 import { BoardPage } from './pages/BoardPage';
 import EditProfile from './pages/EditProfile';
 import MainPage from './pages/MainPage';
