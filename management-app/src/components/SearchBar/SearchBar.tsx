@@ -4,7 +4,6 @@ import style from './SearchBar.module.css';
 
 const Item = styled('input')({
   color: '#ffffff',
-  backgroundColor: 'rgba(255, 255, 255, 0.2)',
 });
 
 const styleBlur = {
