@@ -34,6 +34,7 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
       state.userData = {} as TUserData;
       localStorage.removeItem('token');
+      localStorage.removeItem('id');
     },
   },
   extraReducers: (builder) => {
@@ -52,7 +53,9 @@ const authSlice = createSlice({
       .addCase(signIn.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLoggedIn = true;
+        state.userData.id = action.payload.id;
         localStorage.setItem('token', action.payload.token);
+        localStorage.setItem('userId', action.payload.id);
       })
       .addCase(signIn.rejected, (state) => {
         state.isLoading = false;
