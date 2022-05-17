@@ -10,6 +10,7 @@ import style from './Header.module.css';
 import NavButton from '../NavButton/NavButton';
 import SearchBar from '../SearchBar/SearchBar';
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';
+import LanguageSwitch from '../LanguageSwitch/LanguageSwitch';
 
 function Header() {
   const { isLoggedIn } = useAppSelector((state) => state.auth);
@@ -69,6 +70,9 @@ function Header() {
           </Grid>
           <Grid item>
             <ThemeSwitch />
+          </Grid>
+          <Grid item>
+            <LanguageSwitch />
           </Grid>
         </Grid>
       </div>
