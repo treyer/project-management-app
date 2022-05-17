@@ -4,6 +4,7 @@ import { experimentalStyled as styled } from '@mui/material/styles';
 
 type TType = {
   title: string;
+  onClick?: () => void;
 };
 
 const Item = styled(Button)({
@@ -13,7 +14,7 @@ const Item = styled(Button)({
   fontWeight: '400',
 });
 
-function NavButton({ title }: TType) {
+function NavButton({ title, onClick }: TType) {
   const [mouseOver, setMouseOver] = useState(false);
 
   return (
@@ -22,6 +23,7 @@ function NavButton({ title }: TType) {
       onFocus={() => setMouseOver(true)}
       onMouseOut={() => setMouseOver(false)}
       onBlur={() => setMouseOver(false)}
+      onClick={onClick}
       style={
         mouseOver
           ? { backgroundColor: 'rgba(255, 255, 255, 0.2)' }
@@ -32,5 +34,9 @@ function NavButton({ title }: TType) {
     </Item>
   );
 }
+
+NavButton.defaultProps = {
+  onClick: () => false,
+};
 
 export default NavButton;
