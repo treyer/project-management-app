@@ -13,6 +13,7 @@ export function TaskCard({ taskInfo }: TTaskCardProps) {
         bgcolor: '#fff',
         margin: 2,
         boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+        cursor: 'grabbing',
       }}
     >
       <Typography variant="subtitle1">{title}</Typography>
