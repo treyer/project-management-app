@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';
+import MenuIcon from '@mui/icons-material/Menu';
 import { logOut } from '../../auth/authSlice';
 import { ROUTES } from '../../routes';
 import { useAppDispatch, useAppSelector } from '../../store';
@@ -11,6 +12,7 @@ import NavButton from '../NavButton/NavButton';
 import SearchBar from '../SearchBar/SearchBar';
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';
 import LanguageSwitch from '../LanguageSwitch/LanguageSwitch';
+import UserMenu from '../UserMenu/UserMenu';
 
 function Header() {
   const { isLoggedIn } = useAppSelector((state) => state.auth);
@@ -55,7 +57,8 @@ function Header() {
                     (el) =>
                       el.isShownWhenLoggedIn === isLoggedIn &&
                       el.id !== RouteID.NotFound &&
-                      el.id !== RouteID.Welcome
+                      el.id !== RouteID.Welcome &&
+                      el.id !== RouteID.Board
                   ).map((el) => (
                     <Grid item key={el.id}>
                       <NavLink
@@ -72,12 +75,21 @@ function Header() {
                       <NavButton onClick={handleLogOut} title="Log out" />
                     </Grid>
                   )}
+                  <Grid item>
+                    <MenuIcon fontSize="large" style={{ color: '#ffffff' }} />
+                  </Grid>
                 </Grid>
               </nav>
             </Grid>
           </Grid>
 
-          <Grid container item alignItems="center" style={{ width: 'auto' }}>
+          <Grid
+            container
+            item
+            alignItems="center"
+            spacing={1}
+            style={{ width: 'auto' }}
+          >
             <Grid item>
               <SearchBar />
             </Grid>
@@ -87,6 +99,7 @@ function Header() {
             <Grid item>
               <LanguageSwitch />
             </Grid>
+            <UserMenu />
           </Grid>
         </Grid>
       </div>

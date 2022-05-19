@@ -15,3 +15,8 @@ export enum RouteID {
   EditProfile,
   NotFound,
 }
+
+export enum MenuModalType {
+  User = 'user',
+  Menu = 'menu',
+}
