@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
+import { useDrop } from 'react-dnd';
 
 import { TBoardColumnProps } from './BoardColumn.types';
 import { useAppDispatch, useAppSelector } from '../../../../store';
@@ -13,13 +14,13 @@ import { ColumnTitle } from '../ColumnTitle';
 export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
 
-  const { id: boardId } = useAppSelector((state) => state.board);
+  const { id: boardId } = useAppSelector((state) => state.board.boardData);
   const userIdLS = localStorage.getItem('userId') ?? '';
   const { id: userId } =
     useAppSelector((state) => state.auth.userData) ?? userIdLS;
   const { tasks } =
     useAppSelector((state) => {
-      const currentColumn = state.board.columns.find(
+      const currentColumn = state.board.boardData.columns.find(
         (column) => column.id === id
       );
       if (currentColumn) {
@@ -69,8 +70,18 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
     setIsAddTaskFieldOpen(true);
   };
 
+  const [, drop] = useDrop(() => ({
+    accept: 'taskCard',
+    drop: (item: TTaskResponse, monitor) => {
+      return { id };
+    },
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  }));
+
   return (
-    <Box>
+    <Box ref={drop} id={id}>
       <Box sx={{ borderRadius: 2, backgroundColor: '#eee' }}>
         <Stack spacing={2}>
           <ColumnTitle title={title} handleClickAway={handleClickAway} />
@@ -78,7 +89,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
           {tasks &&
             tasks.map(
               ({
-                id,
+                id: taskId,
                 title,
                 order,
                 done,
@@ -87,9 +98,11 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
                 files,
               }: TTaskResponse) => (
                 <TaskCard
-                  key={id}
+                  key={taskId}
+                  columnId={id}
+                  boardId={boardId}
                   taskInfo={{
-                    id,
+                    id: taskId,
                     title,
                     order,
                     done,
