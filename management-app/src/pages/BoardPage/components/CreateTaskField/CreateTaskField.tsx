@@ -8,13 +8,13 @@ export function CreateTaskField({
 }: TCreateTaskFieldProps) {
   const [taskTitleInput, setTaskTitleInput] = useState('');
 
-  const addTask = (e: MouseEvent) => {
-    e.stopPropagation();
-    if (taskTitleInput) {
-      createTask(taskTitleInput);
-    }
-    onRequestClose();
-  };
+  // const addTask = (e: MouseEvent) => {
+  //   e.stopPropagation();
+  //   if (taskTitleInput) {
+  //     createTask(taskTitleInput);
+  //   }
+  //   onRequestClose();
+  // };
 
   const handleClickAway = () => {
     if (taskTitleInput) {
@@ -38,7 +38,7 @@ export function CreateTaskField({
           onChange={handleOnChange}
         />
       </ClickAwayListener>
-      <Button onClick={addTask}>Add task</Button>
+      <Button>Add task</Button>
       <Button onClick={onRequestClose}>X</Button>
     </Box>
   );

@@ -77,7 +77,13 @@ export const getBoard = createAsyncThunk('board/getBoard', (id: string) => {
   throw new Error();
 });
 
-const initialState: TBoardResponse = {} as TBoardResponse;
+const initialState = {
+  boardContent: {} as TBoardResponse,
+  isBoardLoading: false,
+  isColumnTitleLoading: false,
+  isNewTaskLoading: false,
+  isNewColumnLoading: false,
+};
 
 const boardSlice = createSlice({
   name: 'board',
@@ -87,26 +93,46 @@ const boardSlice = createSlice({
     builder
       // TODO: maintain rejected, pending ...
       .addCase(getBoard.fulfilled, (state, action) => {
+        state.isBoardLoading = false;
+
         if (action.payload) {
           const { id, title, columns } = action.payload;
-          state.id = id;
-          state.title = title;
-          state.columns = columns;
+          state.boardContent.id = id;
+          state.boardContent.title = title;
+          state.boardContent.columns = columns;
         }
       })
+      .addCase(getBoard.rejected, (state) => {
+        state.isBoardLoading = false;
+      })
+      .addCase(getBoard.pending, (state) => {
+        state.isBoardLoading = true;
+      })
       .addCase(setColumnTitle.fulfilled, (state, action) => {
+        state.isColumnTitleLoading = false;
         if (action.payload) {
           const { id: columnId, title } = action.payload;
-          const column = state.columns.find(({ id }) => id === columnId);
+          const column = state.boardContent.columns.find(
+            ({ id }) => id === columnId
+          );
           if (column) {
             column.title = title;
           }
         }
       })
+      .addCase(setColumnTitle.rejected, (state) => {
+        state.isColumnTitleLoading = false;
+      })
+      .addCase(setColumnTitle.pending, (state) => {
+        state.isColumnTitleLoading = true;
+      })
       .addCase(createTask.fulfilled, (state, action) => {
+        state.isNewTaskLoading = false;
         const { title, order, description, userId, taskId, columnId } =
           action.payload;
-        const column = state.columns.find(({ id }) => id === columnId);
+        const column = state.boardContent.columns.find(
+          ({ id }) => id === columnId
+        );
         if (column) {
           column.tasks.push({
             id: taskId,
@@ -119,14 +145,27 @@ const boardSlice = createSlice({
           });
         }
       })
+      .addCase(createTask.rejected, (state) => {
+        state.isNewTaskLoading = false;
+      })
+      .addCase(createTask.pending, (state) => {
+        state.isNewTaskLoading = true;
+      })
       .addCase(createColumn.fulfilled, (state, action) => {
+        state.isNewColumnLoading = false;
         const { id, title, order } = action.payload;
-        state.columns.push({
+        state.boardContent.columns.push({
           id,
           title,
           order,
           tasks: [],
         });
+      })
+      .addCase(createColumn.rejected, (state) => {
+        state.isNewColumnLoading = false;
+      })
+      .addCase(createColumn.pending, (state) => {
+        state.isNewColumnLoading = true;
       });
   },
 });

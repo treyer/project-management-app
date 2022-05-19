@@ -3,47 +3,37 @@ import React, { useEffect, useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
 
 import { TBoardColumnProps } from './BoardColumn.types';
-import { useAppDispatch, useAppSelector } from '../../../../store';
+import { RootState, useAppDispatch, useAppSelector } from '../../../../store';
 import { setColumnTitle, createTask } from '../../boardSlice';
 import { CreateTaskField } from '../CreateTaskField';
 import { TColumnResponse, TTaskResponse } from '../../../../api/types';
 import { TaskCard } from '../TaskCard';
 import { ColumnTitle } from '../ColumnTitle';
+import { getTasksByColumnId } from '../../BoardPage.utils';
 // TODO: use TColumn instead of BoardColumnProps?
-export function BoardColumn({ id, title, order }: TBoardColumnProps) {
+export function BoardColumn({ id: columnId, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
 
-  const { id: boardId } = useAppSelector((state) => state.board);
+  const { id: boardId } = useAppSelector((state) => state.board.boardContent);
   const userIdLS = localStorage.getItem('userId') ?? '';
-  const { id: userId } =
-    useAppSelector((state) => state.auth.userData) ?? userIdLS;
+  const { id } = useAppSelector((state) => state.auth.userData);
+  const userId = id ?? userIdLS;
+
   const { tasks } =
-    useAppSelector((state) => {
-      const currentColumn = state.board.columns.find(
-        (column) => column.id === id
-      );
-      if (currentColumn) {
-        return currentColumn;
-      }
-      return {} as TColumnResponse;
-    }) ?? [];
+    useAppSelector((state) => getTasksByColumnId(state, columnId)) ?? [];
 
   const [isAddTaskFieldOpen, setIsAddTaskFieldOpen] = useState(false);
   const [totalTasksCount, setTotalTasksCount] = useState(tasks.length);
 
-  useEffect(() => {
-    setTotalTasksCount(tasks.length);
-  }, [tasks]);
-
   const addNewTask = (taskTitleInput: string) => {
-    const taskOrder = totalTasksCount + 1;
+    const nextTaskOrder = totalTasksCount + 1;
     dispatch(
       createTask({
         boardId,
-        columnId: id,
+        columnId,
         task: {
           title: taskTitleInput,
-          order: taskOrder,
+          order: nextTaskOrder,
           description: taskTitleInput,
           userId,
         },
@@ -55,7 +45,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
     dispatch(
       setColumnTitle({
         boardId,
-        columnId: id,
+        columnId,
         column: { title: titleInput, order },
       })
     );
@@ -77,28 +67,34 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
 
           {tasks &&
             tasks.map(
-              ({
-                id,
-                title,
-                order,
-                done,
-                description,
-                userId,
-                files,
-              }: TTaskResponse) => (
-                <TaskCard
-                  key={id}
-                  taskInfo={{
-                    id,
-                    title,
-                    order,
-                    done,
-                    description,
-                    userId,
-                    files,
-                  }}
-                />
-              )
+              (
+                {
+                  id,
+                  title,
+                  order,
+                  done,
+                  description,
+                  userId,
+                  files,
+                }: TTaskResponse,
+                index
+              ) => {
+                const uniqueKey = index + id;
+                return (
+                  <TaskCard
+                    key={uniqueKey}
+                    taskInfo={{
+                      id,
+                      title,
+                      order,
+                      done,
+                      description,
+                      userId,
+                      files,
+                    }}
+                  />
+                );
+              }
             )}
           {!isAddTaskFieldOpen ? (
             <Button onClick={openAddTaskField}>+ Add a task</Button>
