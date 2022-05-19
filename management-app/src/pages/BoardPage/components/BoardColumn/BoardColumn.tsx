@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
 import { useDrag, useDrop } from 'react-dnd';
 
@@ -7,44 +7,34 @@ import { TBoardColumnProps } from './BoardColumn.types';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { setColumnTitle, createTask } from '../../boardSlice';
 import { CreateTaskField } from '../CreateTaskField';
-import { TColumnResponse, TTaskResponse } from '../../../../api/types';
+import { TTaskResponse } from '../../../../api/types';
 import { TaskCard } from '../TaskCard';
 import { ColumnTitle } from '../ColumnTitle';
+import { getTasksByColumnId } from '../../BoardPage.utils';
 // TODO: use TColumn instead of BoardColumnProps?
 export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
 
   const { id: boardId } = useAppSelector((state) => state.board.boardData);
   const userIdLS = localStorage.getItem('userId') ?? '';
-  const { id: userId } =
-    useAppSelector((state) => state.auth.userData) ?? userIdLS;
+  const { id: userDataId } = useAppSelector((state) => state.auth.userData);
+  const userId = userDataId ?? userIdLS;
+
   const { tasks } =
-    useAppSelector((state) => {
-      const currentColumn = state.board.boardData.columns.find(
-        (column) => column.id === id
-      );
-      if (currentColumn) {
-        return currentColumn;
-      }
-      return {} as TColumnResponse;
-    }) ?? [];
+    useAppSelector((state) => getTasksByColumnId(state, id)) ?? [];
 
   const [isAddTaskFieldOpen, setIsAddTaskFieldOpen] = useState(false);
   const [totalTasksCount, setTotalTasksCount] = useState(tasks.length);
 
-  useEffect(() => {
-    setTotalTasksCount(tasks.length);
-  }, [tasks]);
-
   const addNewTask = (taskTitleInput: string) => {
-    const taskOrder = totalTasksCount + 1;
+    const nextTaskOrder = totalTasksCount + 1;
     dispatch(
       createTask({
         boardId,
         columnId: id,
         task: {
           title: taskTitleInput,
-          order: taskOrder,
+          order: nextTaskOrder,
           description: taskTitleInput,
           userId,
         },
@@ -104,30 +94,36 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
 
           {tasks &&
             tasks.map(
-              ({
-                id: taskId,
-                title,
-                order,
-                done,
-                description,
-                userId,
-                files,
-              }: TTaskResponse) => (
-                <TaskCard
-                  key={taskId}
-                  columnId={id}
-                  boardId={boardId}
-                  taskInfo={{
-                    id: taskId,
-                    title,
-                    order,
-                    done,
-                    description,
-                    userId,
-                    files,
-                  }}
-                />
-              )
+              (
+                {
+                  id: taskId,
+                  title,
+                  order,
+                  done,
+                  description,
+                  userId,
+                  files,
+                }: TTaskResponse,
+                index: number
+              ) => {
+                const uniqueKey = index + taskId;
+                return (
+                  <TaskCard
+                    key={uniqueKey}
+                    columnId={id}
+                    boardId={boardId}
+                    taskInfo={{
+                      id: taskId,
+                      title,
+                      order,
+                      done,
+                      description,
+                      userId,
+                      files,
+                    }}
+                  />
+                );
+              }
             )}
           {!isAddTaskFieldOpen ? (
             <Button onClick={openAddTaskField}>+ Add a task</Button>
