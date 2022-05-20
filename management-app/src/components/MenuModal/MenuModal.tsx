@@ -38,7 +38,8 @@ function MenuModal({ display, close, type }: TProps) {
       sx={{
         position: 'absolute',
         right: `${type === MenuModalType.User ? '5px' : 'auto'}`,
-        top: `${display ? '55px' : '-200px'}`,
+        left: `${type === MenuModalType.Menu ? '5px' : 'auto'}`,
+        top: `${display ? '55px' : '-500px'}`,
         backgroundColor: '#ffffff',
         padding: '5px 14px 0 5px',
         minWidth: '90px',

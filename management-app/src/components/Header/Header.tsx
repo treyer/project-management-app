@@ -3,6 +3,7 @@ import { Grid } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { experimentalStyled as styled } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { ROUTES } from '../../routes';
 import { RouteID } from '../../types';
 import Logo from '../Logo/Logo';
@@ -19,78 +20,99 @@ const Link = styled(NavLink)({
   textDecoration: 'none',
 });
 
+const StyledGrid = styled(Grid)({
+  position: 'relative',
+});
+
 function Header() {
   const { isLoggedIn } = useAppSelector((state) => state.auth);
+
+  const matches = useMediaQuery('(max-width:900px)');
+  const matches1 = useMediaQuery('(max-width:470px)');
+  const matches2 = useMediaQuery('(max-width:430px)');
 
   return (
     <header className={style.header}>
       <div className={style.wrapper}>
-        <Grid
+        <StyledGrid
           container
-          justifyContent="space-between"
+          justifyContent={matches1 ? 'center' : 'space-between'}
           alignItems="center"
           className={style.links}
           spacing={1}
         >
-          <Grid
+          <StyledGrid
             container
             item
             alignItems="center"
+            flexDirection={matches2 ? 'row-reverse' : 'row'}
             spacing={1}
             style={{ width: 'auto' }}
           >
-            <Grid item>
+            <StyledGrid item>
               <Link
                 key={ROUTES[RouteID.Welcome].id}
                 to={ROUTES[RouteID.Welcome].routePath}
               >
                 <Logo />
               </Link>
-            </Grid>
+            </StyledGrid>
 
-            {isLoggedIn && (
-              <Grid item>
+            {isLoggedIn && !matches && (
+              <StyledGrid item>
                 <Link
                   key={ROUTES[RouteID.Main].id}
                   to={ROUTES[RouteID.Main].routePath}
                 >
                   <NavButton title={ROUTES[RouteID.Main].title} />
                 </Link>
-              </Grid>
+              </StyledGrid>
             )}
 
-            {isLoggedIn && (
-              <Grid item>
+            {isLoggedIn && !matches && (
+              <StyledGrid item>
                 <NavButton title="add Board" startIcon={<AddIcon />} />
-              </Grid>
+              </StyledGrid>
             )}
 
-            <Grid item style={{ position: 'relative' }}>
-              <BurgerMenu />
-            </Grid>
-          </Grid>
+            {matches && (
+              <StyledGrid item>
+                <BurgerMenu />
+              </StyledGrid>
+            )}
+          </StyledGrid>
 
-          <Grid
+          <StyledGrid
             container
             item
             alignItems="center"
+            justifyContent={matches1 ? 'center' : 'space-between'}
             spacing={1}
             style={{ width: 'auto' }}
           >
-            <Grid item>
+            <StyledGrid item>
               <SearchBar />
-            </Grid>
-            <Grid item>
-              <ThemeSwitch />
-            </Grid>
-            <Grid item>
-              <LanguageSwitch />
-            </Grid>
-            <Grid item style={{ position: 'relative' }}>
-              <UserMenu />
-            </Grid>
-          </Grid>
-        </Grid>
+            </StyledGrid>
+
+            <StyledGrid
+              container
+              item
+              alignItems="center"
+              spacing={1}
+              style={{ width: 'auto' }}
+            >
+              <StyledGrid item>
+                <ThemeSwitch />
+              </StyledGrid>
+              <StyledGrid item>
+                <LanguageSwitch />
+              </StyledGrid>
+              <StyledGrid item>
+                <UserMenu />
+              </StyledGrid>
+            </StyledGrid>
+          </StyledGrid>
+        </StyledGrid>
       </div>
     </header>
   );

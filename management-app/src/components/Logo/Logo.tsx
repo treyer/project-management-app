@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { Grid, Typography } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import style from './Logo.module.css';
 
 function Logo() {
   const [mouseOver, setMouseOver] = useState(false);
+
+  const matches = useMediaQuery('(min-width:720px)');
+  const matches1 = useMediaQuery('(max-width:585px)');
 
   return (
     <Grid
@@ -27,19 +31,21 @@ function Logo() {
           alt="Logo img"
         />
       </Grid>
-      <Grid>
-        <Typography
-          variant="h5"
-          component="h1"
-          style={
-            mouseOver
-              ? { fontWeight: '500', color: '#cccccc' }
-              : { fontWeight: '900', color: '#ffffff' }
-          }
-        >
-          Manage App
-        </Typography>
-      </Grid>
+      {(matches || matches1) && (
+        <Grid>
+          <Typography
+            variant="h5"
+            component="h1"
+            style={
+              mouseOver
+                ? { fontWeight: '500', color: '#cccccc' }
+                : { fontWeight: '900', color: '#ffffff' }
+            }
+          >
+            Manage App
+          </Typography>
+        </Grid>
+      )}
     </Grid>
   );
 }
