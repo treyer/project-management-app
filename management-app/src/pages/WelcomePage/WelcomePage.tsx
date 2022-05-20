@@ -2,6 +2,8 @@ import { Card, CardMedia, CardContent, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../store';
+import TeamInfoCard from './components/TeamInfoCard';
+import { TEAM_INFO } from './constants';
 
 import style from './WelcomePage.module.css';
 
@@ -68,57 +70,9 @@ function WelcomePage() {
         </Typography>
       </div>
       <div className={style.sectionEnd}>
-        <Card sx={{ maxWidth: 300 }} className={style.card}>
-          <CardMedia
-            component="img"
-            alt="img"
-            width={200}
-            height={300}
-            image="/assets/img/lena.jpg"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Elena
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Some words about myself...
-            </Typography>
-          </CardContent>
-        </Card>
-        <Card sx={{ maxWidth: 300 }} className={style.card}>
-          <CardMedia
-            component="img"
-            alt="img"
-            width={200}
-            height={300}
-            image="/assets/img/andrey.jpg"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Andrey
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Some words about myself...
-            </Typography>
-          </CardContent>
-        </Card>
-        <Card sx={{ maxWidth: 300 }} className={style.card}>
-          <CardMedia
-            component="img"
-            alt="img"
-            width={200}
-            height={300}
-            image="/assets/img/marina.jpg"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Marina
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Some words about myself...
-            </Typography>
-          </CardContent>
-        </Card>
+        {Object.values(TEAM_INFO).map(({ name, src, info }) => (
+          <TeamInfoCard key={name} name={name} src={src} info={info} />
+        ))}
       </div>
     </div>
   );
