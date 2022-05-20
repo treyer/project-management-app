@@ -7,7 +7,7 @@ import { RootState, useAppDispatch, useAppSelector } from '../../store';
 // eslint-disable-next-line import/extensions
 import { BoardColumn } from './components/BoardColumn';
 import { TColumnResponse } from '../../api/types';
-import { CreateColumnField } from './components/CreateColumnField';
+import { CreateColumnModal } from './components/CreateColumnModal';
 
 export function BoardPage() {
   const { boardId } = useParams();
@@ -20,7 +20,6 @@ export function BoardPage() {
     return a.order > b.order ? 1 : -1;
   });
   columns = [...columnsForSort];
-  console.log(columns);
   const { isBoardLoading } = useAppSelector((state: RootState) => state.board);
 
   const [isAddColumnFieldOpen, setIsAddColumnFieldOpen] = useState(false);
@@ -101,9 +100,10 @@ export function BoardPage() {
             + Add a column
           </Button>
         ) : (
-          <CreateColumnField
+          <CreateColumnModal
             createColumn={addNewColumn}
             onRequestClose={exitAddColumnField}
+            isModalOpen={isAddColumnFieldOpen}
           />
         )}
       </Grid>
