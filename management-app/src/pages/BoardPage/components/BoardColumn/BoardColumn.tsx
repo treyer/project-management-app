@@ -6,12 +6,11 @@ import { useDrag, useDrop } from 'react-dnd';
 import { TBoardColumnProps } from './BoardColumn.types';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { setColumnTitle, createTask } from '../../boardSlice';
-import { CreateTaskField } from '../CreateTaskField';
-import { TTaskResponse } from '../../../../api/types';
 import { TaskCard } from '../TaskCard';
 import { ColumnTitle } from '../ColumnTitle';
 import { getTasksByColumnId } from '../../BoardPage.utils';
 import { CreateTaskModal } from '../CreateTaskModal';
+import { TTaskResponse } from '../../../../api/types';
 // TODO: use TColumn instead of BoardColumnProps?
 export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
@@ -25,10 +24,9 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
     useAppSelector((state) => getTasksByColumnId(state, id)) ?? [];
 
   const [isAddTaskFieldOpen, setIsAddTaskFieldOpen] = useState(false);
-  const [totalTasksCount, setTotalTasksCount] = useState(tasks.length);
 
   const addNewTask = (taskTitleInput: string) => {
-    const nextTaskOrder = totalTasksCount + 1;
+    const nextTaskOrder = tasks.length + 1;
     dispatch(
       createTask({
         boardId,

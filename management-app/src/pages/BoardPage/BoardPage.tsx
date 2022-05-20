@@ -15,17 +15,23 @@ export function BoardPage() {
   const columns = useAppSelector(
     (state: RootState) => state.board.boardData.columns ?? []
   );
+  // TODO: find a way to store columns in the right order instead of using sort
+  const columnsForSort = [...columns];
+  columnsForSort.sort((a, b) => {
+    return a.order > b.order ? 1 : -1;
+  });
+  columns = [...columnsForSort];
+  console.log(columns);
   const { isBoardLoading } = useAppSelector((state: RootState) => state.board);
 
   const [isAddColumnFieldOpen, setIsAddColumnFieldOpen] = useState(false);
-  // TODO: create a const newColumnOrder = .. without totalColumnsCount
-  const [totalColumnsCount, setTotalColumnsCount] = useState(columns.length);
   const [error, setError] = useState('');
 
   const dispatch = useAppDispatch();
+
   const addNewColumn = useCallback(
     (columnTitleInput: string) => {
-      const newColumnOrder = totalColumnsCount + 1;
+      const newColumnOrder = columns.length + 1;
       if (boardId) {
         dispatch(
           createColumn({
@@ -45,7 +51,7 @@ export function BoardPage() {
           });
       }
     },
-    [boardId, dispatch, totalColumnsCount]
+    [boardId, columns.length, dispatch]
   );
 
   useEffect(() => {
@@ -81,7 +87,6 @@ export function BoardPage() {
   return (
     <Box m={3} ref={drop}>
       {error && <Alert severity="error">{error}</Alert>}
-
       <Grid container spacing={{ xs: 2 }} sx={{ height: '85vh' }}>
         {isBoardLoading
           ? [...Array(3)].map((elem, index) => {

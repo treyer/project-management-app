@@ -1,6 +1,6 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import styles from './CreateTaskModal.module.scss';
 import { Modal } from '../../../../components/Modal';
 import {
@@ -72,7 +72,7 @@ export class CreateTaskModal extends React.PureComponent<
             fieldName="Task description"
             taskTitle={taskDescription}
             onChange={this.handleOnChange}
-            isMultiline={true}
+            isMultiline
             // TODO: make multiline input
           />
           {/* <Typography component="p" gutterBottom sx={{ mt: 2 }}>
