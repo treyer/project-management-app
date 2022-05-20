@@ -25,7 +25,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
 
   const [isAddTaskFieldOpen, setIsAddTaskFieldOpen] = useState(false);
 
-  const addNewTask = (taskTitleInput: string) => {
+  const addNewTask = (taskTitleInput: string, taskDescription: string) => {
     const nextTaskOrder = tasks.length + 1;
     dispatch(
       createTask({
@@ -34,7 +34,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
         task: {
           title: taskTitleInput,
           order: nextTaskOrder,
-          description: taskTitleInput,
+          description: taskDescription,
           userId,
         },
       })
@@ -133,10 +133,6 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
               onRequestClose={exitAddTaskField}
               isModalOpen={isAddTaskFieldOpen}
             />
-            // <CreateTaskField
-            //   createTask={addNewTask}
-            //   onRequestClose={exitAddTaskField}
-            // />
           )}
         </Stack>
       </Box>
