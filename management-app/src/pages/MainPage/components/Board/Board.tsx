@@ -42,7 +42,7 @@ function Board({ titleBoard, id }: TBoardProps) {
           onDecline={handleDecline}
         />
       )}
-      <NavLink to={`/board/${id}`} style={{ textDecoration: 'none' }}>
+      <NavLink to={`/boards/${id}`} style={{ textDecoration: 'none' }}>
         <Card sx={{ width: 230, height: 170 }}>
           <CardHeader
             action={
