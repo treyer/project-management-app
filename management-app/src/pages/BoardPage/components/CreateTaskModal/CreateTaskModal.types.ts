@@ -1,7 +1,7 @@
-import { Dispatch, DispatchWithoutAction } from 'react';
+import { DispatchWithoutAction } from 'react';
 
 export type TCreateTaskModalProps = {
-  createTask: Dispatch<string>;
+  createTask: (taskTitleInput: string, taskDescription: string) => void;
   onRequestClose: DispatchWithoutAction;
   isModalOpen: boolean;
 };

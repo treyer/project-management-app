@@ -38,7 +38,7 @@ export class CreateTaskModal extends React.PureComponent<
     const { createTask, onRequestClose } = this.props;
     const { taskTitle, taskDescription } = this.state;
     if (taskTitle) {
-      createTask(taskTitle);
+      createTask(taskTitle, taskDescription);
     }
     onRequestClose();
   }
@@ -73,18 +73,8 @@ export class CreateTaskModal extends React.PureComponent<
             taskTitle={taskDescription}
             onChange={this.handleOnChange}
             isMultiline
-            // TODO: make multiline input
           />
-          {/* <Typography component="p" gutterBottom sx={{ mt: 2 }}>
-            Task name
-          </Typography>
-          <TextField
-            fullWidth
-            name="tack title"
-            placeholder="Enter a title for this task..."
-            value={taskTitle}
-            onChange={this.handleOnChange}
-          /> */}
+
           <Button onClick={this.addNewTask}>Add task</Button>
           <Button onClick={onRequestClose}>X</Button>
         </Box>
