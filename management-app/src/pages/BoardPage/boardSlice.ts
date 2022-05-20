@@ -44,31 +44,6 @@ export const createTask = createAsyncThunk(
   }
 );
 
-export const updateTask = createAsyncThunk(
-  'board/updateTask',
-  async ({
-    boardId,
-    columnId,
-    taskId,
-    task,
-  }: {
-    boardId: string;
-    columnId: string;
-    taskId: string;
-    task: TUpdateTaskRequestBody;
-  }): Promise<TCreateTaskResponse> => {
-    const token = localStorage.getItem('token') as string;
-    const result = await tasksAPI.updateTask({
-      boardId,
-      columnId,
-      taskId,
-      task,
-      token,
-    });
-    return result;
-  }
-);
-
 export const getTask = createAsyncThunk(
   'board/getTask',
   async ({
@@ -137,6 +112,35 @@ export const getBoard = createAsyncThunk('board/getBoard', (id: string) => {
   }
   throw new Error();
 });
+
+export const updateTask = createAsyncThunk(
+  'board/updateTask',
+  async (
+    {
+      boardId,
+      columnId,
+      taskId,
+      task,
+    }: {
+      boardId: string;
+      columnId: string;
+      taskId: string;
+      task: TUpdateTaskRequestBody;
+    },
+    { dispatch }
+  ): Promise<TCreateTaskResponse> => {
+    const token = localStorage.getItem('token') as string;
+    const result = await tasksAPI.updateTask({
+      boardId,
+      columnId,
+      taskId,
+      task,
+      token,
+    });
+    dispatch(getBoard(boardId));
+    return result;
+  }
+);
 
 const boardSlice = createSlice({
   name: 'board',
