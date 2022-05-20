@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
 
 import { TBoardColumnProps } from './BoardColumn.types';
-import { RootState, useAppDispatch, useAppSelector } from '../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../store';
 import { setColumnTitle, createTask } from '../../boardSlice';
-import { CreateTaskField } from '../CreateTaskField';
-import { TColumnResponse, TTaskResponse } from '../../../../api/types';
 import { TaskCard } from '../TaskCard';
 import { ColumnTitle } from '../ColumnTitle';
 import { getTasksByColumnId } from '../../BoardPage.utils';
 import { CreateTaskModal } from '../CreateTaskModal';
+import { TTaskResponse } from '../../../../api/types';
 // TODO: use TColumn instead of BoardColumnProps?
 export function BoardColumn({ id: columnId, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
@@ -20,14 +19,20 @@ export function BoardColumn({ id: columnId, title, order }: TBoardColumnProps) {
   const { id } = useAppSelector((state) => state.auth.userData);
   const userId = id ?? userIdLS;
 
-  const { tasks } =
+  let { tasks } =
     useAppSelector((state) => getTasksByColumnId(state, columnId)) ?? [];
+  // TODO: find a way to store tasks in the right order instead of using sort
+  const tasksForSort = [...tasks];
+  tasksForSort.sort((a, b) => {
+    return a.order > b.order ? 1 : -1;
+  });
+  tasks = [...tasksForSort];
+  console.log(tasks);
 
   const [isAddTaskFieldOpen, setIsAddTaskFieldOpen] = useState(false);
-  const [totalTasksCount, setTotalTasksCount] = useState(tasks.length);
 
   const addNewTask = (taskTitleInput: string) => {
-    const nextTaskOrder = totalTasksCount + 1;
+    const nextTaskOrder = tasks.length + 1;
     dispatch(
       createTask({
         boardId,
