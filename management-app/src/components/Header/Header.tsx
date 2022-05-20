@@ -75,7 +75,7 @@ function Header() {
               </StyledGrid>
             )}
 
-            {matches && (
+            {isLoggedIn && matches && (
               <StyledGrid item>
                 <BurgerMenu />
               </StyledGrid>
