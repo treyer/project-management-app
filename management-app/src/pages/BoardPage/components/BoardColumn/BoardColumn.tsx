@@ -16,6 +16,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
 
   const { id: boardId } = useAppSelector((state) => state.board.boardData);
+  // TODO:
   const userIdLS = localStorage.getItem('userId') ?? '';
   const { id: userDataId } = useAppSelector((state) => state.auth.userData);
   const userId = userDataId ?? userIdLS;

@@ -1,5 +1,3 @@
-import { Dispatch } from 'react';
-
 export type TFormFieldProps = {
   placeholder: string;
   fieldName: string;
