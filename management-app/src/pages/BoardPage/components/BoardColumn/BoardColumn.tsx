@@ -70,38 +70,40 @@ export function BoardColumn({ id: columnId, title, order }: TBoardColumnProps) {
       <Box sx={{ borderRadius: 2, backgroundColor: '#eee' }}>
         <Stack spacing={2}>
           <ColumnTitle title={title} handleClickAway={handleClickAway} />
+          <Box sx={{ overflow: 'auto', maxHeight: '60vh' }}>
+            {tasks &&
+              tasks.map(
+                (
+                  {
+                    id,
+                    title,
+                    order,
+                    done,
+                    description,
+                    userId,
+                    files,
+                  }: TTaskResponse,
+                  index
+                ) => {
+                  const uniqueKey = index + id;
+                  return (
+                    <TaskCard
+                      key={uniqueKey}
+                      taskInfo={{
+                        id,
+                        title,
+                        order,
+                        done,
+                        description,
+                        userId,
+                        files,
+                      }}
+                    />
+                  );
+                }
+              )}
+          </Box>
 
-          {tasks &&
-            tasks.map(
-              (
-                {
-                  id,
-                  title,
-                  order,
-                  done,
-                  description,
-                  userId,
-                  files,
-                }: TTaskResponse,
-                index
-              ) => {
-                const uniqueKey = index + id;
-                return (
-                  <TaskCard
-                    key={uniqueKey}
-                    taskInfo={{
-                      id,
-                      title,
-                      order,
-                      done,
-                      description,
-                      userId,
-                      files,
-                    }}
-                  />
-                );
-              }
-            )}
           {!isAddTaskFieldOpen ? (
             <Button onClick={openAddTaskField}>+ Add a task</Button>
           ) : (
