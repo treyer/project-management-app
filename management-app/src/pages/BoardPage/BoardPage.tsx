@@ -8,11 +8,11 @@ import { RootState, useAppDispatch, useAppSelector } from '../../store';
 
 import { BoardColumn } from './components/BoardColumn';
 import { TColumn, TColumnResponse } from '../../api/types';
-import { CreateColumnField } from './components/CreateColumnField';
+import { CreateColumnModal } from './components/CreateColumnModal';
 
 export function BoardPage() {
   const { boardId } = useParams();
-  const columns = useAppSelector(
+  let columns = useAppSelector(
     (state: RootState) => state.board.boardData.columns ?? []
   );
   // TODO: find a way to store columns in the right order instead of using sort
@@ -21,7 +21,6 @@ export function BoardPage() {
     return a.order > b.order ? 1 : -1;
   });
   columns = [...columnsForSort];
-  console.log(columns);
   const { isBoardLoading } = useAppSelector((state: RootState) => state.board);
 
   const [isAddColumnFieldOpen, setIsAddColumnFieldOpen] = useState(false);
@@ -113,9 +112,10 @@ export function BoardPage() {
             + Add a column
           </Button>
         ) : (
-          <CreateColumnField
+          <CreateColumnModal
             createColumn={addNewColumn}
             onRequestClose={exitAddColumnField}
+            isModalOpen={isAddColumnFieldOpen}
           />
         )}
       </Grid>
