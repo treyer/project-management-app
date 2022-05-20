@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
 
 import { TBoardColumnProps } from './BoardColumn.types';
@@ -15,6 +15,7 @@ export function BoardColumn({ id: columnId, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
 
   const { id: boardId } = useAppSelector((state) => state.board.boardContent);
+  // TODO:
   const userIdLS = localStorage.getItem('userId') ?? '';
   const { id } = useAppSelector((state) => state.auth.userData);
   const userId = id ?? userIdLS;
@@ -30,21 +31,24 @@ export function BoardColumn({ id: columnId, title, order }: TBoardColumnProps) {
 
   const [isAddTaskFieldOpen, setIsAddTaskFieldOpen] = useState(false);
 
-  const addNewTask = (taskTitleInput: string, taskDescription: string) => {
-    const nextTaskOrder = tasks.length + 1;
-    dispatch(
-      createTask({
-        boardId,
-        columnId,
-        task: {
-          title: taskTitleInput,
-          order: nextTaskOrder,
-          description: taskDescription,
-          userId,
-        },
-      })
-    );
-  };
+  const addNewTask = useCallback(
+    (taskTitleInput: string, taskDescription: string) => {
+      const nextTaskOrder = tasks.length + 1;
+      dispatch(
+        createTask({
+          boardId,
+          columnId,
+          task: {
+            title: taskTitleInput,
+            order: nextTaskOrder,
+            description: taskDescription,
+            userId,
+          },
+        })
+      );
+    },
+    [tasks.length, dispatch, boardId, columnId, userId]
+  );
 
   const handleClickAway = (titleInput: string) => {
     dispatch(
@@ -55,10 +59,10 @@ export function BoardColumn({ id: columnId, title, order }: TBoardColumnProps) {
       })
     );
   };
-  // TODO: useMemo for tasks callbacks
-  const exitAddTaskField = () => {
+
+  const exitAddTaskField = useCallback(() => {
     setIsAddTaskFieldOpen(false);
-  };
+  }, []);
 
   const openAddTaskField = () => {
     setIsAddTaskFieldOpen(true);
