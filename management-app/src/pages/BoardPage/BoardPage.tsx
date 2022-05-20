@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Box, Button, Grid } from '@mui/material';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useDrop } from 'react-dnd';
 
 import { useParams } from 'react-router-dom';
 import { createColumn, getBoard } from './boardSlice';
 import { RootState, useAppDispatch, useAppSelector } from '../../store';
 
 import { BoardColumn } from './components/BoardColumn';
-import { TColumnResponse } from '../../api/types';
+import { TColumn, TColumnResponse } from '../../api/types';
 import { CreateColumnField } from './components/CreateColumnField';
 
 export function BoardPage() {
@@ -54,32 +53,41 @@ export function BoardPage() {
     setIsAddColumnFieldOpen(true);
   };
 
+  // TODO: add logic for dnd column
+  const [, drop] = useDrop(() => ({
+    accept: 'boardColumn',
+    drop: (item: TColumn, monitor) => {
+      return { item };
+    },
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  }));
+
   return (
-    <DndProvider backend={HTML5Backend}>
-      <Box m={3}>
-        <Grid container spacing={{ xs: 2 }} sx={{ height: '85vh' }}>
-          {columns &&
-            columns.map((column: TColumnResponse) => (
-              <Grid item xs={2} key={column.id}>
-                <BoardColumn
-                  id={column.id}
-                  title={column.title}
-                  order={column.order}
-                />
-              </Grid>
-            ))}
-          {!isAddColumnFieldOpen ? (
-            <Button sx={{ height: 100 }} onClick={openAddColumnField}>
-              + Add a column
-            </Button>
-          ) : (
-            <CreateColumnField
-              createColumn={addNewColumn}
-              onRequestClose={exitAddColumnField}
-            />
-          )}
-        </Grid>
-      </Box>
-    </DndProvider>
+    <Box m={3} ref={drop}>
+      <Grid container spacing={{ xs: 2 }} sx={{ height: '85vh' }}>
+        {columns &&
+          columns.map((column: TColumnResponse) => (
+            <Grid item xs={2} key={column.id}>
+              <BoardColumn
+                id={column.id}
+                title={column.title}
+                order={column.order}
+              />
+            </Grid>
+          ))}
+        {!isAddColumnFieldOpen ? (
+          <Button sx={{ height: 100 }} onClick={openAddColumnField}>
+            + Add a column
+          </Button>
+        ) : (
+          <CreateColumnField
+            createColumn={addNewColumn}
+            onRequestClose={exitAddColumnField}
+          />
+        )}
+      </Grid>
+    </Box>
   );
 }
