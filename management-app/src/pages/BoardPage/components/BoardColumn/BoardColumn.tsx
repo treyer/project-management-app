@@ -11,6 +11,7 @@ import { TTaskResponse } from '../../../../api/types';
 import { TaskCard } from '../TaskCard';
 import { ColumnTitle } from '../ColumnTitle';
 import { getTasksByColumnId } from '../../BoardPage.utils';
+import { CreateTaskModal } from '../CreateTaskModal';
 // TODO: use TColumn instead of BoardColumnProps?
 export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
@@ -128,10 +129,15 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
           {!isAddTaskFieldOpen ? (
             <Button onClick={openAddTaskField}>+ Add a task</Button>
           ) : (
-            <CreateTaskField
+            <CreateTaskModal
               createTask={addNewTask}
               onRequestClose={exitAddTaskField}
+              isModalOpen={isAddTaskFieldOpen}
             />
+            // <CreateTaskField
+            //   createTask={addNewTask}
+            //   onRequestClose={exitAddTaskField}
+            // />
           )}
         </Stack>
       </Box>
