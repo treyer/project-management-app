@@ -20,6 +20,7 @@ function Logo() {
       <Grid>
         <img
           className={style.image}
+          style={{ display: 'block' }}
           src={
             mouseOver ? './assets/img/logo_hover.png' : './assets/img/logo.png'
           }

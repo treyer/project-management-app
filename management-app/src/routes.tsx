@@ -22,7 +22,7 @@ export const ROUTES: TPath[] = [
   {
     id: RouteID.Main,
     routePath: '/main',
-    title: 'Main',
+    title: 'Boards',
     element: <MainPage />,
     isShownWhenLoggedIn: true,
   },

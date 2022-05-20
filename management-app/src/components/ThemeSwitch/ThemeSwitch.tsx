@@ -54,7 +54,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 function ThemeSwitch() {
-  return <MaterialUISwitch sx={{ m: 1 }} defaultChecked />;
+  return <MaterialUISwitch sx={{ m: 1, margin: '8px 0' }} defaultChecked />;
 }
 
 export default ThemeSwitch;

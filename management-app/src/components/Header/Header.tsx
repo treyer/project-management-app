@@ -1,10 +1,9 @@
 import React from 'react';
 import { Grid } from '@mui/material';
-import { NavLink, useNavigate } from 'react-router-dom';
-import MenuIcon from '@mui/icons-material/Menu';
-import { logOut } from '../../auth/authSlice';
+import { NavLink } from 'react-router-dom';
+import AddIcon from '@mui/icons-material/Add';
+import { experimentalStyled as styled } from '@mui/material/styles';
 import { ROUTES } from '../../routes';
-import { useAppDispatch, useAppSelector } from '../../store';
 import { RouteID } from '../../types';
 import Logo from '../Logo/Logo';
 import style from './Header.module.css';
@@ -13,16 +12,15 @@ import SearchBar from '../SearchBar/SearchBar';
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';
 import LanguageSwitch from '../LanguageSwitch/LanguageSwitch';
 import UserMenu from '../UserMenu/UserMenu';
+import { useAppSelector } from '../../store';
+import BurgerMenu from '../BurgerMenu/BurgerMenu';
+
+const Link = styled(NavLink)({
+  textDecoration: 'none',
+});
 
 function Header() {
   const { isLoggedIn } = useAppSelector((state) => state.auth);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const handleLogOut = () => {
-    dispatch(logOut());
-    navigate('/');
-  };
 
   return (
     <header className={style.header}>
@@ -42,44 +40,33 @@ function Header() {
             style={{ width: 'auto' }}
           >
             <Grid item>
-              <NavLink
+              <Link
                 key={ROUTES[RouteID.Welcome].id}
                 to={ROUTES[RouteID.Welcome].routePath}
-                style={{ textDecoration: 'none' }}
               >
                 <Logo />
-              </NavLink>
+              </Link>
             </Grid>
-            <Grid item>
-              <nav className="nav-links">
-                <Grid container spacing={1} style={{ width: 'auto' }}>
-                  {ROUTES.filter(
-                    (el) =>
-                      el.isShownWhenLoggedIn === isLoggedIn &&
-                      el.id !== RouteID.NotFound &&
-                      el.id !== RouteID.Welcome &&
-                      el.id !== RouteID.Board
-                  ).map((el) => (
-                    <Grid item key={el.id}>
-                      <NavLink
-                        key={el.id}
-                        to={el.routePath}
-                        style={{ textDecoration: 'none' }}
-                      >
-                        <NavButton title={el.title} />
-                      </NavLink>
-                    </Grid>
-                  ))}
-                  {isLoggedIn && (
-                    <Grid item>
-                      <NavButton onClick={handleLogOut} title="Log out" />
-                    </Grid>
-                  )}
-                  <Grid item>
-                    <MenuIcon fontSize="large" style={{ color: '#ffffff' }} />
-                  </Grid>
-                </Grid>
-              </nav>
+
+            {isLoggedIn && (
+              <Grid item>
+                <Link
+                  key={ROUTES[RouteID.Main].id}
+                  to={ROUTES[RouteID.Main].routePath}
+                >
+                  <NavButton title={ROUTES[RouteID.Main].title} />
+                </Link>
+              </Grid>
+            )}
+
+            {isLoggedIn && (
+              <Grid item>
+                <NavButton title="add Board" startIcon={<AddIcon />} />
+              </Grid>
+            )}
+
+            <Grid item style={{ position: 'relative' }}>
+              <BurgerMenu />
             </Grid>
           </Grid>
 
@@ -99,7 +86,9 @@ function Header() {
             <Grid item>
               <LanguageSwitch />
             </Grid>
-            <UserMenu />
+            <Grid item style={{ position: 'relative' }}>
+              <UserMenu />
+            </Grid>
           </Grid>
         </Grid>
       </div>

@@ -3,6 +3,7 @@ import { ButtonGroup, Card } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import { experimentalStyled as styled } from '@mui/material/styles';
+import AddIcon from '@mui/icons-material/Add';
 import NavButton from '../NavButton/NavButton';
 import { MenuModalType, RouteID } from '../../types';
 import { ROUTES } from '../../routes';
@@ -36,7 +37,7 @@ function MenuModal({ display, close, type }: TProps) {
     <Card
       sx={{
         position: 'absolute',
-        right: '5px',
+        right: `${type === MenuModalType.User ? '5px' : 'auto'}`,
         top: `${display ? '55px' : '-200px'}`,
         backgroundColor: '#ffffff',
         padding: '5px 14px 0 5px',
@@ -54,6 +55,7 @@ function MenuModal({ display, close, type }: TProps) {
               close();
               navigate(ROUTES[RouteID.LogIn].routePath);
             }}
+            isMarginBottom
           />
           <NavButton
             title={ROUTES[RouteID.SignUp].title}
@@ -61,6 +63,7 @@ function MenuModal({ display, close, type }: TProps) {
               close();
               navigate(ROUTES[RouteID.SignUp].routePath);
             }}
+            isMarginBottom
           />
         </ButtonGroup>
       )}
@@ -73,6 +76,7 @@ function MenuModal({ display, close, type }: TProps) {
               dispatch(logOut());
               navigate('/');
             }}
+            isMarginBottom
           />
           <NavButton
             title={ROUTES[RouteID.EditProfile].title}
@@ -80,6 +84,28 @@ function MenuModal({ display, close, type }: TProps) {
               close();
               navigate(ROUTES[RouteID.EditProfile].routePath);
             }}
+            isMarginBottom
+          />
+        </ButtonGroup>
+      )}
+      {type === MenuModalType.Menu && isLoggedIn && (
+        <ButtonGroup orientation="vertical">
+          <NavButton
+            title={ROUTES[RouteID.Main].title}
+            onClick={() => {
+              close();
+              navigate(ROUTES[RouteID.Main].routePath);
+            }}
+            isMarginBottom
+          />
+          <NavButton
+            title="add Board"
+            startIcon={<AddIcon />}
+            onClick={() => {
+              close();
+              // navigate(ROUTES[RouteID.EditProfile].routePath);
+            }}
+            isMarginBottom
           />
         </ButtonGroup>
       )}

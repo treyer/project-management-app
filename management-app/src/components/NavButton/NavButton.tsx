@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { Button } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 
 type TType = {
   title: string;
   onClick?: () => void;
+  startIcon?: ReactNode;
+  isMarginBottom?: boolean;
 };
 
 const Item = styled(Button)({
@@ -12,11 +14,22 @@ const Item = styled(Button)({
   textTransform: 'none',
   fontSize: '14px',
   fontWeight: '400',
-  marginBottom: '5px',
 });
 
-function NavButton({ title, onClick }: TType) {
+function NavButton({ title, onClick, startIcon, isMarginBottom }: TType) {
   const [mouseOver, setMouseOver] = useState(false);
+
+  let style;
+  if (mouseOver && isMarginBottom)
+    style = { backgroundColor: '#3588b9', marginBottom: '5px' };
+  if (mouseOver && !isMarginBottom) {
+    style = { backgroundColor: '#3588b9' };
+  }
+  if (!mouseOver && isMarginBottom)
+    style = { backgroundColor: '#02507f', marginBottom: '5px' };
+  if (!mouseOver && !isMarginBottom) {
+    style = { backgroundColor: '#02507f' };
+  }
 
   return (
     <Item
@@ -25,11 +38,8 @@ function NavButton({ title, onClick }: TType) {
       onMouseOut={() => setMouseOver(false)}
       onBlur={() => setMouseOver(false)}
       onClick={onClick}
-      style={
-        mouseOver
-          ? { backgroundColor: '#3588b9' }
-          : { backgroundColor: '#02507f' }
-      }
+      style={style}
+      startIcon={startIcon}
     >
       {title}
     </Item>
@@ -38,6 +48,8 @@ function NavButton({ title, onClick }: TType) {
 
 NavButton.defaultProps = {
   onClick: () => false,
+  startIcon: null,
+  isMarginBottom: false,
 };
 
 export default NavButton;

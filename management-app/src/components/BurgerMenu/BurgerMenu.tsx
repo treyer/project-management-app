@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
-import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import MenuIcon from '@mui/icons-material/Menu';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import MenuModal from '../MenuModal/MenuModal';
 import BackLayer from '../BackLayer/BackLayer';
 import { MenuModalType } from '../../types';
 
-const Icon = styled(AccountCircleRoundedIcon)({
+const Icon = styled(MenuIcon)({
   position: 'relative',
   color: '#ffffff',
-  marginTop: '6px',
   cursor: 'pointer',
   '&:hover': {
     color: '#cccccc',
   },
 });
 
-function UserMenu() {
+function BurgerMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleIconClick = () => {
@@ -32,11 +31,11 @@ function UserMenu() {
       <MenuModal
         display={isModalOpen}
         close={closeModal}
-        type={MenuModalType.User}
+        type={MenuModalType.Menu}
       />
       <BackLayer display={isModalOpen} close={closeModal} />
     </>
   );
 }
 
-export default UserMenu;
+export default BurgerMenu;
