@@ -12,6 +12,7 @@ export function TaskCard({ taskInfo, columnId, boardId }: TTaskCardProps) {
 
   const dispatch = useAppDispatch();
 
+  //  TODO: use right order
   const [, drag] = useDrag(() => ({
     type: 'taskCard',
     item: { id, title, description, order, userId },
@@ -19,7 +20,7 @@ export function TaskCard({ taskInfo, columnId, boardId }: TTaskCardProps) {
       isDragging: !!monitor.isDragging(),
     }),
     end: (item, monitor) => {
-      const finishColumnId = monitor.getDropResult() as { id: string };
+      const fineshColumnId = monitor.getDropResult() as { id: string };
       dispatch(
         updateTask({
           boardId,
@@ -31,7 +32,7 @@ export function TaskCard({ taskInfo, columnId, boardId }: TTaskCardProps) {
             description,
             userId,
             boardId,
-            columnId: finishColumnId?.id,
+            columnId: fineshColumnId?.id,
           },
         })
       );
