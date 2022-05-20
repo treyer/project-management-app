@@ -12,14 +12,14 @@ export const ROUTES: TPath[] = [
   {
     id: RouteID.Welcome,
     routePath: '/',
-    title: 'Welcome',
+    title: 'Home',
     element: <WelcomePage />,
     isShownWhenLoggedIn: false,
   },
   {
     id: RouteID.Main,
     routePath: '/main',
-    title: 'Main',
+    title: 'Boards',
     element: <MainPage />,
     isShownWhenLoggedIn: true,
   },
