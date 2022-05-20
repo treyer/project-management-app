@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { useEffect, useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
-import { useDrop } from 'react-dnd';
+import { useDrag, useDrop } from 'react-dnd';
 
 import { TBoardColumnProps } from './BoardColumn.types';
 import { useAppDispatch, useAppSelector } from '../../../../store';
@@ -80,9 +80,25 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
     }),
   }));
 
+  // TODO: add logic for dnd column
+  const [, drag] = useDrag(() => ({
+    type: 'boardColumn',
+    item: { id, title, order },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+    end: (item, monitor) => {
+      // eslint-disable-next-line no-console
+      console.log(monitor.getDropResult());
+    },
+  }));
+
   return (
-    <Box ref={drop} id={id}>
-      <Box sx={{ borderRadius: 2, backgroundColor: '#eee' }}>
+    <Box id={id} ref={drag}>
+      <Box
+        ref={drop}
+        sx={{ borderRadius: 2, backgroundColor: '#eee', cursor: 'grabbing' }}
+      >
         <Stack spacing={2}>
           <ColumnTitle title={title} handleClickAway={handleClickAway} />
 
