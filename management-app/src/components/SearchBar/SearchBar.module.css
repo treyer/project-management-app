@@ -1,0 +1,27 @@
+.input {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  box-shadow: none;
+  height: 32px;
+  width: 250px;
+  line-height: 19px;
+  font-size: 14px;
+  outline: none;
+  padding-left: 40px;
+}
+
+.input::placeholder {
+  color: #ffffff;
+}
+
+.label {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  top: 4px;
+  left: 10px;
+  width: 20px;
+  height: 20px;
+}
