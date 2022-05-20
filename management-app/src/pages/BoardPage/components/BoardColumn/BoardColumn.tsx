@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
 import { useDrag, useDrop } from 'react-dnd';
 
@@ -25,21 +25,24 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
 
   const [isAddTaskFieldOpen, setIsAddTaskFieldOpen] = useState(false);
 
-  const addNewTask = (taskTitleInput: string, taskDescription: string) => {
-    const nextTaskOrder = tasks.length + 1;
-    dispatch(
-      createTask({
-        boardId,
-        columnId: id,
-        task: {
-          title: taskTitleInput,
-          order: nextTaskOrder,
-          description: taskDescription,
-          userId,
-        },
-      })
-    );
-  };
+  const addNewTask = useCallback(
+    (taskTitleInput: string, taskDescription: string) => {
+      const nextTaskOrder = tasks.length + 1;
+      dispatch(
+        createTask({
+          boardId,
+          columnId: id,
+          task: {
+            title: taskTitleInput,
+            order: nextTaskOrder,
+            description: taskDescription,
+            userId,
+          },
+        })
+      );
+    },
+    [tasks.length, dispatch, boardId, id, userId]
+  );
 
   const handleClickAway = (titleInput: string) => {
     dispatch(
@@ -50,10 +53,10 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
       })
     );
   };
-  // TODO: useMemo for tasks callbacks
-  const exitAddTaskField = () => {
+
+  const exitAddTaskField = useCallback(() => {
     setIsAddTaskFieldOpen(false);
-  };
+  }, []);
 
   const openAddTaskField = () => {
     setIsAddTaskFieldOpen(true);
