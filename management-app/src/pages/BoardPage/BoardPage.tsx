@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Button, Grid } from '@mui/material';
+import { useDrop } from 'react-dnd';
 
 import { useParams } from 'react-router-dom';
 import { createColumn, getBoard } from './boardSlice';
 import { RootState, useAppDispatch, useAppSelector } from '../../store';
-// eslint-disable-next-line import/extensions
+
 import { BoardColumn } from './components/BoardColumn';
-import { TColumnResponse } from '../../api/types';
+import { TColumn, TColumnResponse } from '../../api/types';
 import { CreateColumnField } from './components/CreateColumnField';
 
 export function BoardPage() {
   const { boardId } = useParams();
   const columns = useAppSelector(
-    (state: RootState) => state.board.columns ?? []
+    (state: RootState) => state.board.boardData.columns ?? []
   );
 
   const [isAddColumnFieldOpen, setIsAddColumnFieldOpen] = useState(false);
@@ -52,8 +53,19 @@ export function BoardPage() {
     setIsAddColumnFieldOpen(true);
   };
 
+  // TODO: add logic for dnd column
+  const [, drop] = useDrop(() => ({
+    accept: 'boardColumn',
+    drop: (item: TColumn, monitor) => {
+      return { item };
+    },
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  }));
+
   return (
-    <Box m={3}>
+    <Box m={3} ref={drop}>
       <Grid container spacing={{ xs: 2 }} sx={{ height: '85vh' }}>
         {columns &&
           columns.map((column: TColumnResponse) => (
