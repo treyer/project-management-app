@@ -11,13 +11,15 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <main className="main">
-        <Routes>
-          {ROUTES.map((el) => (
-            <Route key={el.id} path={el.routePath} element={el.element} />
-          ))}
-        </Routes>
-      </main>
+      <div className="wrapper">
+        <main className="main">
+          <Routes>
+            {ROUTES.map((el) => (
+              <Route key={el.id} path={el.routePath} element={el.element} />
+            ))}
+          </Routes>
+        </main>
+      </div>
       <Footer />
     </div>
   );
