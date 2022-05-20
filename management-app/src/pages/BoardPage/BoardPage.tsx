@@ -12,7 +12,7 @@ import { CreateColumnModal } from './components/CreateColumnModal';
 export function BoardPage() {
   const { boardId } = useParams();
   let columns = useAppSelector(
-    (state: RootState) => state.board.boardContent.columns ?? []
+    (state: RootState) => state.board.boardData.columns ?? []
   );
   // TODO: find a way to store columns in the right order instead of using sort
   const columnsForSort = [...columns];

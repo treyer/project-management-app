@@ -14,7 +14,7 @@ import { TTaskResponse } from '../../../../api/types';
 export function BoardColumn({ id: columnId, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
 
-  const { id: boardId } = useAppSelector((state) => state.board.boardContent);
+  const { id: boardId } = useAppSelector((state) => state.board.boardData);
   // TODO:
   const userIdLS = localStorage.getItem('userId') ?? '';
   const { id } = useAppSelector((state) => state.auth.userData);

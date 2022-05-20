@@ -78,7 +78,7 @@ export const getBoard = createAsyncThunk('board/getBoard', (id: string) => {
 });
 
 const initialState = {
-  boardContent: {} as TBoardResponse,
+  boardData: {} as TBoardResponse,
   isBoardLoading: false,
   isColumnTitleLoading: false,
   isNewTaskLoading: false,
@@ -97,9 +97,9 @@ const boardSlice = createSlice({
 
         if (action.payload) {
           const { id, title, columns } = action.payload;
-          state.boardContent.id = id;
-          state.boardContent.title = title;
-          state.boardContent.columns = columns;
+          state.boardData.id = id;
+          state.boardData.title = title;
+          state.boardData.columns = columns;
         }
       })
       .addCase(getBoard.rejected, (state) => {
@@ -112,7 +112,7 @@ const boardSlice = createSlice({
         state.isColumnTitleLoading = false;
         if (action.payload) {
           const { id: columnId, title } = action.payload;
-          const column = state.boardContent.columns.find(
+          const column = state.boardData.columns.find(
             ({ id }) => id === columnId
           );
           if (column) {
@@ -130,7 +130,7 @@ const boardSlice = createSlice({
         state.isNewTaskLoading = false;
         const { title, order, description, userId, taskId, columnId } =
           action.payload;
-        const column = state.boardContent.columns.find(
+        const column = state.boardData.columns.find(
           ({ id }) => id === columnId
         );
         if (column) {
@@ -154,7 +154,7 @@ const boardSlice = createSlice({
       .addCase(createColumn.fulfilled, (state, action) => {
         state.isNewColumnLoading = false;
         const { id, title, order } = action.payload;
-        state.boardContent.columns.push({
+        state.boardData.columns.push({
           id,
           title,
           order,

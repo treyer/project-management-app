@@ -2,7 +2,7 @@ import { TColumnResponse } from '../../api/types';
 import { RootState } from '../../store';
 
 const getTasksByColumnId = (state: RootState, columnId: string) => {
-  const currentColumn = state.board.boardContent.columns.find(
+  const currentColumn = state.board.boardData.columns.find(
     (column) => column.id === columnId
   );
   if (currentColumn) {
