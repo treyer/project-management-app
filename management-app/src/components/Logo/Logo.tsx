@@ -9,11 +9,16 @@ function Logo() {
   const matches = useMediaQuery('(min-width:720px)');
   const matches1 = useMediaQuery('(max-width:585px)');
 
+  const imageSrcArr: string[] = [
+    './assets/img/logo.png',
+    './assets/img/logo_hover.png',
+  ];
+
   useEffect(() => {
-    const logoImg = new Image();
-    logoImg.src = './assets/img/logo.png';
-    const logoImgHover = new Image();
-    logoImgHover.src = './assets/img/logo_hover.png';
+    imageSrcArr.forEach((imgSrc) => {
+      const img = new Image();
+      img.src = imgSrc;
+    });
   });
 
   return (

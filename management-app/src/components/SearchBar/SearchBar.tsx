@@ -19,11 +19,16 @@ const styleFocus = {
 function SearchBar() {
   const [inputFocus, setInputFocus] = useState(false);
 
+  const imageSrcArr: string[] = [
+    './assets/svg/icon-search-white.svg',
+    './assets/svg/icon-search-black.svg',
+  ];
+
   useEffect(() => {
-    const iconSearchWhite = new Image();
-    iconSearchWhite.src = './assets/svg/icon-search-white.svg';
-    const iconSearchBlack = new Image();
-    iconSearchBlack.src = './assets/svg/icon-search-black.svg';
+    imageSrcArr.forEach((imgSrc) => {
+      const img = new Image();
+      img.src = imgSrc;
+    });
   });
 
   return (
