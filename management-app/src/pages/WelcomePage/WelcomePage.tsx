@@ -70,8 +70,14 @@ function WelcomePage() {
         </Typography>
       </div>
       <div className={style.sectionEnd}>
-        {Object.values(TEAM_INFO).map(({ name, src, info }) => (
-          <TeamInfoCard key={name} name={name} src={src} info={info} />
+        {Object.values(TEAM_INFO).map(({ name, src, info, path }) => (
+          <TeamInfoCard
+            key={name}
+            name={name}
+            src={src}
+            info={info}
+            path={path}
+          />
         ))}
       </div>
     </div>
