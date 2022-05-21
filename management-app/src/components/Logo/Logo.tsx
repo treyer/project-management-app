@@ -10,8 +10,8 @@ function Logo() {
   const matches1 = useMediaQuery('(max-width:585px)');
 
   const imageSrcArr: string[] = [
-    './assets/img/logo.png',
-    './assets/img/logo_hover.png',
+    '/assets/img/logo.png',
+    '/assets/img/logo_hover.png',
   ];
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function Logo() {
           className={style.image}
           style={{ display: 'block' }}
           src={
-            mouseOver ? './assets/img/logo_hover.png' : './assets/img/logo.png'
+            mouseOver ? '/assets/img/logo_hover.png' : '/assets/img/logo.png'
           }
           alt="Logo img"
         />

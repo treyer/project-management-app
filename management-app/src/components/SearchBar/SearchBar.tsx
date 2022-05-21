@@ -20,8 +20,8 @@ function SearchBar() {
   const [inputFocus, setInputFocus] = useState(false);
 
   const imageSrcArr: string[] = [
-    './assets/svg/icon-search-white.svg',
-    './assets/svg/icon-search-black.svg',
+    '/assets/svg/icon-search-white.svg',
+    '/assets/svg/icon-search-black.svg',
   ];
 
   useEffect(() => {
@@ -45,8 +45,8 @@ function SearchBar() {
       <img
         src={
           inputFocus
-            ? './assets/svg/icon-search-black.svg'
-            : './assets/svg/icon-search-white.svg'
+            ? '/assets/svg/icon-search-black.svg'
+            : '/assets/svg/icon-search-white.svg'
         }
         alt="Search icon"
         className={style.icon}
