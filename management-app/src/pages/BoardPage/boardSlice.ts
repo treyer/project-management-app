@@ -3,8 +3,22 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import boardsAPI from '../../api/boardsAPI';
 import columnsAPI from '../../api/columnsAPI';
 import tasksAPI from '../../api/tasksAPI';
-import { TBoardResponse, TColumnBase, TTaskBase } from '../../api/types';
+import {
+  TBoardResponse,
+  TColumnBase,
+  TCreateTaskResponse,
+  TTask,
+  TTaskBase,
+  TUpdateTaskRequestBody,
+} from '../../api/types';
 import { RootState, useAppSelector } from '../../store';
+
+type TBoardState = {
+  boardData: TBoardResponse;
+};
+const initialState: TBoardState = {
+  boardData: {} as TBoardResponse,
+};
 
 export const createTask = createAsyncThunk(
   'board/createTask',
@@ -17,7 +31,7 @@ export const createTask = createAsyncThunk(
     columnId: string;
     task: TTaskBase;
   }) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') as string;
     if (token) {
       return tasksAPI.createTask({
         boardId,
@@ -30,10 +44,32 @@ export const createTask = createAsyncThunk(
   }
 );
 
+export const getTask = createAsyncThunk(
+  'board/getTask',
+  async ({
+    boardId,
+    columnId,
+    taskId,
+  }: {
+    boardId: string;
+    columnId: string;
+    taskId: string;
+  }): Promise<TTask> => {
+    const token = localStorage.getItem('token') as string;
+    const result = await tasksAPI.getTask({
+      boardId,
+      columnId,
+      taskId,
+      token,
+    });
+    return result;
+  }
+);
+
 export const createColumn = createAsyncThunk(
   'board/createColumn',
   ({ boardId, column }: { boardId: string; column: TColumnBase }) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') as string;
     if (token) {
       return columnsAPI.createColumn({
         boardId,
@@ -56,7 +92,7 @@ export const setColumnTitle = createAsyncThunk(
     columnId: string;
     column: TColumnBase;
   }) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') as string;
     if (token) {
       return columnsAPI.updateColumn({
         boardId,
@@ -70,14 +106,41 @@ export const setColumnTitle = createAsyncThunk(
 );
 
 export const getBoard = createAsyncThunk('board/getBoard', (id: string) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token') as string;
   if (token) {
     return boardsAPI.getBoard(id, token);
   }
   throw new Error();
 });
 
-const initialState: TBoardResponse = {} as TBoardResponse;
+export const updateTask = createAsyncThunk(
+  'board/updateTask',
+  async (
+    {
+      boardId,
+      columnId,
+      taskId,
+      task,
+    }: {
+      boardId: string;
+      columnId: string;
+      taskId: string;
+      task: TUpdateTaskRequestBody;
+    },
+    { dispatch }
+  ): Promise<TCreateTaskResponse> => {
+    const token = localStorage.getItem('token') as string;
+    const result = await tasksAPI.updateTask({
+      boardId,
+      columnId,
+      taskId,
+      task,
+      token,
+    });
+    dispatch(getBoard(boardId));
+    return result;
+  }
+);
 
 const boardSlice = createSlice({
   name: 'board',
@@ -89,15 +152,17 @@ const boardSlice = createSlice({
       .addCase(getBoard.fulfilled, (state, action) => {
         if (action.payload) {
           const { id, title, columns } = action.payload;
-          state.id = id;
-          state.title = title;
-          state.columns = columns;
+          state.boardData.id = id;
+          state.boardData.title = title;
+          state.boardData.columns = columns;
         }
       })
       .addCase(setColumnTitle.fulfilled, (state, action) => {
         if (action.payload) {
           const { id: columnId, title } = action.payload;
-          const column = state.columns.find(({ id }) => id === columnId);
+          const column = state.boardData.columns.find(
+            ({ id }) => id === columnId
+          );
           if (column) {
             column.title = title;
           }
@@ -106,7 +171,9 @@ const boardSlice = createSlice({
       .addCase(createTask.fulfilled, (state, action) => {
         const { title, order, description, userId, taskId, columnId } =
           action.payload;
-        const column = state.columns.find(({ id }) => id === columnId);
+        const column = state.boardData.columns.find(
+          ({ id }) => id === columnId
+        );
         if (column) {
           column.tasks.push({
             id: taskId,
@@ -121,7 +188,7 @@ const boardSlice = createSlice({
       })
       .addCase(createColumn.fulfilled, (state, action) => {
         const { id, title, order } = action.payload;
-        state.columns.push({
+        state.boardData.columns.push({
           id,
           title,
           order,

@@ -69,6 +69,15 @@ export type TTask = TTaskBase & {
   columnId: string;
 };
 
+export type TUpdateTaskRequestBody = {
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+  boardId: string;
+  columnId: string;
+};
+
 export type TFile = {
   taskId: string;
   file: string;
