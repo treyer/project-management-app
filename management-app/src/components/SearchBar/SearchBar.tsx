@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import style from './SearchBar.module.css';
 
@@ -18,6 +18,13 @@ const styleFocus = {
 
 function SearchBar() {
   const [inputFocus, setInputFocus] = useState(false);
+
+  useEffect(() => {
+    const iconSearchWhite = new Image();
+    iconSearchWhite.src = './assets/svg/icon-search-white.svg';
+    const iconSearchBlack = new Image();
+    iconSearchBlack.src = './assets/svg/icon-search-black.svg';
+  });
 
   return (
     <label htmlFor="search-input" className={style.label}>

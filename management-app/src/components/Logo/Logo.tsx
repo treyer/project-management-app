@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Typography } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import style from './Logo.module.css';
@@ -8,6 +8,13 @@ function Logo() {
 
   const matches = useMediaQuery('(min-width:720px)');
   const matches1 = useMediaQuery('(max-width:585px)');
+
+  useEffect(() => {
+    const logoImg = new Image();
+    logoImg.src = './assets/img/logo.png';
+    const logoImgHover = new Image();
+    logoImgHover.src = './assets/img/logo_hover.png';
+  });
 
   return (
     <Grid
