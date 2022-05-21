@@ -21,8 +21,14 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const { id: userDataId } = useAppSelector((state) => state.auth.userData);
   const userId = userDataId ?? userIdLS;
 
-  const { tasks } =
+  let { tasks } =
     useAppSelector((state) => getTasksByColumnId(state, id)) ?? [];
+
+  const tasksForSort = [...tasks];
+  tasksForSort.sort((a, b) => {
+    return a.order > b.order ? 1 : -1;
+  });
+  tasks = [...tasksForSort];
 
   const [isAddTaskFieldOpen, setIsAddTaskFieldOpen] = useState(false);
 
