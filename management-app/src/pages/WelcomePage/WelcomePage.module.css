@@ -30,9 +30,6 @@
 .card {
   transition: 0.2s;
   background-color: #278d9f2f;
-  -webkit-box-shadow: 10px 8px 27px -5px rgba(39, 141, 159, 0.75);
-  -moz-box-shadow: 10px 8px 27px -5px rgba(39, 141, 159, 0.75);
-  box-shadow: 10px 8px 27px -5px rgba(39, 141, 159, 0.75);
 }
 .card:hover {
   transform: scale(1.1);
@@ -51,5 +48,5 @@
 @media screen and (max-width: 640px) {
   .hidden {
     display: none;
-  } 
+  }
 }

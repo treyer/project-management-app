@@ -71,7 +71,7 @@ function WelcomePage() {
         }}
       />
       <div className={style.container}>
-        <Typography variant="h4" paddingTop={0}>
+        <Typography variant="h3" paddingTop={0}>
           Our team
         </Typography>
       </div>
