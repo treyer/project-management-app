@@ -20,25 +20,31 @@ function WelcomePage() {
   return (
     <div className={style.main}>
       <div className={style.sectionStart}>
-        <Card className={style.card}>
+        <Card className={style.card && style.hidden}>
           <CardMedia
             component="img"
             alt="img"
-            width={500}
-            height={500}
+            sx={{ minWidth: '480px', maxWidth: '500px', height: '500px' }}
             image="/assets/img/hero.png"
           />
         </Card>
-        <Card className={style.card} sx={{ width: '500px', height: '500px' }}>
+        <Card
+          className={style.card}
+          sx={{ minWidth: '400px', maxWidth: '500px', height: '500px' }}
+        >
           <CardContent>
-            <Typography variant="h2" paddingTop={15} height={100}>
+            <Typography
+              variant="h2"
+              paddingTop={15}
+              className={style.infoTitle}
+            >
               Manage App
             </Typography>
             <Typography
+              className={style.info}
               component="p"
               paddingTop={5}
               paddingBottom={8}
-              height={100}
               fontSize={18}
               sx={{ textAlign: 'justify' }}
             >

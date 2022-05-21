@@ -47,3 +47,9 @@
   gap: 35px;
   margin-bottom: 200px;
 }
+
+@media screen and (max-width: 640px) {
+  .hidden {
+    display: none;
+  } 
+}
