@@ -99,7 +99,7 @@ export type TCreateTaskResponse = {
   order: number;
   description: string;
   userId: string;
-  taskId: string;
+  id: string;
   boardId: string;
   columnId: string;
 };
