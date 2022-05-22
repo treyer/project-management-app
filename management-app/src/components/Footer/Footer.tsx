@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid, Link } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -13,6 +13,15 @@ const Item = styled('div')({
 function Footer() {
   const matches = useMediaQuery('(max-width:574px)');
   const matches1 = useMediaQuery('(min-width:465px)');
+
+  const imageSrcArr: string[] = ['/assets/svg/rss.svg'];
+
+  useEffect(() => {
+    imageSrcArr.forEach((imgSrc) => {
+      const img = new Image();
+      img.src = imgSrc;
+    });
+  });
 
   return (
     <footer className={style.footer}>
