@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import style from './SearchBar.module.css';
 
@@ -19,6 +19,18 @@ const styleFocus = {
 function SearchBar() {
   const [inputFocus, setInputFocus] = useState(false);
 
+  const imageSrcArr: string[] = [
+    '/assets/svg/icon-search-white.svg',
+    '/assets/svg/icon-search-black.svg',
+  ];
+
+  useEffect(() => {
+    imageSrcArr.forEach((imgSrc) => {
+      const img = new Image();
+      img.src = imgSrc;
+    });
+  });
+
   return (
     <label htmlFor="search-input" className={style.label}>
       <Item
@@ -33,8 +45,8 @@ function SearchBar() {
       <img
         src={
           inputFocus
-            ? './assets/svg/icon-search-black.svg'
-            : './assets/svg/icon-search-white.svg'
+            ? '/assets/svg/icon-search-black.svg'
+            : '/assets/svg/icon-search-white.svg'
         }
         alt="Search icon"
         className={style.icon}
