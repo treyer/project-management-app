@@ -5,6 +5,7 @@ import { experimentalStyled as styled } from '@mui/material/styles';
 type TParam = {
   text: string;
   isActive: boolean;
+  onClick: () => void;
 };
 
 const Btn = styled(Button)({
@@ -16,7 +17,7 @@ const Btn = styled(Button)({
   },
 });
 
-function LanguageButton({ text, isActive }: TParam) {
+function LanguageButton({ text, isActive, onClick }: TParam) {
   return (
     <Btn
       size="small"
@@ -26,6 +27,7 @@ function LanguageButton({ text, isActive }: TParam) {
           : { backgroundColor: 'rgba(0, 0, 0, 0.3)' }
       }
       disabled={isActive}
+      onClick={onClick}
     >
       {text}
     </Btn>

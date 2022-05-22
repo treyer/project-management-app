@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { experimentalStyled as styled } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 import style from './SearchBar.module.css';
 
 const Item = styled('input')({
@@ -18,13 +19,14 @@ const styleFocus = {
 
 function SearchBar() {
   const [inputFocus, setInputFocus] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <label htmlFor="search-input" className={style.label}>
       <Item
         id="search-input"
         type="search"
-        placeholder="Search"
+        placeholder={t('searchBar.placeHolder')}
         className={style.input}
         onFocus={() => setInputFocus(true)}
         onBlur={() => setInputFocus(false)}
