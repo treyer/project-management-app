@@ -65,7 +65,7 @@ function Footer() {
               <Item
                 className={style.logo}
                 style={{
-                  backgroundImage: `url(./assets/svg/rss.svg)`,
+                  backgroundImage: `url(/assets/svg/rss.svg)`,
                 }}
               />
             </Link>
