@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Typography } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import style from './Logo.module.css';
@@ -8,6 +8,18 @@ function Logo() {
 
   const matches = useMediaQuery('(min-width:720px)');
   const matches1 = useMediaQuery('(max-width:585px)');
+
+  const imageSrcArr: string[] = [
+    '/assets/img/logo.png',
+    '/assets/img/logo_hover.png',
+  ];
+
+  useEffect(() => {
+    imageSrcArr.forEach((imgSrc) => {
+      const img = new Image();
+      img.src = imgSrc;
+    });
+  });
 
   return (
     <Grid
@@ -26,7 +38,7 @@ function Logo() {
           className={style.image}
           style={{ display: 'block' }}
           src={
-            mouseOver ? './assets/img/logo_hover.png' : './assets/img/logo.png'
+            mouseOver ? '/assets/img/logo_hover.png' : '/assets/img/logo.png'
           }
           alt="Logo img"
         />
