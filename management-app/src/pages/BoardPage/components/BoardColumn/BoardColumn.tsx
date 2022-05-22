@@ -1,56 +1,55 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
 import { useDrag, useDrop } from 'react-dnd';
 
 import { TBoardColumnProps } from './BoardColumn.types';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { setColumnTitle, createTask } from '../../boardSlice';
-import { CreateTaskField } from '../CreateTaskField';
-import { TColumnResponse, TTaskResponse } from '../../../../api/types';
 import { TaskCard } from '../TaskCard';
 import { ColumnTitle } from '../ColumnTitle';
+import { getTasksByColumnId } from '../../BoardPage.utils';
+import { CreateTaskModal } from '../CreateTaskModal';
+import { TTaskResponse } from '../../../../api/types';
 // TODO: use TColumn instead of BoardColumnProps?
 export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
 
   const { id: boardId } = useAppSelector((state) => state.board.boardData);
+  // TODO:
   const userIdLS = localStorage.getItem('userId') ?? '';
-  const { id: userId } =
-    useAppSelector((state) => state.auth.userData) ?? userIdLS;
-  const { tasks } =
-    useAppSelector((state) => {
-      const currentColumn = state.board.boardData.columns.find(
-        (column) => column.id === id
-      );
-      if (currentColumn) {
-        return currentColumn;
-      }
-      return {} as TColumnResponse;
-    }) ?? [];
+  const { id: userDataId } = useAppSelector((state) => state.auth.userData);
+  const userId = userDataId ?? userIdLS;
+
+  let { tasks } =
+    useAppSelector((state) => getTasksByColumnId(state, id)) ?? [];
+
+  const tasksForSort = [...tasks];
+  tasksForSort.sort((a, b) => {
+    return a.order > b.order ? 1 : -1;
+  });
+  tasks = [...tasksForSort];
 
   const [isAddTaskFieldOpen, setIsAddTaskFieldOpen] = useState(false);
-  const [totalTasksCount, setTotalTasksCount] = useState(tasks.length);
 
-  useEffect(() => {
-    setTotalTasksCount(tasks.length);
-  }, [tasks]);
-
-  const addNewTask = (taskTitleInput: string) => {
-    const taskOrder = totalTasksCount + 1;
-    dispatch(
-      createTask({
-        boardId,
-        columnId: id,
-        task: {
-          title: taskTitleInput,
-          order: taskOrder,
-          description: taskTitleInput,
-          userId,
-        },
-      })
-    );
-  };
+  const addNewTask = useCallback(
+    (taskTitleInput: string, taskDescription: string) => {
+      const nextTaskOrder = tasks.length + 1;
+      dispatch(
+        createTask({
+          boardId,
+          columnId: id,
+          task: {
+            title: taskTitleInput,
+            order: nextTaskOrder,
+            description: taskDescription,
+            userId,
+          },
+        })
+      );
+    },
+    [tasks.length, dispatch, boardId, id, userId]
+  );
 
   const handleClickAway = (titleInput: string) => {
     dispatch(
@@ -61,10 +60,10 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
       })
     );
   };
-  // TODO: useMemo for tasks callbacks
-  const exitAddTaskField = () => {
+
+  const exitAddTaskField = useCallback(() => {
     setIsAddTaskFieldOpen(false);
-  };
+  }, []);
 
   const openAddTaskField = () => {
     setIsAddTaskFieldOpen(true);
@@ -101,23 +100,11 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
       >
         <Stack spacing={2}>
           <ColumnTitle title={title} handleClickAway={handleClickAway} />
-
-          {tasks &&
-            tasks.map(
-              ({
-                id: taskId,
-                title,
-                order,
-                done,
-                description,
-                userId,
-                files,
-              }: TTaskResponse) => (
-                <TaskCard
-                  key={taskId}
-                  columnId={id}
-                  boardId={boardId}
-                  taskInfo={{
+          <Box sx={{ overflow: 'auto', maxHeight: '60vh' }}>
+            {tasks &&
+              tasks.map(
+                (
+                  {
                     id: taskId,
                     title,
                     order,
@@ -125,16 +112,36 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
                     description,
                     userId,
                     files,
-                  }}
-                />
-              )
-            )}
+                  }: TTaskResponse,
+                  index: number
+                ) => {
+                  const uniqueKey = index + taskId;
+                  return (
+                    <TaskCard
+                      key={uniqueKey}
+                      columnId={id}
+                      boardId={boardId}
+                      taskInfo={{
+                        id: taskId,
+                        title,
+                        order,
+                        done,
+                        description,
+                        userId,
+                        files,
+                      }}
+                    />
+                  );
+                }
+              )}
+          </Box>
           {!isAddTaskFieldOpen ? (
             <Button onClick={openAddTaskField}>+ Add a task</Button>
           ) : (
-            <CreateTaskField
+            <CreateTaskModal
               createTask={addNewTask}
               onRequestClose={exitAddTaskField}
+              isModalOpen={isAddTaskFieldOpen}
             />
           )}
         </Stack>
