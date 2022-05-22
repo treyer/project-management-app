@@ -1,0 +1,52 @@
+.main {
+  background-color: #e5eff8;
+  background-size: cover;
+  background-attachment: fixed;
+  overflow-y: auto;
+}
+
+.sectionStart {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 35px;
+  margin: 120px;
+}
+
+.containerParal {
+  width: 100%;
+  height: 300px;
+  padding: 0;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.container {
+  padding-bottom: 40px;
+}
+
+.card {
+  transition: 0.2s;
+  background-color: #278d9f2f;
+}
+.card:hover {
+  transform: scale(1.1);
+}
+
+.sectionEnd {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 35px;
+  margin-bottom: 200px;
+}
+
+@media screen and (max-width: 640px) {
+  .hidden {
+    display: none;
+  }
+}

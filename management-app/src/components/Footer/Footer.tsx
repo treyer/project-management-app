@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid, Link } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -16,6 +16,15 @@ function Footer() {
   const matches1 = useMediaQuery('(min-width:465px)');
 
   const { t } = useTranslation();
+
+  const imageSrcArr: string[] = ['/assets/svg/rss.svg'];
+
+  useEffect(() => {
+    imageSrcArr.forEach((imgSrc) => {
+      const img = new Image();
+      img.src = imgSrc;
+    });
+  });
 
   return (
     <footer className={style.footer}>
@@ -68,7 +77,7 @@ function Footer() {
               <Item
                 className={style.logo}
                 style={{
-                  backgroundImage: `url(./assets/svg/rss.svg)`,
+                  backgroundImage: `url(/assets/svg/rss.svg)`,
                 }}
               />
             </Link>

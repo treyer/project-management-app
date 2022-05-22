@@ -5,7 +5,7 @@ import { BoardPage } from './pages/BoardPage';
 import EditProfile from './pages/EditProfile';
 import MainPage from './pages/MainPage';
 import NotFoundPage from './pages/NotFoundPage';
-import WelcomePage from './pages/WelcomePage';
+import WelcomePage from './pages/WelcomePage/WelcomePage';
 import { RouteID, TPath } from './types';
 
 export const ROUTES: TPath[] = [
