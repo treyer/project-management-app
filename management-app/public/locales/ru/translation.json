@@ -54,5 +54,25 @@
     "PasswordLabel": "Пароль",
     "ConfirmPasswordLabel": "Повтор пароля",
     "loadingIndicator": "...Загрузка"
+  },
+  "mainPage": {
+    "errSomethingWentWrong": "Что-то пошло не так!",
+    "AddBoardBtn": "Добавить Борд",
+    "ifDeleteBoardMessage": "Вы хотите удалить Борд?",
+    "ifGoToNewBoardMessage": "Вы хотите перейти на новый Борд?",
+    "boardNameText": "Имя Борда",
+    "addBoardNameLabel": "Добавьте имя Борда",
+    "confirmMessageText": "Подтвердите действие",
+    "yes": "Да",
+    "no": "Нет"
+  },
+  "boardPage": {
+    "unknownError": "Неизвестная ошибка",
+    "addColumnText": "+ Добавить колонку",
+    "addTaskText": "+ Добавить таск",
+    "enterTitleForColumnText": "Ввести заголовок для этой колонки...",
+    "addColumnBtn": "Добавить колонку",
+    "enterTaskTitleText": "Ввести заголовок для данного таска...",
+    "addTaskBtn": "Добавить таск"
   }
 }

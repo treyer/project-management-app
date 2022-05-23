@@ -54,5 +54,25 @@
     "PasswordLabel": "Password",
     "ConfirmPasswordLabel": "Confirm Password",
     "loadingIndicator": "...Loading"
+  },
+  "mainPage": {
+    "errSomethingWentWrong": "Something went wrong!",
+    "AddBoardBtn": "Add board",
+    "ifDeleteBoardMessage": "Would you like delete the board?",
+    "ifGoToNewBoardMessage": "Would you like go to the new board?",
+    "boardNameText": "Board name",
+    "addBoardNameLabel": "Add board name",
+    "confirmMessageText": "Confirm message",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "boardPage": {
+    "unknownError": "Unknown Error",
+    "addColumnText": "+ Add a column",
+    "addTaskText": "+ Add a task",
+    "enterTitleForColumnText": "Enter a title for this column...",
+    "addColumnBtn": "Add column",
+    "enterTaskTitleText": "Enter a title for this task...",
+    "addTaskBtn": "Add task"
   }
 }
