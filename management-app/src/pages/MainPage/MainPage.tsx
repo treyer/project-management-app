@@ -1,4 +1,4 @@
-import { Alert, Box, CircularProgress, Grid } from '@mui/material';
+import { Alert, CircularProgress, Grid } from '@mui/material';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -45,11 +45,11 @@ function MainPage() {
       <Grid
         container
         spacing={3}
-        gap={3}
+        gap={2.5}
         direction="row"
         alignContent="flex-start"
         margin="0 auto"
-        padding="50px"
+        padding="25px"
         minHeight="75vh"
         maxWidth="1200px"
         width="100%"
