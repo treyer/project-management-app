@@ -14,6 +14,7 @@ export const BOARDS_API_ERRORS: TAPIErrorsMap = {
   [StatusCodes.UNAUTHORIZED]: 'Access token is missing or invalid.',
   [StatusCodes.NOT_FOUND]: 'Board not found.',
   [StatusCodes.INTERNAL_SERVER_ERROR]: 'Internal Server Error.',
+  [StatusCodes.BAD_REQUEST]: 'Validation failed (uuid  is expected)',
 };
 
 export const TASKS_API_ERRORS: TAPIErrorsMap = {

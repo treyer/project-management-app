@@ -21,7 +21,11 @@ type TBoardState = {
   isNewColumnLoading: boolean;
 };
 const initialState: TBoardState = {
-  boardData: {} as TBoardResponse,
+  boardData: {
+    id: '',
+    title: '',
+    columns: [],
+  } as TBoardResponse,
   isBoardLoading: false,
   isColumnTitleLoading: false,
   isNewTaskLoading: false,
