@@ -1,0 +1,78 @@
+{
+  "searchBar": {
+    "placeHolder": "Search"
+  },
+  "footer": {
+    "Andrei": "Andrei Kazhanenka",
+    "Marina": "Marina Presmytskaia",
+    "Lena": "Elena Bezrodnova"
+  },
+  "header": {
+    "Boards": "Boards",
+    "addBoard": "add Board"
+  },
+  "menuModal": {
+    "LogIn": "Log In",
+    "SignUp": "Sign Up",
+    "LogOut": "Log out",
+    "EditProfile": "Edit Profile"
+  },
+  "welcomePage": {
+    "aboutAppText": "Managing resources, teams, deadlines or project budgets will be easy with all the professional Manage App features. With features for all project phases you can get your projects done from start-to-end smoothly.",
+    "registerText": "* Register to use all the features applications.",
+    "teamTitle": "Our team"
+  },
+  "aboutTeam": {
+    "Lena": "Elena",
+    "Andrey": "Andrei",
+    "Marina": "Marina",
+    "LenaInfo": "Love cats, dogs and React class components",
+    "AndreiInfo": "Like to drink vodka with herring, but my wife forbids",
+    "MarinaInfo": "Like to cook borscht and fry meatballs. Hate layouts and node.js"
+  },
+  "signInForm": {
+    "unknownError": "Unknown Error",
+    "signIn": "Sign In",
+    "loadingIndicatorText": "...Loading",
+    "errLoginMinLength": "Login should be of minimum 2 characters length",
+    "errLoginRequired": "Login is required",
+    "errPasswordMinLength": "Password should be of minimum 8 characters length",
+    "errPasswordRequired": "Password is required",
+    "LoginLabel": "Login",
+    "PasswordLabel": "Password"
+  },
+  "signUpForm": {
+    "signUpText": "Sign Up",
+    "errNameRequired": "Name is required",
+    "errLoginMinLength": "Login should be of minimum 2 characters length",
+    "errLoginRequired": "Login is required",
+    "errPasswordMinLength": "Password should be of minimum 8 characters length",
+    "errPasswordRequired": "Password is required",
+    "errPasswordDoNotMatch": "Your passwords do not match",
+    "NameLabel": "Name",
+    "LoginLabel": "Login",
+    "PasswordLabel": "Password",
+    "ConfirmPasswordLabel": "Confirm Password",
+    "loadingIndicator": "...Loading"
+  },
+  "mainPage": {
+    "errSomethingWentWrong": "Something went wrong!",
+    "AddBoardBtn": "Add board",
+    "ifDeleteBoardMessage": "Would you like delete the board?",
+    "ifGoToNewBoardMessage": "Would you like go to the new board?",
+    "boardNameText": "Board name",
+    "addBoardNameLabel": "Add board name",
+    "confirmMessageText": "Confirm message",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "boardPage": {
+    "unknownError": "Unknown Error",
+    "addColumnText": "+ Add a column",
+    "addTaskText": "+ Add a task",
+    "enterTitleForColumnText": "Enter a title for this column...",
+    "addColumnBtn": "Add column",
+    "enterTaskTitleText": "Enter a title for this task...",
+    "addTaskBtn": "Add task"
+  }
+}

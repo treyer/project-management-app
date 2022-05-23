@@ -1,4 +1,5 @@
 import React, { ChangeEvent, MouseEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Button, ClickAwayListener, TextField } from '@mui/material';
 import { TCreateColumnFieldProps } from './CreateColumnField.types';
 
@@ -7,6 +8,7 @@ export function CreateColumnField({
   onRequestClose,
 }: TCreateColumnFieldProps) {
   const [columnTitleInput, setColumnTitleInput] = useState('');
+  const { t } = useTranslation();
 
   const addColumn = (e: MouseEvent) => {
     e.stopPropagation();
@@ -33,12 +35,12 @@ export function CreateColumnField({
         <TextField
           fullWidth
           name="column title"
-          placeholder="Enter a title for this column..."
+          placeholder={t('boardPage.enterTitleForColumnText')}
           value={columnTitleInput}
           onChange={handleOnChange}
         />
       </ClickAwayListener>
-      <Button onClick={addColumn}>Add column</Button>
+      <Button onClick={addColumn}>{t('boardPage.addColumnBtn')}</Button>
       <Button onClick={onRequestClose}>X</Button>
     </Box>
   );

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { experimentalStyled as styled } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 import style from './SearchBar.module.css';
 
 const Item = styled('input')({
@@ -18,6 +19,7 @@ const styleFocus = {
 
 function SearchBar() {
   const [inputFocus, setInputFocus] = useState(false);
+  const { t } = useTranslation();
 
   const imageSrcArr: string[] = [
     '/assets/svg/icon-search-white.svg',
@@ -36,7 +38,7 @@ function SearchBar() {
       <Item
         id="search-input"
         type="search"
-        placeholder="Search"
+        placeholder={t('searchBar.placeHolder')}
         className={style.input}
         onFocus={() => setInputFocus(true)}
         onBlur={() => setInputFocus(false)}
