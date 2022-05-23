@@ -6,6 +6,7 @@ import {
   DialogContentText,
   DialogActions,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 type TConfirmMessage = {
   openDialog: boolean;
@@ -20,18 +21,22 @@ function ConfirmMessage({
   onConfirm,
   onDecline,
 }: TConfirmMessage) {
+  const { t } = useTranslation();
+
   return (
     <Dialog aria-labelledby="responsive-dialog-title" open={openDialog}>
-      <DialogTitle id="responsive-dialog-title">Confirm message</DialogTitle>
+      <DialogTitle id="responsive-dialog-title">
+        {t('mainPage.confirmMessageText')}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>{text}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={onConfirm}>
-          Yes
+          {t('mainPage.yes')}
         </Button>
         <Button autoFocus onClick={onDecline}>
-          No
+          {t('mainPage.no')}
         </Button>
       </DialogActions>
     </Dialog>

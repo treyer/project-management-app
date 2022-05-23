@@ -17,6 +17,7 @@ import {
   IconButton,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import {
   closeBoardModal,
@@ -35,6 +36,7 @@ function BoardModal({ onClose }: TBoardModalProps) {
   const { isDialogOpen } = useAppSelector((state) => state.main);
   const dispatch = useAppDispatch();
   const boardId = useAppSelector((state) => state.main.boardData.id);
+  const { t } = useTranslation();
 
   const [titleBoard, setTitleBoard] = useState<string>('');
   const [isDisabled, setDisabled] = useState<boolean>(true);
@@ -75,7 +77,7 @@ function BoardModal({ onClose }: TBoardModalProps) {
       {isDialogOpen && (
         <ConfirmMessage
           openDialog={isDialogOpen}
-          text="Would you like go to the new board?"
+          text={t('mainPage.ifGoToNewBoardMessage')}
           onConfirm={handleConfirm}
           onDecline={handleDecline}
         />
@@ -110,7 +112,7 @@ function BoardModal({ onClose }: TBoardModalProps) {
             borderBottom: '1px solid',
           }}
         >
-          Add board
+          {t('mainPage.AddBoardBtn')}
         </Typography>
         <Box
           sx={{
@@ -129,11 +131,11 @@ function BoardModal({ onClose }: TBoardModalProps) {
         </Box>
         <Box component="form" onSubmit={handleSubmitBoard} sx={{ Width: 600 }}>
           <Typography component="p" gutterBottom>
-            Board name
+            {t('mainPage.boardNameText')}
           </Typography>
           <TextField
             id="outlined-basic"
-            label="Add board name"
+            label={t('mainPage.addBoardNameLabel')}
             variant="outlined"
             size="small"
             sx={{ marginBottom: '20px' }}
@@ -146,7 +148,7 @@ function BoardModal({ onClose }: TBoardModalProps) {
           onClick={handleSubmitBoard}
           disabled={isDisabled}
         >
-          Add board
+          {t('mainPage.AddBoardBtn')}
         </Button>
       </Grid>
     </>

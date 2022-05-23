@@ -1,5 +1,6 @@
 import React, { ChangeEvent, MouseEvent, useState } from 'react';
 import { Box, Button, ClickAwayListener, TextField } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { TCreateTaskFieldProps } from './CreateTaskField.types';
 
 export function CreateTaskField({
@@ -7,7 +8,7 @@ export function CreateTaskField({
   onRequestClose,
 }: TCreateTaskFieldProps) {
   const [taskTitleInput, setTaskTitleInput] = useState('');
-
+  const { t } = useTranslation();
   // const addTask = (e: MouseEvent) => {
   //   e.stopPropagation();
   //   if (taskTitleInput) {
@@ -33,12 +34,12 @@ export function CreateTaskField({
         <TextField
           fullWidth
           name="tack title"
-          placeholder="Enter a title for this task..."
+          placeholder={t('boardPage.enterTaskTitleText')}
           value={taskTitleInput}
           onChange={handleOnChange}
         />
       </ClickAwayListener>
-      <Button>Add task</Button>
+      <Button>{t('boardPage.addTaskBtn')}</Button>
       <Button onClick={onRequestClose}>X</Button>
     </Box>
   );

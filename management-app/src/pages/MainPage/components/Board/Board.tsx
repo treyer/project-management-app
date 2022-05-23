@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../../../../store';
 import { closeDialog, deleteBoard } from '../../slice/mainSlice';
 import ConfirmMessage from '../../../../components/ConfirmMessage/ConfirmMessage';
@@ -21,6 +22,7 @@ type TBoardProps = {
 
 function Board({ titleBoard, id, columnNum }: TBoardProps) {
   const [isDialogOpen, setDialogOpen] = useState(false);
+  const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
 
@@ -44,7 +46,7 @@ function Board({ titleBoard, id, columnNum }: TBoardProps) {
       {isDialogOpen && (
         <ConfirmMessage
           openDialog={isDialogOpen}
-          text="Would you like delete the board?"
+          text={t('mainPage.ifDeleteBoardMessage')}
           onConfirm={handleConfirm}
           onDecline={handleDecline}
         />

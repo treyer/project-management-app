@@ -1,11 +1,14 @@
 import { memo } from 'react';
 import { Grid, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 type TProps = {
   onClick: () => void;
 };
 
 function AddBoardBtn({ onClick }: TProps) {
+  const { t } = useTranslation();
+
   return (
     <Grid
       container
@@ -33,7 +36,7 @@ function AddBoardBtn({ onClick }: TProps) {
           textTransform: 'uppercase',
         }}
       >
-        Add board
+        {t('mainPage.AddBoardBtn')}
       </Typography>
     </Grid>
   );

@@ -5,10 +5,14 @@ const signUpFields: {
   type: string;
   label: string;
 }[] = [
-  { fieldName: 'name', type: 'text', label: 'Name' },
-  { fieldName: 'login', type: 'text', label: 'Login' },
-  { fieldName: 'password', type: 'password', label: 'Password' },
-  { fieldName: 'confirmPassword', type: 'password', label: 'Confirm password' },
+  { fieldName: 'name', type: 'text', label: 'NameLabel' },
+  { fieldName: 'login', type: 'text', label: 'LoginLabel' },
+  { fieldName: 'password', type: 'password', label: 'PasswordLabel' },
+  {
+    fieldName: 'confirmPassword',
+    type: 'password',
+    label: 'ConfirmPasswordLabel',
+  },
 ];
 
 export { signUpFields };
