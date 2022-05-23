@@ -121,7 +121,11 @@ function BoardModal({ onClose }: TBoardModalProps) {
             margin: '15px auto',
           }}
         >
-          <img src="./assets/svg/board.svg" alt="board" />
+          <img
+            src="./assets/svg/board.svg"
+            alt="board"
+            style={{ width: '190px', height: '115px' }}
+          />
         </Box>
         <Box component="form" onSubmit={handleSubmitBoard} sx={{ Width: 600 }}>
           <Typography component="p" gutterBottom>

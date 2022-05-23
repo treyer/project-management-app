@@ -1,7 +1,13 @@
 /* eslint-disable max-len */
 import { useCallback, MouseEvent, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Card, CardHeader, CardMedia, IconButton } from '@mui/material';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  IconButton,
+  Typography,
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAppDispatch } from '../../../../store';
 import { closeDialog, deleteBoard } from '../../slice/mainSlice';
@@ -10,9 +16,10 @@ import ConfirmMessage from '../../../../components/ConfirmMessage/ConfirmMessage
 type TBoardProps = {
   titleBoard: string;
   id: string;
+  columnNum: number;
 };
 
-function Board({ titleBoard, id }: TBoardProps) {
+function Board({ titleBoard, id, columnNum }: TBoardProps) {
   const [isDialogOpen, setDialogOpen] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -43,8 +50,18 @@ function Board({ titleBoard, id }: TBoardProps) {
         />
       )}
       <NavLink to={`/boards/${id}`} style={{ textDecoration: 'none' }}>
-        <Card sx={{ width: 230, height: 170 }}>
+        <Card
+          sx={{
+            width: '270px',
+            height: '200px',
+            backgroundImage: 'url(./assets/svg/board.svg)',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'bottom',
+            position: 'relative',
+          }}
+        >
           <CardHeader
+            sx={{ textAlign: 'left' }}
             action={
               <IconButton
                 aria-label="delete"
@@ -56,12 +73,15 @@ function Board({ titleBoard, id }: TBoardProps) {
             }
             title={titleBoard}
           />
-          <CardMedia
-            component="img"
-            height="70"
-            image="./assets/svg/board.svg"
-            alt="board"
-          />
+          <CardContent>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ textAlign: 'left', position: 'absolute', bottom: '5px' }}
+            >
+              {`Number of Columns: ${columnNum}`}
+            </Typography>
+          </CardContent>
         </Card>
       </NavLink>
     </>
