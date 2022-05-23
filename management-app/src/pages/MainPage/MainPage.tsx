@@ -1,5 +1,6 @@
 import { Alert, Box, CircularProgress, Grid } from '@mui/material';
 import { useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import AddBoardBtn from './components/AddBoardBtn/AddBoardBtn';
 import Board from './components/Board/Board';
@@ -16,6 +17,7 @@ function MainPage() {
   const isLoading = useAppSelector((state) => state.main.isLoading);
   const isError = useAppSelector((state) => state.main.isError);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(getBoards());

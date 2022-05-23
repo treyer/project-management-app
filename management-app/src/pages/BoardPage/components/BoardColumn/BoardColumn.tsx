@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { useCallback, useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { useDrag, useDrop } from 'react-dnd';
 
 import { TBoardColumnProps } from './BoardColumn.types';
@@ -14,6 +15,7 @@ import { TTaskResponse } from '../../../../api/types';
 // TODO: use TColumn instead of BoardColumnProps?
 export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const { id: boardId } = useAppSelector((state) => state.board.boardData);
   // TODO:
@@ -136,7 +138,9 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
               )}
           </Box>
           {!isAddTaskFieldOpen ? (
-            <Button onClick={openAddTaskField}>+ Add a task</Button>
+            <Button onClick={openAddTaskField}>
+              {t('boardPage.addTaskText')}
+            </Button>
           ) : (
             <CreateTaskModal
               createTask={addNewTask}

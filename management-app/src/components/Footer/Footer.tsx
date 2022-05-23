@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Grid, Link } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTranslation } from 'react-i18next';
 import style from './Footer.module.css';
 import GitLink from '../GitLink/GitLink';
 
@@ -11,8 +12,11 @@ const Item = styled('div')({
 });
 
 function Footer() {
-  const matches = useMediaQuery('(max-width:574px)');
-  const matches1 = useMediaQuery('(min-width:465px)');
+  const matches = useMediaQuery('(max-width:615px)');
+  const matches1 = useMediaQuery('(min-width:510px)');
+  const matches2 = useMediaQuery('(max-width:445px)');
+
+  const { t } = useTranslation();
 
   const imageSrcArr: string[] = ['/assets/svg/rss.svg'];
 
@@ -30,6 +34,7 @@ function Footer() {
           container
           justifyContent={matches ? 'center' : 'space-between'}
           alignItems="center"
+          flexDirection={matches2 ? 'column' : 'row'}
           className={style.container}
         >
           <Grid container item style={{ width: 'auto' }}>
@@ -43,23 +48,24 @@ function Footer() {
               item
               style={{ width: 'auto' }}
               justifyContent={matches ? 'center' : 'space-between'}
+              flexDirection={matches2 ? 'column' : 'row'}
             >
               <Grid item>
                 <GitLink
                   linkSrc="https://github.com/MarinaPresmytskaia"
-                  text="Marina Presmytskaia"
+                  text={t('footer.Marina')}
                 />
               </Grid>
               <Grid item>
                 <GitLink
                   linkSrc="https://github.com/ElenaBezro"
-                  text="Elena Bezrodnova"
+                  text={t('footer.Lena')}
                 />
               </Grid>
               <Grid item>
                 <GitLink
                   linkSrc="https://github.com/treyer"
-                  text="Andrei Kazhanenka"
+                  text={t('footer.Andrei')}
                 />
               </Grid>
             </Grid>

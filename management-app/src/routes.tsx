@@ -5,7 +5,7 @@ import { BoardPage } from './pages/BoardPage';
 import EditProfile from './pages/EditProfile';
 import MainPage from './pages/MainPage';
 import NotFoundPage from './pages/NotFoundPage';
-import WelcomePage from './pages/WelcomePage';
+import WelcomePage from './pages/WelcomePage/WelcomePage';
 import { RouteID, TPath } from './types';
 
 export const ROUTES: TPath[] = [
@@ -33,21 +33,21 @@ export const ROUTES: TPath[] = [
   {
     id: RouteID.LogIn,
     routePath: '/login',
-    title: 'Log In',
+    title: 'LogIn',
     element: <SignInForm />,
     isShownWhenLoggedIn: false,
   },
   {
     id: RouteID.SignUp,
     routePath: '/signup',
-    title: 'Sign Up',
+    title: 'SignUp',
     element: <SignUpForm />,
     isShownWhenLoggedIn: false,
   },
   {
     id: RouteID.EditProfile,
     routePath: '/editprofile',
-    title: 'Edit Profile',
+    title: 'EditProfile',
     element: <EditProfile />,
     isShownWhenLoggedIn: true,
   },

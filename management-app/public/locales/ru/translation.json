@@ -1,0 +1,78 @@
+{
+  "searchBar": {
+    "placeHolder": "Поиск"
+  },
+  "footer": {
+    "Andrei": "Андрей Кожаненко",
+    "Marina": "Марина Пресмыцкая",
+    "Lena": "Елена Безроднова"
+  },
+  "header": {
+    "Boards": "Борды",
+    "addBoard": "добавить Борд"
+  },
+  "menuModal": {
+    "LogIn": "Войти",
+    "SignUp": "Регистрация",
+    "LogOut": "Выйти",
+    "EditProfile": "Редактировать профиль"
+  },
+  "welcomePage": {
+    "aboutAppText": "Управлять ресурсами, командами, сроками выполнения или бюджетами проектов будет легко с профессиональным функционалом нашего приложения Manage App. С предоставляемыми вам возможностями для всех этапов работы над проектами вы сможете реализовать свой проект от начала до конца очень лекго и гладко.",
+    "registerText": "* Зарегистрируйтесь, чтобы воспользоваться всеми возможностями приложения",
+    "teamTitle": "Наша команда"
+  },
+  "aboutTeam": {
+    "Lena": "Елена",
+    "Andrey": "Андрей",
+    "Marina": "Марина",
+    "LenaInfo": "Обожаю котиков, собачек и классовые компоненты",
+    "AndreiInfo": "Люблю выпить водочки с селёдочкой, но жена запрещает",
+    "MarinaInfo": "Люблю варить борщ и жарить котлеты. Ненавижу вёрстку и node.js"
+  },
+  "signInForm": {
+    "unknownError": "Неизвестная ошибка",
+    "signIn": "Войти",
+    "loadingIndicatorText": "...Загрузка",
+    "errLoginMinLength": "Поле 'логин' должно содержать минимум 2 символа",
+    "errLoginRequired": "Поле 'логин' обязательно для заполнения",
+    "errPasswordMinLength": "Поле 'пароль' должно содержать не менее 8 символов",
+    "errPasswordRequired": "Поле 'пароль' обязательно для заполнения",
+    "LoginLabel": "Логин",
+    "PasswordLabel": "Пароль"
+  },
+  "signUpForm": {
+    "signUpText": "Регистрация",
+    "errNameRequired": "Поле 'имя' обязательно для заполнения",
+    "errLoginMinLength": "Поле 'логин' должно содержать минимум 2 символа",
+    "errLoginRequired": "Поле 'логин' обязательно для заполнения",
+    "errPasswordMinLength": "Поле 'пароль' должно содержать не менее 8 символов",
+    "errPasswordRequired": "Поле 'пароль' обязательно для заполнения",
+    "errPasswordDoNotMatch": "Повторный ввод пароля не совпадает с полем 'пароль'",
+    "NameLabel": "Имя",
+    "LoginLabel": "Логин",
+    "PasswordLabel": "Пароль",
+    "ConfirmPasswordLabel": "Повтор пароля",
+    "loadingIndicator": "...Загрузка"
+  },
+  "mainPage": {
+    "errSomethingWentWrong": "Что-то пошло не так!",
+    "AddBoardBtn": "Добавить Борд",
+    "ifDeleteBoardMessage": "Вы хотите удалить Борд?",
+    "ifGoToNewBoardMessage": "Вы хотите перейти на новый Борд?",
+    "boardNameText": "Имя Борда",
+    "addBoardNameLabel": "Добавьте имя Борда",
+    "confirmMessageText": "Подтвердите действие",
+    "yes": "Да",
+    "no": "Нет"
+  },
+  "boardPage": {
+    "unknownError": "Неизвестная ошибка",
+    "addColumnText": "+ Добавить колонку",
+    "addTaskText": "+ Добавить таск",
+    "enterTitleForColumnText": "Ввести заголовок для этой колонки...",
+    "addColumnBtn": "Добавить колонку",
+    "enterTaskTitleText": "Ввести заголовок для данного таска...",
+    "addTaskBtn": "Добавить таск"
+  }
+}

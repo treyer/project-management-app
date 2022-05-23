@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, Box, Button, Skeleton, Stack } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { useDrop } from 'react-dnd';
 
 import { useParams } from 'react-router-dom';
@@ -11,6 +12,7 @@ import { TColumn, TColumnResponse } from '../../api/types';
 import { CreateColumnModal } from './components/CreateColumnModal';
 
 export function BoardPage() {
+  const { t } = useTranslation();
   const { boardId } = useParams();
 
   const { isBoardLoading } = useAppSelector((state: RootState) => state.board);
@@ -26,10 +28,14 @@ export function BoardPage() {
         .unwrap()
         .then(() => setError(''))
         .catch((e) => {
-          setError(typeof e.message === 'string' ? e.message : 'Unknown Error');
+          setError(
+            typeof e.message === 'string'
+              ? e.message
+              : t('boardPage.unknownError')
+          );
         });
     }
-  }, [dispatch, boardId]);
+  }, [dispatch, boardId, t]);
 
   // TODO: find a way to store columns in the right order instead of using sort
   let columns = useAppSelector(
@@ -60,12 +66,14 @@ export function BoardPage() {
           .then(() => setError(''))
           .catch((e) => {
             setError(
-              typeof e.message === 'string' ? e.message : 'Unknown Error'
+              typeof e.message === 'string'
+                ? e.message
+                : t('boardPage.unknownError')
             );
           });
       }
     },
-    [boardId, columns.length, dispatch]
+    [boardId, columns.length, dispatch, t]
   );
 
   const exitAddColumnField = useCallback(() => {
@@ -112,7 +120,7 @@ export function BoardPage() {
             ))}
         {!isAddColumnFieldOpen ? (
           <Button sx={{ height: 100 }} onClick={openAddColumnField}>
-            + Add a column
+            {t('boardPage.addColumnText')}
           </Button>
         ) : (
           <CreateColumnModal
