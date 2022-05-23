@@ -81,7 +81,7 @@ function Board({ titleBoard, id, columnNum }: TBoardProps) {
               color="text.secondary"
               sx={{ textAlign: 'left', position: 'absolute', bottom: '5px' }}
             >
-              {`Number of Columns: ${columnNum}`}
+              {`${t('mainPage.numberOfColumns')}: ${columnNum}`}
             </Typography>
           </CardContent>
         </Card>

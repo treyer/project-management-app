@@ -64,7 +64,8 @@
     "addBoardNameLabel": "Add board name",
     "confirmMessageText": "Confirm message",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "numberOfColumns": "Number of columns"
   },
   "boardPage": {
     "unknownError": "Unknown Error",

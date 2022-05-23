@@ -64,7 +64,8 @@
     "addBoardNameLabel": "Добавьте имя Борда",
     "confirmMessageText": "Подтвердите действие",
     "yes": "Да",
-    "no": "Нет"
+    "no": "Нет",
+    "numberOfColumns": "Количество колонок"
   },
   "boardPage": {
     "unknownError": "Неизвестная ошибка",
