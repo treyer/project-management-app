@@ -1,25 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import * as yup from 'yup';
+import React, { useState, useEffect, useMemo } from 'react';
+import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { Alert, Box, Stack, TextField, Typography, Fade } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { useTranslation } from 'react-i18next';
 
 import { useNavigate } from 'react-router-dom';
 import { SignInFormValues } from './SignInForm.types';
 import { signInFields } from './SignInForm.utils';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { signIn } from '../authSlice';
-
-const loginValidationSchema = yup.object({
-  login: yup
-    .string()
-    .min(2, 'Login should be of minimum 2 characters length')
-    .required('Login is required'),
-  password: yup
-    .string()
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required('Password is required'),
-});
 
 const initialValues: SignInFormValues = {
   login: '',
@@ -31,6 +21,20 @@ function SignInForm() {
   const dispatch = useAppDispatch();
   const [signInError, setSignInError] = useState('');
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const loginValidationSchema = useMemo(
+    () =>
+      Yup.object().shape({
+        login: Yup.string()
+          .min(2, t('signInForm.errLoginMinLength'))
+          .required(t('signInForm.errLoginRequired')),
+        password: Yup.string()
+          .min(8, t('signInForm.errPasswordMinLength'))
+          .required(t('signInForm.errPasswordRequired')),
+      }),
+    [t]
+  );
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -47,7 +51,9 @@ function SignInForm() {
         .then(() => setSignInError(''))
         .catch((e) => {
           setSignInError(
-            typeof e.message === 'string' ? e.message : 'Unknown Error'
+            typeof e.message === 'string'
+              ? e.message
+              : t('signInForm.unknownError')
           );
         });
     },
@@ -55,9 +61,13 @@ function SignInForm() {
 
   return (
     <Stack alignItems="center" justifyContent="center" sx={{ height: '100%' }}>
-      <Box component="form" onSubmit={formik.handleSubmit} sx={{ width: 600 }}>
+      <Box
+        component="form"
+        onSubmit={formik.handleSubmit}
+        sx={{ maxWidth: 600, minWidth: 280 }}
+      >
         <Typography variant="h3" gutterBottom>
-          Sign In
+          {t('signInForm.signIn')}
         </Typography>
 
         <Box sx={{ m: 2 }}>
@@ -76,7 +86,7 @@ function SignInForm() {
               id={elem.fieldName}
               name={elem.fieldName}
               type={elem.type}
-              label={elem.label}
+              label={t(`signInForm.${elem.label}`)}
               value={formik.values[elem.fieldName]}
               onChange={formik.handleChange}
               error={
@@ -92,9 +102,9 @@ function SignInForm() {
             variant="contained"
             type="submit"
             loading={isLoading}
-            loadingIndicator="...Loading"
+            loadingIndicator={t('signInForm.loadingIndicatorText')}
           >
-            Sign In
+            {t('signInForm.signIn')}
           </LoadingButton>
         </Stack>
       </Box>

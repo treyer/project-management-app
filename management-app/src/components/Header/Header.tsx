@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTranslation } from 'react-i18next';
 import { ROUTES } from '../../routes';
 import { RouteID } from '../../types';
 import Logo from '../Logo/Logo';
@@ -26,6 +27,7 @@ const StyledGrid = styled(Grid)({
 
 function Header() {
   const { isLoggedIn } = useAppSelector((state) => state.auth);
+  const { t } = useTranslation();
 
   const matches = useMediaQuery('(max-width:900px)');
   const matches1 = useMediaQuery('(max-width:470px)');
@@ -64,14 +66,19 @@ function Header() {
                   key={ROUTES[RouteID.Main].id}
                   to={ROUTES[RouteID.Main].routePath}
                 >
-                  <NavButton title={ROUTES[RouteID.Main].title} />
+                  <NavButton
+                    title={t(`header.${ROUTES[RouteID.Main].title}`)}
+                  />
                 </Link>
               </StyledGrid>
             )}
 
             {isLoggedIn && !matches && (
               <StyledGrid item>
-                <NavButton title="add Board" startIcon={<AddIcon />} />
+                <NavButton
+                  title={t('header.addBoard')}
+                  startIcon={<AddIcon />}
+                />
               </StyledGrid>
             )}
 

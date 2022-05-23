@@ -4,6 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import AddIcon from '@mui/icons-material/Add';
+import { useTranslation } from 'react-i18next';
 import NavButton from '../NavButton/NavButton';
 import { MenuModalType, RouteID } from '../../types';
 import { ROUTES } from '../../routes';
@@ -32,6 +33,7 @@ function MenuModal({ display, close, type }: TProps) {
   const { isLoggedIn } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <Card
@@ -51,7 +53,7 @@ function MenuModal({ display, close, type }: TProps) {
       {type === MenuModalType.User && !isLoggedIn && (
         <ButtonGroup orientation="vertical">
           <NavButton
-            title={ROUTES[RouteID.LogIn].title}
+            title={t(`menuModal.${ROUTES[RouteID.LogIn].title}`)}
             onClick={() => {
               close();
               navigate(ROUTES[RouteID.LogIn].routePath);
@@ -59,7 +61,7 @@ function MenuModal({ display, close, type }: TProps) {
             isMarginBottom
           />
           <NavButton
-            title={ROUTES[RouteID.SignUp].title}
+            title={t(`menuModal.${ROUTES[RouteID.SignUp].title}`)}
             onClick={() => {
               close();
               navigate(ROUTES[RouteID.SignUp].routePath);
@@ -71,7 +73,7 @@ function MenuModal({ display, close, type }: TProps) {
       {type === MenuModalType.User && isLoggedIn && (
         <ButtonGroup orientation="vertical">
           <NavButton
-            title="Log out"
+            title={t('menuModal.LogOut')}
             onClick={() => {
               close();
               dispatch(logOut());
@@ -80,7 +82,7 @@ function MenuModal({ display, close, type }: TProps) {
             isMarginBottom
           />
           <NavButton
-            title={ROUTES[RouteID.EditProfile].title}
+            title={t(`menuModal.${ROUTES[RouteID.EditProfile].title}`)}
             onClick={() => {
               close();
               navigate(ROUTES[RouteID.EditProfile].routePath);
@@ -92,7 +94,7 @@ function MenuModal({ display, close, type }: TProps) {
       {type === MenuModalType.Menu && isLoggedIn && (
         <ButtonGroup orientation="vertical">
           <NavButton
-            title={ROUTES[RouteID.Main].title}
+            title={t(`header.${ROUTES[RouteID.Main].title}`)}
             onClick={() => {
               close();
               navigate(ROUTES[RouteID.Main].routePath);
@@ -100,7 +102,7 @@ function MenuModal({ display, close, type }: TProps) {
             isMarginBottom
           />
           <NavButton
-            title="add Board"
+            title={t('header.addBoard')}
             startIcon={<AddIcon />}
             onClick={() => {
               close();

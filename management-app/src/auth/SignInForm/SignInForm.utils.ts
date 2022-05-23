@@ -5,8 +5,8 @@ const signInFields: {
   type: string;
   label: string;
 }[] = [
-  { fieldName: 'login', type: 'text', label: 'Login' },
-  { fieldName: 'password', type: 'password', label: 'Password' },
+  { fieldName: 'login', type: 'text', label: 'LoginLabel' },
+  { fieldName: 'password', type: 'password', label: 'PasswordLabel' },
 ];
 
 export { signInFields };

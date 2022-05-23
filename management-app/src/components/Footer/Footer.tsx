@@ -12,8 +12,9 @@ const Item = styled('div')({
 });
 
 function Footer() {
-  const matches = useMediaQuery('(max-width:574px)');
-  const matches1 = useMediaQuery('(min-width:465px)');
+  const matches = useMediaQuery('(max-width:615px)');
+  const matches1 = useMediaQuery('(min-width:510px)');
+  const matches2 = useMediaQuery('(max-width:445px)');
 
   const { t } = useTranslation();
 
@@ -33,6 +34,7 @@ function Footer() {
           container
           justifyContent={matches ? 'center' : 'space-between'}
           alignItems="center"
+          flexDirection={matches2 ? 'column' : 'row'}
           className={style.container}
         >
           <Grid container item style={{ width: 'auto' }}>
@@ -46,6 +48,7 @@ function Footer() {
               item
               style={{ width: 'auto' }}
               justifyContent={matches ? 'center' : 'space-between'}
+              flexDirection={matches2 ? 'column' : 'row'}
             >
               <Grid item>
                 <GitLink

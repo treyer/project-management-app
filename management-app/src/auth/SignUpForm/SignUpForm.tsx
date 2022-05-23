@@ -1,30 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { Alert, Box, Stack, TextField, Typography, Fade } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { SignUpFormValues } from './SignUpForm.types';
 import { signUpFields } from './SignUpForm.utils';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { signUp, signIn } from '../authSlice';
-
-const registerValidationSchema = yup.object({
-  name: yup.string().required('Name is required'),
-  login: yup
-    .string()
-    .min(2, 'Login should be of minimum 2 characters length')
-    .required('Login is required'),
-  password: yup
-    .string()
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required('Password is required'),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref('password')], 'Your passwords do not match.')
-    .required('Password is required'),
-});
 
 const initialValues: SignUpFormValues = {
   name: '',
@@ -38,6 +23,27 @@ function SignUpForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState('');
+  const { t } = useTranslation();
+
+  const registerValidationSchema = useMemo(
+    () =>
+      yup.object({
+        name: yup.string().required(t('signUpForm.errNameRequired')),
+        login: yup
+          .string()
+          .min(2, t('signUpForm.errLoginMinLength'))
+          .required(t('signUpForm.errLoginRequired')),
+        password: yup
+          .string()
+          .min(8, t('signUpForm.errPasswordMinLength'))
+          .required(t('signUpForm.errPasswordRequired')),
+        confirmPassword: yup
+          .string()
+          .oneOf([yup.ref('password')], t('signUpForm.errPasswordDoNotMatch'))
+          .required(t('signUpForm.errPasswordRequired')),
+      }),
+    [t]
+  );
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -65,9 +71,13 @@ function SignUpForm() {
 
   return (
     <Stack alignItems="center" justifyContent="center" sx={{ height: '100%' }}>
-      <Box component="form" onSubmit={formik.handleSubmit} sx={{ width: 600 }}>
+      <Box
+        component="form"
+        onSubmit={formik.handleSubmit}
+        sx={{ maxWidth: 600, minWidth: 280 }}
+      >
         <Typography variant="h3" gutterBottom>
-          Sign Up
+          {t('signUpForm.signUpText')}
         </Typography>
 
         <Box sx={{ m: 2 }}>
@@ -86,7 +96,7 @@ function SignUpForm() {
               id={elem.fieldName}
               name={elem.fieldName}
               type={elem.type}
-              label={elem.label}
+              label={t(`signUpForm.${elem.label}`)}
               value={formik.values[elem.fieldName]}
               onChange={formik.handleChange}
               error={
@@ -102,9 +112,9 @@ function SignUpForm() {
             variant="contained"
             type="submit"
             loading={isLoading}
-            loadingIndicator="...Loading"
+            loadingIndicator={t('signUpForm.loadingIndicator')}
           >
-            Sign Up
+            {t('signUpForm.signUpText')}
           </LoadingButton>
         </Stack>
       </Box>

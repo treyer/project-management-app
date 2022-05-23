@@ -1,11 +1,13 @@
 import { Card, CardMedia, CardContent, Typography } from '@mui/material';
-
+import { useTranslation } from 'react-i18next';
 import TeamInfoCard from './components/TeamInfoCard';
 import { TEAM_INFO } from './constants';
 
 import style from './WelcomePage.module.css';
 
 function WelcomePage() {
+  const { t } = useTranslation();
+
   return (
     <div className={style.main}>
       <div className={style.sectionStart}>
@@ -37,10 +39,7 @@ function WelcomePage() {
               fontSize={18}
               sx={{ textAlign: 'justify' }}
             >
-              Managing resources, teams, deadlines or project budgets will be
-              easy with all the professional Manage App features. With features
-              for all project phases you can get your projects done from
-              start-to-end smoothly.
+              {t('welcomePage.aboutAppText')}
             </Typography>
             <Typography
               component="p"
@@ -48,7 +47,7 @@ function WelcomePage() {
               fontWeight={600}
               sx={{ textAlign: 'justify' }}
             >
-              * Register to use all the features applications.
+              {t('welcomePage.registerText')}
             </Typography>
           </CardContent>
         </Card>
@@ -61,16 +60,16 @@ function WelcomePage() {
       />
       <div className={style.container}>
         <Typography variant="h3" paddingTop={0}>
-          Our team
+          {t('welcomePage.teamTitle')}
         </Typography>
       </div>
       <div className={style.sectionEnd}>
         {Object.values(TEAM_INFO).map(({ name, src, info, path }) => (
           <TeamInfoCard
             key={name}
-            name={name}
+            name={t(`aboutTeam.${name}`)}
             src={src}
-            info={info}
+            info={t(`aboutTeam.${info}`)}
             path={path}
           />
         ))}
