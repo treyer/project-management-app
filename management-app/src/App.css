@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -15,7 +18,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 10vh;
+  min-height: 10vh; /* consider using other units than vh (e.g. px, em, rem, etc) */
   height: 15vh;
   display: flex;
   flex-direction: column;
@@ -39,7 +42,9 @@
 }
 
 .main {
-  min-height: calc(100vh - 52px - 56px);
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .wrapper {

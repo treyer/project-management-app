@@ -1,4 +1,4 @@
-import { Alert, CircularProgress, Grid } from '@mui/material';
+import { Alert, Box, CircularProgress, Grid } from '@mui/material';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -32,35 +32,35 @@ function MainPage() {
   }, [dispatch]);
 
   return (
-    <>
-      {isLoading && (
-        <CircularProgress
-          color="inherit"
-          sx={{ position: 'fixed', top: '50%' }}
-        />
-      )}
-      {isError && (
-        <Alert severity="error">{t('mainPage.errSomethingWentWrong')}</Alert>
-      )}
-      <Grid
-        container
-        spacing={3}
-        gap={3}
-        direction="row"
-        alignContent="flex-start"
-        margin="0 auto"
-        padding="50px"
-        minHeight="75vh"
-        maxWidth="1200px"
-        width="100%"
-      >
-        {boards.map(({ id, title }) => (
-          <Board key={id} id={id} titleBoard={title} />
-        ))}
-        <AddBoardBtn onClick={handleOpenBoardModal} />
-        {isBoardModalOpen && <BoardModal onClose={handleCloseBoardModel} />}
-      </Grid>
-    </>
+    <Box sx={{ width: 1200, overflowX: 'hidden' }}>
+      <Box sx={{ maxWidth: 1200 }}>
+        {isLoading && (
+          <CircularProgress
+            color="inherit"
+            sx={{ position: 'fixed', top: '50%' }}
+          />
+        )}
+        {isError && <Alert severity="error">Something went wrong!</Alert>}
+        <Grid
+          container
+          spacing={3}
+          gap={3}
+          direction="row"
+          alignContent="flex-start"
+          margin="0 auto"
+          padding="50px"
+          minHeight="75vh"
+          // maxWidth="1200px"
+          // width="100%"
+        >
+          {boards.map(({ id, title }) => (
+            <Board key={id} id={id} titleBoard={title} />
+          ))}
+          <AddBoardBtn onClick={handleOpenBoardModal} />
+          {isBoardModalOpen && <BoardModal onClose={handleCloseBoardModel} />}
+        </Grid>
+      </Box>
+    </Box>
   );
 }
 

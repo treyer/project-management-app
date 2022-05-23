@@ -95,7 +95,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   }));
 
   return (
-    <Box id={id} ref={drag}>
+    <Box id={id} ref={drag} sx={{ minWidth: 250, maxWidth: 250 }}>
       <Box
         ref={drop}
         sx={{ borderRadius: 2, backgroundColor: '#eee', cursor: 'grabbing' }}
