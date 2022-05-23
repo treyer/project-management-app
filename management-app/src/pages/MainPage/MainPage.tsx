@@ -1,4 +1,4 @@
-import { Alert, CircularProgress, Grid } from '@mui/material';
+import { Alert, Box, CircularProgress, Grid } from '@mui/material';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 

@@ -60,12 +60,8 @@ function SignInForm() {
   });
 
   return (
-    <Stack alignItems="center" justifyContent="center" sx={{ height: '100%' }}>
-      <Box
-        component="form"
-        onSubmit={formik.handleSubmit}
-        sx={{ maxWidth: 600, minWidth: 280 }}
-      >
+    <Box component="form" onSubmit={formik.handleSubmit} sx={{ width: 600 }}>
+      <Box sx={{ maxWidth: 600 }}>
         <Typography variant="h3" gutterBottom>
           {t('signInForm.signIn')}
         </Typography>
@@ -108,7 +104,7 @@ function SignInForm() {
           </LoadingButton>
         </Stack>
       </Box>
-    </Stack>
+    </Box>
   );
 }
 
