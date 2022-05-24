@@ -3,6 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDrag, useDrop } from 'react-dnd';
+import { Droppable } from 'react-beautiful-dnd';
 
 import { TBoardColumnProps } from './BoardColumn.types';
 import { useAppDispatch, useAppSelector } from '../../../../store';
@@ -12,6 +13,7 @@ import { ColumnTitle } from '../ColumnTitle';
 import { getTasksByColumnId } from '../../BoardPage.utils';
 import { CreateTaskModal } from '../CreateTaskModal';
 import { TTaskResponse } from '../../../../api/types';
+// import { TaskList } from '../TaskList';
 // TODO: use TColumn instead of BoardColumnProps?
 export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
@@ -100,52 +102,62 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
       >
         <Stack spacing={2}>
           <ColumnTitle title={title} handleClickAway={handleClickAway} />
-          <Box sx={{ overflow: 'auto', maxHeight: '60vh' }}>
-            {tasks &&
-              tasks.map(
-                (
-                  {
-                    id: taskId,
-                    title,
-                    order,
-                    done,
-                    description,
-                    userId,
-                    files,
-                  }: TTaskResponse,
-                  index: number
-                ) => {
-                  const uniqueKey = index + taskId;
-                  return (
-                    <TaskCard
-                      key={uniqueKey}
-                      columnId={id}
-                      boardId={boardId}
-                      taskInfo={{
-                        id: taskId,
-                        title,
-                        order,
-                        done,
-                        description,
-                        userId,
-                        files,
-                      }}
-                    />
-                  );
-                }
-              )}
-          </Box>
-          {!isAddTaskFieldOpen ? (
+          <Droppable droppableId={id}>
+            {(provided) => (
+              <Box
+                ref={provided.innerRef}
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                {...provided.droppableProps}
+                sx={{ overflow: 'auto', maxHeight: '60vh' }}
+              >
+                {tasks.map(
+                  (
+                    {
+                      id: taskId,
+                      title,
+                      order,
+                      done,
+                      description,
+                      userId,
+                      files,
+                    }: TTaskResponse,
+                    index: number
+                  ) => {
+                    const uniqueKey = index + taskId;
+                    return (
+                      <TaskCard
+                        key={uniqueKey}
+                        index={index}
+                        columnId={id}
+                        boardId={boardId}
+                        taskInfo={{
+                          id: taskId,
+                          title,
+                          order,
+                          done,
+                          description,
+                          userId,
+                          files,
+                        }}
+                      />
+                    );
+                  }
+                )}
+
+                {provided.placeholder}
+              </Box>
+            )}
+          </Droppable>
+          {!isAddTaskFieldOpen && (
             <Button onClick={openAddTaskField}>
               {t('boardPage.addTaskText')}
             </Button>
-          ) : (
-            <CreateTaskModal
-              createTask={addNewTask}
-              onRequestClose={exitAddTaskField}
-              isModalOpen={isAddTaskFieldOpen}
-            />
           )}
+          <CreateTaskModal
+            createTask={addNewTask}
+            onRequestClose={exitAddTaskField}
+            isModalOpen={isAddTaskFieldOpen}
+          />
         </Stack>
       </Box>
     </Box>
