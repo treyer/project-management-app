@@ -1,15 +1,37 @@
+import { useNavigate } from 'react-router-dom';
 import { Alert, CircularProgress, Grid } from '@mui/material';
-import { useCallback, useEffect } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 
 import AddBoardBtn from './components/AddBoardBtn/AddBoardBtn';
 import Board from './components/Board/Board';
 
-import BoardModal from './components/BoardModal/BoardModal';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { closeBoardModal, getBoards, openBoardModal } from './slice/mainSlice';
+import {
+  closeBoardModal,
+  closeDialog,
+  createBoard,
+  getBoards,
+  openBoardModal,
+} from './slice/mainSlice';
+import CreateModal from '../../components/CreateModal/CreateModal';
+import ConfirmMessage from '../../components/ConfirmMessage/ConfirmMessage';
 
 function MainPage() {
+  const [titleBoard, setTitleBoard] = useState<string>('');
+  const [isDisabled, setDisabled] = useState<boolean>(true);
+
+  const navigate = useNavigate();
+  const { isDialogOpen } = useAppSelector((state) => state.main);
+
+  const boardId = useAppSelector((state) => state.main.boardData.id);
+
   const boards = useAppSelector((state) => state.main.boards);
   const isBoardModalOpen = useAppSelector(
     (state) => state.main.isBoardModalOpen
@@ -31,6 +53,37 @@ function MainPage() {
     dispatch(closeBoardModal());
   }, [dispatch]);
 
+  const handleSubmitBoard = useCallback(
+    (event: MouseEvent | FormEvent) => {
+      event.preventDefault();
+      dispatch(createBoard({ title: titleBoard }));
+    },
+    [titleBoard, dispatch]
+  );
+
+  const handleInputChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const target = event.target as HTMLInputElement;
+      const value = target.value as string;
+      if (value !== '') {
+        setDisabled(false);
+      }
+      setTitleBoard(value);
+    },
+    []
+  );
+
+  const handleDecline = useCallback(() => {
+    dispatch(closeDialog());
+    dispatch(getBoards());
+    dispatch(closeBoardModal());
+  }, [dispatch]);
+
+  const handleConfirm = useCallback(() => {
+    navigate(`/boards/${boardId}`);
+    handleDecline();
+  }, [boardId, handleDecline, navigate]);
+
   return (
     <>
       {isLoading && (
@@ -41,6 +94,14 @@ function MainPage() {
       )}
       {isError && (
         <Alert severity="error">{t('mainPage.errSomethingWentWrong')}</Alert>
+      )}
+      {isDialogOpen && (
+        <ConfirmMessage
+          openDialog={isDialogOpen}
+          text={t('mainPage.ifGoToNewBoardMessage')}
+          onConfirm={handleConfirm}
+          onDecline={handleDecline}
+        />
       )}
       <Grid
         container
@@ -63,7 +124,17 @@ function MainPage() {
           />
         ))}
         <AddBoardBtn onClick={handleOpenBoardModal} />
-        {isBoardModalOpen && <BoardModal onClose={handleCloseBoardModel} />}
+        <CreateModal
+          isModalOpen={isBoardModalOpen}
+          titleModal={t('mainPage.AddBoardBtn')}
+          inputName={t('mainPage.boardNameText')}
+          labelName={t('mainPage.addBoardNameLabel')}
+          btnName={t('mainPage.AddBoardBtn')}
+          isDisabled={isDisabled}
+          onCreate={handleSubmitBoard}
+          onClose={handleCloseBoardModel}
+          onChange={handleInputChange}
+        />
       </Grid>
     </>
   );

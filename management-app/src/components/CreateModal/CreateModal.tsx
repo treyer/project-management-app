@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, FormEvent } from 'react';
 import {
   Button,
   Modal,
@@ -18,9 +18,9 @@ type TCreateModal = {
   labelName: string;
   btnName: string;
   isDisabled: boolean;
-  onCreate: () => void;
   onClose: () => void;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onCreate: (event: MouseEvent | FormEvent) => void;
 };
 
 function CreateModal({
