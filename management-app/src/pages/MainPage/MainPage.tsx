@@ -1,12 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Alert, CircularProgress, Grid } from '@mui/material';
-import {
-  ChangeEvent,
-  FormEvent,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import AddBoardBtn from './components/AddBoardBtn/AddBoardBtn';
