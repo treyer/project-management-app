@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Grid } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -14,8 +14,9 @@ import SearchBar from '../SearchBar/SearchBar';
 import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';
 import LanguageSwitch from '../LanguageSwitch/LanguageSwitch';
 import UserMenu from '../UserMenu/UserMenu';
-import { useAppSelector } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
+import { openBoardModal } from '../../pages/MainPage/slice/mainSlice';
 
 const Link = styled(NavLink)({
   textDecoration: 'none',
@@ -27,7 +28,15 @@ const StyledGrid = styled(Grid)({
 
 function Header() {
   const { isLoggedIn } = useAppSelector((state) => state.auth);
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
+
+  const handleOpenBoardModal = useCallback(() => {
+    navigate(`/main`);
+    dispatch(openBoardModal());
+  }, [dispatch, navigate]);
 
   const matches = useMediaQuery('(max-width:900px)');
   const matches1 = useMediaQuery('(max-width:470px)');
@@ -78,6 +87,7 @@ function Header() {
                 <NavButton
                   title={t('header.addBoard')}
                   startIcon={<AddIcon />}
+                  onClick={handleOpenBoardModal}
                 />
               </StyledGrid>
             )}
