@@ -36,21 +36,19 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
 
   const addNewTask = useCallback(
     (taskTitleInput: string, taskDescription: string) => {
-      const nextTaskOrder = tasks.length + 1;
       dispatch(
         createTask({
           boardId,
           columnId: id,
           task: {
             title: taskTitleInput,
-            order: nextTaskOrder,
             description: taskDescription,
             userId,
           },
         })
       );
     },
-    [tasks.length, dispatch, boardId, id, userId]
+    [dispatch, boardId, id, userId]
   );
 
   const handleClickAway = (titleInput: string) => {

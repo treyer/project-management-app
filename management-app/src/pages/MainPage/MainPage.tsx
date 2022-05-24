@@ -57,7 +57,7 @@ function MainPage() {
     (event: MouseEvent | FormEvent) => {
       event.preventDefault();
       // TODO: pass in real description
-      dispatch(createBoard({ title: titleBoard, description: titleBoard }));
+      dispatch(createBoard({ title: titleBoard, description: 'description' }));
     },
     [titleBoard, dispatch]
   );

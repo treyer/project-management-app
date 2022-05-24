@@ -5,6 +5,7 @@ import {
   TTask,
   TTaskBase,
   TUpdateTaskRequestBody,
+  TUpdateTaskResponse,
 } from './types';
 
 class TasksAPI extends BaseAPI {
@@ -97,7 +98,7 @@ class TasksAPI extends BaseAPI {
     taskId: string;
     task: TUpdateTaskRequestBody;
     token: string;
-  }): Promise<TCreateTaskResponse> {
+  }): Promise<TUpdateTaskResponse> {
     return this.put(
       `boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
       task,
