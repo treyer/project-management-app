@@ -4,10 +4,18 @@ import { BOARDS_API_ERRORS } from './errors';
 import type { TBoard, TBoardBase, TBoardResponse } from './types';
 
 class BoardsAPI extends BaseAPI {
-  createBoard(title: TBoardBase, token: string): Promise<TBoard> {
-    return this.post('boards', title, {
-      Authorization: `Bearer ${token}`,
-    }).then((result) => {
+  createBoard(
+    title: string,
+    description: string,
+    token: string
+  ): Promise<TBoard> {
+    return this.post(
+      'boards',
+      { title, description },
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    ).then((result) => {
       BaseAPI.handleError(result, BOARDS_API_ERRORS);
       return result.json();
     });

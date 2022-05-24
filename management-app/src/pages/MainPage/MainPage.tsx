@@ -46,7 +46,7 @@ function MainPage() {
 
   const handleSubmitBoard = useCallback(
     (titleBoard: string) => {
-      dispatch(createBoard({ title: titleBoard }));
+      dispatch(createBoard({ title: titleBoard, description: 'description' }));
     },
     [dispatch]
   );
@@ -107,11 +107,9 @@ function MainPage() {
           titleModal={t('mainPage.AddBoardBtn')}
           inputName={t('mainPage.boardNameText')}
           labelName={t('mainPage.addBoardNameLabel')}
-          btnName={t('columnModal.btnName')}
-          //  isDisabled={isDisabled}
+          btnName={t('mainPage.btnName')}
           onSubmit={handleSubmitBoard}
           onClose={handleCloseBoardModel}
-          //  onChange={handleInputChange}
         />
       </Grid>
     </>
