@@ -107,7 +107,7 @@ function MainPage() {
           titleModal={t('mainPage.AddBoardBtn')}
           inputName={t('mainPage.boardNameText')}
           labelName={t('mainPage.addBoardNameLabel')}
-          btnName={t('mainPage.btnName')}
+          btnName={t('mainPage.AddBoardBtn')}
           onSubmit={handleSubmitBoard}
           onClose={handleCloseBoardModel}
         />
