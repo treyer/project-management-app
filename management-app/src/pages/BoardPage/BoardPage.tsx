@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Alert, Box, Button, Skeleton, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDrop } from 'react-dnd';
@@ -19,8 +19,6 @@ export function BoardPage() {
 
   const [isAddColumnFieldOpen, setIsAddColumnFieldOpen] = useState(false);
   const [error, setError] = useState('');
-  //  const [columnTitleInput, setColumnTitleInput] = useState<string>('');
-  //  const [isDisabled, setDisabled] = useState<boolean>(true);
 
   const dispatch = useAppDispatch();
 
@@ -77,18 +75,6 @@ export function BoardPage() {
     [boardId, columns.length, dispatch, t]
   );
 
-  /*  const handleInputChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const target = event.target as HTMLInputElement;
-      const value = target.value as string;
-      if (value !== '') {
-        setDisabled(false);
-      }
-      setColumnTitleInput(value);
-    },
-    []
-  );  */
-
   const exitAddColumnField = useCallback(() => {
     setIsAddColumnFieldOpen(false);
   }, []);
@@ -142,10 +128,8 @@ export function BoardPage() {
             inputName={t('columnModal.inputName')}
             labelName={t('columnModal.labelName')}
             btnName={t('columnModal.btnName')}
-            //  isDisabled={isDisabled}
             onSubmit={addNewColumn}
             onClose={exitAddColumnField}
-            //  onChange={handleInputChange}
           />
         )}
       </Stack>

@@ -24,9 +24,6 @@ import CreateModal from '../../components/CreateModal/CreateModal';
 import ConfirmMessage from '../../components/ConfirmMessage/ConfirmMessage';
 
 function MainPage() {
-  //  const [titleBoard, setTitleBoard] = useState<string>('');
-  //  const [isDisabled, setDisabled] = useState<boolean>(true);
-
   const navigate = useNavigate();
   const { isDialogOpen } = useAppSelector((state) => state.main);
 
@@ -54,24 +51,11 @@ function MainPage() {
   }, [dispatch]);
 
   const handleSubmitBoard = useCallback(
-    (/*  event: MouseEvent | FormEvent  */ titleBoard: string) => {
-      //  event.preventDefault();
+    (titleBoard: string) => {
       dispatch(createBoard({ title: titleBoard }));
     },
     [dispatch]
   );
-
-  /*  const handleInputChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const target = event.target as HTMLInputElement;
-      const value = target.value as string;
-      if (value !== '') {
-        setDisabled(false);
-      }
-      setTitleBoard(value);
-    },
-    []
-  );  */
 
   const handleDecline = useCallback(() => {
     dispatch(closeDialog());

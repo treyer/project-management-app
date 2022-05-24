@@ -1,11 +1,4 @@
-import {
-  ChangeEvent,
-  FormEvent,
-  useCallback,
-  useState,
-  MouseEvent,
-  useEffect,
-} from 'react';
+import { ChangeEvent, useCallback, useState, useEffect } from 'react';
 import {
   Button,
   Modal,
@@ -24,17 +17,8 @@ type TCreateModal = {
   inputName: string;
   labelName: string;
   btnName: string;
-  //  isDisabled: boolean;
   onClose: () => void;
-  //  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (titleInput: string, taskDescription: string) => void;
-  // eslint-disable-next-line react/require-default-props
-  //  onSubmitDescription?: (titleInput: string, taskDescription: string) => void;
-
-  // eslint-disable-next-line react/require-default-props
-  //  onChangeDescription?: (event: ChangeEvent<HTMLInputElement>) => void;
-  // eslint-disable-next-line react/no-unused-prop-types
-  // eslint-disable-next-line react/require-default-props
   isRenderDescription?: boolean;
 };
 
@@ -44,13 +28,9 @@ function CreateModal({
   titleModal,
   labelName,
   btnName,
-  //  isDisabled,
   onSubmit,
-  //  onSubmitDescription,
   onClose,
-  //  onChange,
-  //  onChangeDescription,
-  isRenderDescription = false,
+  isRenderDescription,
 }: TCreateModal) {
   const [titleInput, setTitleInput] = useState<string>('');
   const [taskDescription, setTaskDescription] = useState<string>('');
@@ -89,7 +69,6 @@ function CreateModal({
 
   const handelSubmit = useCallback(() => {
     onSubmit(titleInput, taskDescription);
-    //  onSubmitDescription(titleInput, taskDescription);
   }, [titleInput, onSubmit, taskDescription]);
 
   return (
@@ -179,5 +158,9 @@ function CreateModal({
     </Modal>
   );
 }
+
+CreateModal.defaultProps = {
+  isRenderDescription: false,
+};
 
 export default CreateModal;

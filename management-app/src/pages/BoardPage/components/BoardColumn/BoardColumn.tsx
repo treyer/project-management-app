@@ -18,9 +18,6 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  //  const [taskTitleInput, setTaskTitleInput] = useState<string>('');
-  //  const [taskDescription, setTaskDescription] = useState<string>('');
-  //  const [isDisabled, setDisabled] = useState<boolean>(true);
   const [isRenderDescription, setIsRenderDescription] =
     useState<boolean>(false);
 
@@ -79,30 +76,6 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
     setIsAddTaskFieldOpen(true);
     setIsRenderDescription(true);
   };
-
-  /*  const handleInputChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const target = event.target as HTMLInputElement;
-      const value = target.value as string;
-      if (value !== '') {
-        setDisabled(false);
-      }
-      setTaskTitleInput(value);
-    },
-    []
-  );  */
-
-  /*  const handleChangeDescription = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const target = event.target as HTMLInputElement;
-      const value = target.value as string;
-      /*  if (value !== '') {
-        setDisabled(false);
-      }  
-      setTaskDescription(value);
-    },
-    []
-  );  */
 
   const [, drop] = useDrop(() => ({
     accept: 'taskCard',
@@ -181,19 +154,11 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
               inputName={t('columnModal.inputName')}
               labelName={t('columnModal.labelName')}
               btnName={t('columnModal.btnName')}
-              //  isDisabled={isDisabled}
               onSubmit={addNewTask}
               onClose={exitAddTaskField}
-              //  onChange={handleInputChange}
-              //  onChangeDescription={handleChangeDescription}
               isRenderDescription={isRenderDescription}
             />
           )}
-          {/*   <CreateTaskModal
-              createTask={addNewTask}
-              onRequestClose={exitAddTaskField}
-              isModalOpen={isAddTaskFieldOpen}
-          />  */}
         </Stack>
       </Box>
     </Box>
