@@ -81,5 +81,13 @@
     "inputName": "Column name",
     "labelName": "Add column name",
     "btnName": "Add column"
+  },
+  "taskModal": {
+    "titleModal": "Add task",
+    "inputName": "Task name",
+    "labelName": "Add task name",
+    "descriptionName": "Description",
+    "labelDescription": "Add description",
+    "btnName": "Add task"
   }
 }

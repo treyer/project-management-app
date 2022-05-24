@@ -81,5 +81,13 @@
     "inputName": "Имя колонки",
     "labelName": "Добавьте имя колонки",
     "btnName": "Добавить колонку"
+  },
+  "taskModal": {
+    "titleModal": "Добавить задачу",
+    "inputName": "Заголовок задачи",
+    "labelName": "Добавить заголовок задачи",
+    "descriptionName": "Описание задачи",
+    "labelDescription": "Добавьте описание задачи",
+    "btnName": "Добавить задачу"
   }
 }

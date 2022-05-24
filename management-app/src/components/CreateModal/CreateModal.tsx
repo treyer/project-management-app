@@ -20,6 +20,8 @@ type TCreateModal = {
   onClose: () => void;
   onSubmit: (titleInput: string, taskDescription: string) => void;
   isRenderDescription?: boolean;
+  descriptionName?: string;
+  labelDescription?: string;
 };
 
 function CreateModal({
@@ -31,6 +33,8 @@ function CreateModal({
   onSubmit,
   onClose,
   isRenderDescription,
+  descriptionName,
+  labelDescription,
 }: TCreateModal) {
   const [titleInput, setTitleInput] = useState<string>('');
   const [taskDescription, setTaskDescription] = useState<string>('');
@@ -132,18 +136,21 @@ function CreateModal({
             sx={{ marginBottom: '20px', width: '100%' }}
             onChange={handleInputChange}
           />
-          <Typography component="p" gutterBottom>
-            {inputName}
-          </Typography>
+
           {isRenderDescription && (
-            <TextField
-              id="outlined-basic"
-              label={labelName}
-              variant="outlined"
-              size="small"
-              sx={{ marginBottom: '20px', width: '100%' }}
-              onChange={handleChangeDescription}
-            />
+            <>
+              <Typography component="p" gutterBottom>
+                {descriptionName}
+              </Typography>
+              <TextField
+                id="outlined-basic"
+                label={labelDescription}
+                variant="outlined"
+                size="small"
+                sx={{ marginBottom: '20px', width: '100%' }}
+                onChange={handleChangeDescription}
+              />
+            </>
           )}
         </Box>
         <Button
@@ -161,6 +168,8 @@ function CreateModal({
 
 CreateModal.defaultProps = {
   isRenderDescription: false,
+  descriptionName: '',
+  labelDescription: '',
 };
 
 export default CreateModal;
