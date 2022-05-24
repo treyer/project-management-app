@@ -8,8 +8,8 @@
     "Lena": "Елена Безроднова"
   },
   "header": {
-    "Boards": "Борды",
-    "addBoard": "добавить Борд"
+    "Boards": "Доски",
+    "addBoard": "добавить доску"
   },
   "menuModal": {
     "LogIn": "Войти",
@@ -57,11 +57,11 @@
   },
   "mainPage": {
     "errSomethingWentWrong": "Что-то пошло не так!",
-    "AddBoardBtn": "Добавить Борд",
-    "ifDeleteBoardMessage": "Вы хотите удалить Борд?",
+    "AddBoardBtn": "Добавить доску",
+    "ifDeleteBoardMessage": "Вы хотите удалить доску?",
     "ifGoToNewBoardMessage": "Вы хотите перейти на новый Борд?",
-    "boardNameText": "Имя Борда",
-    "addBoardNameLabel": "Добавьте имя Борда",
+    "boardNameText": "Имя доски",
+    "addBoardNameLabel": "Добавьте имя доски",
     "confirmMessageText": "Подтвердите действие",
     "yes": "Да",
     "no": "Нет",
@@ -70,11 +70,11 @@
   "boardPage": {
     "unknownError": "Неизвестная ошибка",
     "addColumnText": "+ Добавить колонку",
-    "addTaskText": "+ Добавить таск",
+    "addTaskText": "+ Добавить задачу",
     "enterTitleForColumnText": "Ввести заголовок для этой колонки...",
     "addColumnBtn": "Добавить колонку",
-    "enterTaskTitleText": "Ввести заголовок для данного таска...",
-    "addTaskBtn": "Добавить таск"
+    "enterTaskTitleText": "Ввести заголовок для данной задачи...",
+    "addTaskBtn": "Добавить задачу"
   },
   "columnModal": {
     "titleModal": "Добавить колонку",
