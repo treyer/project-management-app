@@ -15,8 +15,8 @@ function AddBoardBtn({ onClick }: TProps) {
       justifyContent="center"
       alignItems="center"
       direction="column"
-      width="230px"
-      height="170px"
+      width="270px"
+      height="200px"
       sx={{
         border: '1px dashed grey',
         borderRadius: '5px',

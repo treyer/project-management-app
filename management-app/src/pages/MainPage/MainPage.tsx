@@ -1,15 +1,37 @@
-import { Alert, Box, CircularProgress, Grid } from '@mui/material';
-import { useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Alert, CircularProgress, Grid } from '@mui/material';
+import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 
 import AddBoardBtn from './components/AddBoardBtn/AddBoardBtn';
 import Board from './components/Board/Board';
 
-import BoardModal from './components/BoardModal/BoardModal';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { closeBoardModal, getBoards, openBoardModal } from './slice/mainSlice';
+import {
+  closeBoardModal,
+  closeDialog,
+  createBoard,
+  getBoards,
+  openBoardModal,
+} from './slice/mainSlice';
+import CreateModal from '../../components/CreateModal/CreateModal';
+import ConfirmMessage from '../../components/ConfirmMessage/ConfirmMessage';
 
 function MainPage() {
+  const [titleBoard, setTitleBoard] = useState<string>('');
+  const [isDisabled, setDisabled] = useState<boolean>(true);
+
+  const navigate = useNavigate();
+  const { isDialogOpen } = useAppSelector((state) => state.main);
+
+  const boardId = useAppSelector((state) => state.main.boardData.id);
+
   const boards = useAppSelector((state) => state.main.boards);
   const isBoardModalOpen = useAppSelector(
     (state) => state.main.isBoardModalOpen
@@ -31,36 +53,90 @@ function MainPage() {
     dispatch(closeBoardModal());
   }, [dispatch]);
 
+  const handleSubmitBoard = useCallback(
+    (event: MouseEvent | FormEvent) => {
+      event.preventDefault();
+      dispatch(createBoard({ title: titleBoard }));
+    },
+    [titleBoard, dispatch]
+  );
+
+  const handleInputChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const target = event.target as HTMLInputElement;
+      const value = target.value as string;
+      if (value !== '') {
+        setDisabled(false);
+      }
+      setTitleBoard(value);
+    },
+    []
+  );
+
+  const handleDecline = useCallback(() => {
+    dispatch(closeDialog());
+    dispatch(getBoards());
+    dispatch(closeBoardModal());
+  }, [dispatch]);
+
+  const handleConfirm = useCallback(() => {
+    navigate(`/boards/${boardId}`);
+    handleDecline();
+  }, [boardId, handleDecline, navigate]);
+
   return (
-    <Box sx={{ width: 1200, overflowX: 'hidden' }}>
-      <Box sx={{ maxWidth: 1200 }}>
-        {isLoading && (
-          <CircularProgress
-            color="inherit"
-            sx={{ position: 'fixed', top: '50%' }}
+    <>
+      {isLoading && (
+        <CircularProgress
+          color="inherit"
+          sx={{ position: 'fixed', top: '50%' }}
+        />
+      )}
+      {isError && (
+        <Alert severity="error">{t('mainPage.errSomethingWentWrong')}</Alert>
+      )}
+      {isDialogOpen && (
+        <ConfirmMessage
+          openDialog={isDialogOpen}
+          text={t('mainPage.ifGoToNewBoardMessage')}
+          onConfirm={handleConfirm}
+          onDecline={handleDecline}
+        />
+      )}
+      <Grid
+        container
+        spacing={3}
+        gap={2.5}
+        direction="row"
+        alignContent="flex-start"
+        margin="0 auto"
+        padding="25px"
+        minHeight="75vh"
+        maxWidth="1200px"
+        width="100%"
+      >
+        {boards.map(({ id, title, columns }) => (
+          <Board
+            key={id}
+            id={id}
+            titleBoard={title}
+            columnNum={columns.length}
           />
-        )}
-        {isError && <Alert severity="error">Something went wrong!</Alert>}
-        <Grid
-          container
-          spacing={3}
-          gap={3}
-          direction="row"
-          alignContent="flex-start"
-          margin="0 auto"
-          padding="50px"
-          minHeight="75vh"
-          // maxWidth="1200px"
-          // width="100%"
-        >
-          {boards.map(({ id, title }) => (
-            <Board key={id} id={id} titleBoard={title} />
-          ))}
-          <AddBoardBtn onClick={handleOpenBoardModal} />
-          {isBoardModalOpen && <BoardModal onClose={handleCloseBoardModel} />}
-        </Grid>
-      </Box>
-    </Box>
+        ))}
+        <AddBoardBtn onClick={handleOpenBoardModal} />
+        <CreateModal
+          isModalOpen={isBoardModalOpen}
+          titleModal={t('mainPage.AddBoardBtn')}
+          inputName={t('mainPage.boardNameText')}
+          labelName={t('mainPage.addBoardNameLabel')}
+          btnName={t('mainPage.AddBoardBtn')}
+          isDisabled={isDisabled}
+          onCreate={handleSubmitBoard}
+          onClose={handleCloseBoardModel}
+          onChange={handleInputChange}
+        />
+      </Grid>
+    </>
   );
 }
 

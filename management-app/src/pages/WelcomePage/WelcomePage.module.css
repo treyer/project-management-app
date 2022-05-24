@@ -3,6 +3,7 @@
   background-size: cover;
   background-attachment: fixed;
   overflow-y: auto;
+  width: 100%;
 }
 
 .sectionStart {
@@ -31,6 +32,7 @@
   transition: 0.2s;
   background-color: #278d9f2f;
 }
+
 .card:hover {
   transform: scale(1.1);
 }

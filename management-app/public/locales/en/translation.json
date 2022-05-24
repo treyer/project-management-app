@@ -64,15 +64,22 @@
     "addBoardNameLabel": "Add board name",
     "confirmMessageText": "Confirm message",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "numberOfColumns": "Number of columns"
   },
   "boardPage": {
     "unknownError": "Unknown Error",
-    "addColumnText": "+ Add a column",
-    "addTaskText": "+ Add a task",
+    "addColumnText": "+ Add column",
+    "addTaskText": "+ Add task",
     "enterTitleForColumnText": "Enter a title for this column...",
     "addColumnBtn": "Add column",
     "enterTaskTitleText": "Enter a title for this task...",
     "addTaskBtn": "Add task"
+  },
+  "columnModal": {
+    "titleModal": "Add column",
+    "inputName": "Column name",
+    "labelName": "Add column name",
+    "btnName": "Add column"
   }
 }

@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import BoardsAPI from '../../../api/boardsAPI';
-import { TBoard, TBoardBase } from '../../../api/types';
+import { TBoard, TBoardBase, TBoardResponse } from '../../../api/types';
 
 type TMainState = {
   boardData: TBoard;
-  boards: TBoard[];
+  boards: TBoardResponse[];
   isLoading: boolean;
   isError: boolean;
   isDialogOpen: boolean;
@@ -35,9 +35,12 @@ export const createBoard = createAsyncThunk(
 
 export const getBoards = createAsyncThunk(
   'main/getBoards',
-  async (): Promise<TBoard[]> => {
+  async (): Promise<TBoardResponse[]> => {
     const result = await BoardsAPI.getBoards(token);
-    return result;
+    const resultAll = await Promise.all(
+      result.map(({ id }) => BoardsAPI.getBoard(id, token))
+    );
+    return resultAll;
   }
 );
 
@@ -46,6 +49,14 @@ export const deleteBoard = createAsyncThunk(
   async (id: string, { dispatch }): Promise<void> => {
     await BoardsAPI.deleteBoard(id, token);
     dispatch(getBoards());
+  }
+);
+
+export const getBoard = createAsyncThunk(
+  'main/getBoard',
+  async (id: string): Promise<TBoardResponse> => {
+    const result = await BoardsAPI.getBoard(id, token);
+    return result;
   }
 );
 
