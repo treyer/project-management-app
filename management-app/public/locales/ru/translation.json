@@ -75,5 +75,11 @@
     "addColumnBtn": "Добавить колонку",
     "enterTaskTitleText": "Ввести заголовок для данного таска...",
     "addTaskBtn": "Добавить таск"
+  },
+  "columnModal": {
+    "titleModal": "Добавить колонку",
+    "inputName": "Имя колонки",
+    "labelName": "Добавьте имя колонки",
+    "btnName": "Добавить колонку"
   }
 }
