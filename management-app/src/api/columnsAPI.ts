@@ -10,7 +10,7 @@ class ColumnsAPI extends BaseAPI {
   }: {
     boardId: string;
     token: string;
-    column: TColumnBase;
+    column: Omit<TColumnBase, 'order'>;
   }): Promise<TColumn> {
     return this.post(`boards/${boardId}/columns`, column, {
       Authorization: `Bearer ${token}`,

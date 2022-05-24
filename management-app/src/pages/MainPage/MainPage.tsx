@@ -56,7 +56,8 @@ function MainPage() {
   const handleSubmitBoard = useCallback(
     (event: MouseEvent | FormEvent) => {
       event.preventDefault();
-      dispatch(createBoard({ title: titleBoard }));
+      // TODO: pass in real description
+      dispatch(createBoard({ title: titleBoard, description: titleBoard }));
     },
     [titleBoard, dispatch]
   );

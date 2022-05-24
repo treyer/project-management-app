@@ -50,14 +50,12 @@ export function BoardPage() {
   columns = [...columnsForSort];
 
   const addNewColumn = useCallback(() => {
-    const newColumnOrder = columns.length + 1;
     if (boardId) {
       dispatch(
         createColumn({
           boardId,
           column: {
             title: columnTitleInput,
-            order: newColumnOrder,
           },
         })
       )
@@ -72,7 +70,7 @@ export function BoardPage() {
         });
     }
     setIsAddColumnFieldOpen(false);
-  }, [boardId, columnTitleInput, columns.length, dispatch, t]);
+  }, [boardId, columnTitleInput, dispatch, t]);
 
   const handleInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {

@@ -25,8 +25,8 @@ const token = localStorage.getItem('token') as string;
 
 export const createBoard = createAsyncThunk(
   'main/createBoard',
-  async (title: TBoardBase, { dispatch }): Promise<TBoard> => {
-    const result = await BoardsAPI.createBoard(title, token);
+  async ({ title, description }: TBoardBase, { dispatch }): Promise<TBoard> => {
+    const result = await BoardsAPI.createBoard(title, description, token);
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     dispatch(openDialog());
     return result;
@@ -80,8 +80,8 @@ const mainSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createBoard.fulfilled, (state, action) => {
-        const { title, id } = action.payload;
-        state.boardData = { title, id };
+        const { title, id, description } = action.payload;
+        state.boardData = { title, id, description };
         state.isLoading = false;
         state.isError = false;
       })

@@ -13,11 +13,13 @@ export type TBoard = TBoardBase & {
 
 export type TBoardBase = {
   title: string;
+  description: string;
 };
 
 export type TBoardResponse = {
   id: string;
   title: string;
+  description: string;
   columns: TColumnResponse[];
 };
 

@@ -24,6 +24,7 @@ const initialState: TBoardState = {
   boardData: {
     id: '',
     title: '',
+    description: '',
     columns: [],
   } as TBoardResponse,
   isBoardLoading: false,
@@ -80,7 +81,13 @@ export const getTask = createAsyncThunk(
 
 export const createColumn = createAsyncThunk(
   'board/createColumn',
-  ({ boardId, column }: { boardId: string; column: TColumnBase }) => {
+  ({
+    boardId,
+    column,
+  }: {
+    boardId: string;
+    column: Omit<TColumnBase, 'order'>;
+  }) => {
     const token = localStorage.getItem('token') as string;
     if (token) {
       return columnsAPI.createColumn({
