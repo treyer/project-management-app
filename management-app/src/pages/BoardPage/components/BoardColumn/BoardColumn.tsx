@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, ChangeEvent } from 'react';
 import { Box, Button, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDrag, useDrop } from 'react-dnd';
@@ -12,10 +12,17 @@ import { ColumnTitle } from '../ColumnTitle';
 import { getTasksByColumnId } from '../../BoardPage.utils';
 import { CreateTaskModal } from '../CreateTaskModal';
 import { TTaskResponse } from '../../../../api/types';
+import CreateModal from '../../../../components/CreateModal/CreateModal';
 // TODO: use TColumn instead of BoardColumnProps?
 export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+
+  //  const [taskTitleInput, setTaskTitleInput] = useState<string>('');
+  //  const [taskDescription, setTaskDescription] = useState<string>('');
+  //  const [isDisabled, setDisabled] = useState<boolean>(true);
+  const [isRenderDescription, setIsRenderDescription] =
+    useState<boolean>(false);
 
   const { id: boardId } = useAppSelector((state) => state.board.boardData);
   // TODO:
@@ -49,6 +56,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
           },
         })
       );
+      setIsAddTaskFieldOpen(false);
     },
     [tasks.length, dispatch, boardId, id, userId]
   );
@@ -69,7 +77,32 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
 
   const openAddTaskField = () => {
     setIsAddTaskFieldOpen(true);
+    setIsRenderDescription(true);
   };
+
+  /*  const handleInputChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const target = event.target as HTMLInputElement;
+      const value = target.value as string;
+      if (value !== '') {
+        setDisabled(false);
+      }
+      setTaskTitleInput(value);
+    },
+    []
+  );  */
+
+  /*  const handleChangeDescription = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const target = event.target as HTMLInputElement;
+      const value = target.value as string;
+      /*  if (value !== '') {
+        setDisabled(false);
+      }  
+      setTaskDescription(value);
+    },
+    []
+  );  */
 
   const [, drop] = useDrop(() => ({
     accept: 'taskCard',
@@ -142,12 +175,25 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
               {t('boardPage.addTaskText')}
             </Button>
           ) : (
-            <CreateTaskModal
+            <CreateModal
+              isModalOpen={isAddTaskFieldOpen}
+              titleModal={t('columnModal.titleModal')}
+              inputName={t('columnModal.inputName')}
+              labelName={t('columnModal.labelName')}
+              btnName={t('columnModal.btnName')}
+              //  isDisabled={isDisabled}
+              onSubmit={addNewTask}
+              onClose={exitAddTaskField}
+              //  onChange={handleInputChange}
+              //  onChangeDescription={handleChangeDescription}
+              isRenderDescription={isRenderDescription}
+            />
+          )}
+          {/*   <CreateTaskModal
               createTask={addNewTask}
               onRequestClose={exitAddTaskField}
               isModalOpen={isAddTaskFieldOpen}
-            />
-          )}
+          />  */}
         </Stack>
       </Box>
     </Box>

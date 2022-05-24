@@ -19,8 +19,8 @@ export function BoardPage() {
 
   const [isAddColumnFieldOpen, setIsAddColumnFieldOpen] = useState(false);
   const [error, setError] = useState('');
-  const [columnTitleInput, setColumnTitleInput] = useState<string>('');
-  const [isDisabled, setDisabled] = useState<boolean>(true);
+  //  const [columnTitleInput, setColumnTitleInput] = useState<string>('');
+  //  const [isDisabled, setDisabled] = useState<boolean>(true);
 
   const dispatch = useAppDispatch();
 
@@ -49,32 +49,35 @@ export function BoardPage() {
   });
   columns = [...columnsForSort];
 
-  const addNewColumn = useCallback(() => {
-    const newColumnOrder = columns.length + 1;
-    if (boardId) {
-      dispatch(
-        createColumn({
-          boardId,
-          column: {
-            title: columnTitleInput,
-            order: newColumnOrder,
-          },
-        })
-      )
-        .unwrap()
-        .then(() => setError(''))
-        .catch((e) => {
-          setError(
-            typeof e.message === 'string'
-              ? e.message
-              : t('boardPage.unknownError')
-          );
-        });
-    }
-    setIsAddColumnFieldOpen(false);
-  }, [boardId, columnTitleInput, columns.length, dispatch, t]);
+  const addNewColumn = useCallback(
+    (titleInput: string) => {
+      const newColumnOrder = columns.length + 1;
+      if (boardId) {
+        dispatch(
+          createColumn({
+            boardId,
+            column: {
+              title: titleInput,
+              order: newColumnOrder,
+            },
+          })
+        )
+          .unwrap()
+          .then(() => setError(''))
+          .catch((e) => {
+            setError(
+              typeof e.message === 'string'
+                ? e.message
+                : t('boardPage.unknownError')
+            );
+          });
+      }
+      setIsAddColumnFieldOpen(false);
+    },
+    [boardId, columns.length, dispatch, t]
+  );
 
-  const handleInputChange = useCallback(
+  /*  const handleInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const target = event.target as HTMLInputElement;
       const value = target.value as string;
@@ -84,7 +87,7 @@ export function BoardPage() {
       setColumnTitleInput(value);
     },
     []
-  );
+  );  */
 
   const exitAddColumnField = useCallback(() => {
     setIsAddColumnFieldOpen(false);
@@ -139,10 +142,10 @@ export function BoardPage() {
             inputName={t('columnModal.inputName')}
             labelName={t('columnModal.labelName')}
             btnName={t('columnModal.btnName')}
-            isDisabled={isDisabled}
-            onCreate={addNewColumn}
+            //  isDisabled={isDisabled}
+            onSubmit={addNewColumn}
             onClose={exitAddColumnField}
-            onChange={handleInputChange}
+            //  onChange={handleInputChange}
           />
         )}
       </Stack>

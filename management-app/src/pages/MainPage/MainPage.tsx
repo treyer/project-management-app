@@ -24,8 +24,8 @@ import CreateModal from '../../components/CreateModal/CreateModal';
 import ConfirmMessage from '../../components/ConfirmMessage/ConfirmMessage';
 
 function MainPage() {
-  const [titleBoard, setTitleBoard] = useState<string>('');
-  const [isDisabled, setDisabled] = useState<boolean>(true);
+  //  const [titleBoard, setTitleBoard] = useState<string>('');
+  //  const [isDisabled, setDisabled] = useState<boolean>(true);
 
   const navigate = useNavigate();
   const { isDialogOpen } = useAppSelector((state) => state.main);
@@ -54,14 +54,14 @@ function MainPage() {
   }, [dispatch]);
 
   const handleSubmitBoard = useCallback(
-    (event: MouseEvent | FormEvent) => {
-      event.preventDefault();
+    (/*  event: MouseEvent | FormEvent  */ titleBoard: string) => {
+      //  event.preventDefault();
       dispatch(createBoard({ title: titleBoard }));
     },
-    [titleBoard, dispatch]
+    [dispatch]
   );
 
-  const handleInputChange = useCallback(
+  /*  const handleInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const target = event.target as HTMLInputElement;
       const value = target.value as string;
@@ -71,7 +71,7 @@ function MainPage() {
       setTitleBoard(value);
     },
     []
-  );
+  );  */
 
   const handleDecline = useCallback(() => {
     dispatch(closeDialog());
@@ -129,11 +129,11 @@ function MainPage() {
           titleModal={t('mainPage.AddBoardBtn')}
           inputName={t('mainPage.boardNameText')}
           labelName={t('mainPage.addBoardNameLabel')}
-          btnName={t('mainPage.AddBoardBtn')}
-          isDisabled={isDisabled}
-          onCreate={handleSubmitBoard}
+          btnName={t('columnModal.btnName')}
+          //  isDisabled={isDisabled}
+          onSubmit={handleSubmitBoard}
           onClose={handleCloseBoardModel}
-          onChange={handleInputChange}
+          //  onChange={handleInputChange}
         />
       </Grid>
     </>
