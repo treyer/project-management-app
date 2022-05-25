@@ -3,11 +3,11 @@ import { createTheme } from '@mui/material';
 export const lightTheme = createTheme({
   palette: {
     mode: 'light',
-    background: {
-      paper: '#f2f2f2',
-    },
-    text: {
-      primary: '#11111',
+    primary: {
+      light: '#3588b9',
+      main: '#026aa7',
+      dark: '#02507f',
+      contrastText: '#ffffff',
     },
   },
 });
@@ -15,11 +15,11 @@ export const lightTheme = createTheme({
 export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-    background: {
-      paper: '#222',
-    },
-    text: {
-      primary: '#fff',
+    primary: {
+      light: '#282c34',
+      main: '#20232a',
+      dark: '#16181d',
+      contrastText: '#61dafb',
     },
   },
 });
