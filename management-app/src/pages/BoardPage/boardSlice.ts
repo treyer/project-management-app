@@ -190,6 +190,26 @@ export const updateTask = createAsyncThunk(
   }
 );
 
+export const deleteTask = createAsyncThunk(
+  'board/deleteTask',
+  async (
+    {
+      boardId,
+      columnId,
+      taskId,
+    }: {
+      boardId: string;
+      columnId: string;
+      taskId: string;
+    },
+    { dispatch }
+  ): Promise<void> => {
+    const token = localStorage.getItem('token') as string;
+    await tasksAPI.deleteTask({ boardId, columnId, taskId, token });
+    dispatch(getBoard(boardId));
+  }
+);
+
 const boardSlice = createSlice({
   name: 'board',
   initialState,
