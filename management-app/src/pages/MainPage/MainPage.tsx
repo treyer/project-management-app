@@ -1,12 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Alert, CircularProgress, Grid } from '@mui/material';
-import {
-  ChangeEvent,
-  FormEvent,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import AddBoardBtn from './components/AddBoardBtn/AddBoardBtn';
@@ -24,8 +18,8 @@ import CreateModal from '../../components/CreateModal/CreateModal';
 import ConfirmMessage from '../../components/ConfirmMessage/ConfirmMessage';
 
 function MainPage() {
-  const [titleBoard, setTitleBoard] = useState<string>('');
-  const [isDisabled, setDisabled] = useState<boolean>(true);
+  const [isRenderDescription, setIsRenderDescription] =
+    useState<boolean>(false);
 
   const navigate = useNavigate();
   const { isDialogOpen } = useAppSelector((state) => state.main);
@@ -47,6 +41,7 @@ function MainPage() {
 
   const handleOpenBoardModal = useCallback(() => {
     dispatch(openBoardModal());
+    setIsRenderDescription(true);
   }, [dispatch]);
 
   const handleCloseBoardModel = useCallback(() => {
@@ -54,24 +49,12 @@ function MainPage() {
   }, [dispatch]);
 
   const handleSubmitBoard = useCallback(
-    (event: MouseEvent | FormEvent) => {
-      event.preventDefault();
-      // TODO: pass in real description
-      dispatch(createBoard({ title: titleBoard, description: titleBoard }));
+    (titleBoard: string, titleDescription: string) => {
+      dispatch(
+        createBoard({ title: titleBoard, description: titleDescription })
+      );
     },
-    [titleBoard, dispatch]
-  );
-
-  const handleInputChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const target = event.target as HTMLInputElement;
-      const value = target.value as string;
-      if (value !== '') {
-        setDisabled(false);
-      }
-      setTitleBoard(value);
-    },
-    []
+    [dispatch]
   );
 
   const handleDecline = useCallback(() => {
@@ -131,10 +114,11 @@ function MainPage() {
           inputName={t('mainPage.boardNameText')}
           labelName={t('mainPage.addBoardNameLabel')}
           btnName={t('mainPage.AddBoardBtn')}
-          isDisabled={isDisabled}
-          onCreate={handleSubmitBoard}
+          onSubmit={handleSubmitBoard}
           onClose={handleCloseBoardModel}
-          onChange={handleInputChange}
+          isRenderDescription={isRenderDescription}
+          descriptionName={t('mainPage.descriptionName')}
+          labelDescription={t('mainPage.labelDescription')}
         />
       </Grid>
     </>

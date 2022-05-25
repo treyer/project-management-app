@@ -1,4 +1,4 @@
-import { TColumnResponse } from '../../api/types';
+import { TColumnResponse, TCreateTaskResponse } from '../../api/types';
 import { RootState } from '../../store';
 
 const getTasksByColumnId = (state: RootState, columnId: string) => {
@@ -11,4 +11,29 @@ const getTasksByColumnId = (state: RootState, columnId: string) => {
   return {} as TColumnResponse;
 };
 
-export { getTasksByColumnId };
+const getColumnById = (columnsToFilter: TColumnResponse[], id: string) => {
+  const result = columnsToFilter.find((column) => column.id === id);
+  return result;
+};
+
+const getTaskById = (
+  column: TColumnResponse,
+  id: string
+): Omit<TCreateTaskResponse, 'id'> => {
+  const task = column.tasks.find((columnTask) => columnTask.id === id);
+  if (task) {
+    const resultTask = {
+      title: task.title,
+      description: task.description,
+      userId: task.userId,
+    };
+    return resultTask;
+  }
+  return {
+    title: '',
+    description: '',
+    userId: '',
+  } as TCreateTaskResponse;
+};
+
+export { getTasksByColumnId, getColumnById, getTaskById };

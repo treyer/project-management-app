@@ -65,7 +65,9 @@
     "confirmMessageText": "Подтвердите действие",
     "yes": "Да",
     "no": "Нет",
-    "numberOfColumns": "Количество колонок"
+    "numberOfColumns": "Количество колонок",
+    "descriptionName": "Описание доски",
+    "labelDescription": "Добавьте описание доски"
   },
   "boardPage": {
     "unknownError": "Неизвестная ошибка",
@@ -81,5 +83,13 @@
     "inputName": "Имя колонки",
     "labelName": "Добавьте имя колонки",
     "btnName": "Добавить колонку"
+  },
+  "taskModal": {
+    "titleModal": "Добавить задачу",
+    "inputName": "Заголовок задачи",
+    "labelName": "Добавить заголовок задачи",
+    "descriptionName": "Описание задачи",
+    "labelDescription": "Добавьте описание задачи",
+    "btnName": "Добавить задачу"
   }
 }

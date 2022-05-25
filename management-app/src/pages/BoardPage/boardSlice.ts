@@ -6,10 +6,10 @@ import tasksAPI from '../../api/tasksAPI';
 import {
   TBoardResponse,
   TColumnBase,
-  TCreateTaskResponse,
   TTask,
   TTaskBase,
   TUpdateTaskRequestBody,
+  TUpdateTaskResponse,
 } from '../../api/types';
 import { RootState, useAppSelector } from '../../store';
 
@@ -33,25 +33,38 @@ const initialState: TBoardState = {
   isNewColumnLoading: false,
 };
 
+export const getBoard = createAsyncThunk('board/getBoard', (id: string) => {
+  const token = localStorage.getItem('token') as string;
+  if (token) {
+    return boardsAPI.getBoard(id, token);
+  }
+  throw new Error();
+});
+
 export const createTask = createAsyncThunk(
   'board/createTask',
-  ({
-    boardId,
-    columnId,
-    task,
-  }: {
-    boardId: string;
-    columnId: string;
-    task: TTaskBase;
-  }) => {
+  (
+    {
+      boardId,
+      columnId,
+      task,
+    }: {
+      boardId: string;
+      columnId: string;
+      task: TTaskBase;
+    },
+    { dispatch }
+  ) => {
     const token = localStorage.getItem('token') as string;
     if (token) {
-      return tasksAPI.createTask({
-        boardId,
-        columnId,
-        token,
-        task,
-      });
+      return tasksAPI
+        .createTask({
+          boardId,
+          columnId,
+          token,
+          task,
+        })
+        .then(() => dispatch(getBoard(boardId)));
     }
     throw new Error();
   }
@@ -100,37 +113,34 @@ export const createColumn = createAsyncThunk(
   }
 );
 
-export const setColumnTitle = createAsyncThunk(
-  'board/setColumnTitle',
-  ({
-    boardId,
-    columnId,
-    column: { title, order },
-  }: {
-    boardId: string;
-    columnId: string;
-    column: TColumnBase;
-  }) => {
+export const updateColumn = createAsyncThunk(
+  'board/updateColumn',
+  (
+    {
+      boardId,
+      columnId,
+      column: { title, order },
+    }: {
+      boardId: string;
+      columnId: string;
+      column: TColumnBase;
+    },
+    { dispatch }
+  ) => {
     const token = localStorage.getItem('token') as string;
     if (token) {
-      return columnsAPI.updateColumn({
-        boardId,
-        columnId,
-        token,
-        column: { title, order },
-      });
+      return columnsAPI
+        .updateColumn({
+          boardId,
+          columnId,
+          token,
+          column: { title, order },
+        })
+        .then(() => dispatch(getBoard(boardId)));
     }
     throw new Error();
   }
 );
-
-export const getBoard = createAsyncThunk('board/getBoard', (id: string) => {
-  const token = localStorage.getItem('token') as string;
-  if (token) {
-    return boardsAPI.getBoard(id, token);
-  }
-  throw new Error();
-});
 
 export const updateTask = createAsyncThunk(
   'board/updateTask',
@@ -147,7 +157,7 @@ export const updateTask = createAsyncThunk(
       task: TUpdateTaskRequestBody;
     },
     { dispatch }
-  ): Promise<TCreateTaskResponse> => {
+  ): Promise<TUpdateTaskResponse> => {
     const token = localStorage.getItem('token') as string;
     const result = await tasksAPI.updateTask({
       boardId,
@@ -167,7 +177,6 @@ const boardSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // TODO: maintain rejected, pending ...
       .addCase(getBoard.fulfilled, (state, action) => {
         state.isBoardLoading = false;
 
@@ -184,48 +193,17 @@ const boardSlice = createSlice({
       .addCase(getBoard.pending, (state) => {
         state.isBoardLoading = true;
       })
-      .addCase(setColumnTitle.fulfilled, (state, action) => {
-        state.isColumnTitleLoading = false;
-        if (action.payload) {
-          const { id: columnId, title } = action.payload;
-          const column = state.boardData.columns.find(
-            ({ id }) => id === columnId
-          );
-          if (column) {
-            column.title = title;
-          }
-        }
-      })
-      .addCase(setColumnTitle.rejected, (state) => {
+      .addCase(updateColumn.fulfilled, (state) => {
         state.isColumnTitleLoading = false;
       })
-      .addCase(setColumnTitle.pending, (state) => {
+      .addCase(updateColumn.rejected, (state) => {
+        state.isColumnTitleLoading = false;
+      })
+      .addCase(updateColumn.pending, (state) => {
         state.isColumnTitleLoading = true;
       })
-      .addCase(createTask.fulfilled, (state, action) => {
+      .addCase(createTask.fulfilled, (state) => {
         state.isNewTaskLoading = false;
-        const {
-          title,
-          order,
-          description,
-          userId,
-          id: taskId,
-          columnId,
-        } = action.payload;
-        const column = state.boardData.columns.find(
-          ({ id }) => id === columnId
-        );
-        if (column) {
-          column.tasks.push({
-            id: taskId,
-            title,
-            order,
-            done: false,
-            description,
-            userId,
-            files: [],
-          });
-        }
       })
       .addCase(createTask.rejected, (state) => {
         state.isNewTaskLoading = false;
