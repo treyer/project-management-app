@@ -106,6 +106,7 @@ export function BoardPage() {
   // }));
 
   const onDragEnd = (result) => {
+    // TODO: use order instead of index
     const { destination, source, draggableId } = result;
 
     if (!destination) {
@@ -127,7 +128,7 @@ export function BoardPage() {
         dispatch(
           updateTask({
             boardId,
-            columnId: destination.droppableId,
+            columnId: source.droppableId,
             taskId: draggableId,
             task: {
               ...draggableTask,
