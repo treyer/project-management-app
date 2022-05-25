@@ -76,7 +76,9 @@
     "enterTitleForColumnText": "Enter a title for this column...",
     "addColumnBtn": "Add column",
     "enterTaskTitleText": "Enter a title for this task...",
-    "addTaskBtn": "Add task"
+    "addTaskBtn": "Add task",
+    "ifDeleteColumnMessage": "Would you like delete the column?",
+    "ifDeleteTaskMessage": "Would you like delete the task?"
   },
   "columnModal": {
     "titleModal": "Add column",

@@ -107,7 +107,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
           {isDialogOpen && (
             <ConfirmMessage
               openDialog={isDialogOpen}
-              text={t('mainPage.ifDeleteBoardMessage')}
+              text={t('boardPage.ifDeleteColumnMessage')}
               onConfirm={handleConfirm}
               onDecline={handleDecline}
             />

@@ -61,7 +61,7 @@ export function TaskCard({
           {isDialogOpen && (
             <ConfirmMessage
               openDialog={isDialogOpen}
-              text={t('mainPage.ifDeleteBoardMessage')}
+              text={t('boardPage.ifDeleteTaskMessage')}
               onConfirm={handleConfirm}
               onDecline={handleDecline}
             />
