@@ -102,7 +102,15 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
           {...provided.draggableProps}
           ref={provided.innerRef}
           id={id}
-          sx={{ minWidth: 250, maxWidth: 250 }}
+          sx={{
+            justifyContent: 'flex-end',
+            gridGap: '50px',
+            gap: '50px',
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            alignContent: 'center',
+          }}
         >
           {isDialogOpen && (
             <ConfirmMessage
@@ -118,7 +126,9 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
             sx={{
               borderRadius: 2,
               backgroundColor: '#eee',
-              position: 'absolute',
+              position: 'relative',
+              minWidth: '350px',
+              height: '80vh',
             }}
           >
             <IconButton

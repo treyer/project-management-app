@@ -17,9 +17,6 @@ import { getBoards } from '../MainPage/slice/mainSlice';
 type TBoardState = {
   boardData: TBoardResponse;
   isBoardLoading: boolean;
-  isColumnTitleLoading: boolean;
-  isNewTaskLoading: boolean;
-  isNewColumnLoading: boolean;
 };
 const initialState: TBoardState = {
   boardData: {
@@ -29,9 +26,6 @@ const initialState: TBoardState = {
     columns: [],
   } as TBoardResponse,
   isBoardLoading: false,
-  isColumnTitleLoading: false,
-  isNewTaskLoading: false,
-  isNewColumnLoading: false,
 };
 
 export const getBoard = createAsyncThunk('board/getBoard', (id: string) => {
@@ -233,25 +227,25 @@ const boardSlice = createSlice({
         state.isBoardLoading = true;
       })
       .addCase(updateColumn.fulfilled, (state) => {
-        state.isColumnTitleLoading = false;
+        state.isBoardLoading = false;
       })
       .addCase(updateColumn.rejected, (state) => {
-        state.isColumnTitleLoading = false;
+        state.isBoardLoading = false;
       })
       .addCase(updateColumn.pending, (state) => {
-        state.isColumnTitleLoading = true;
+        state.isBoardLoading = true;
       })
       .addCase(createTask.fulfilled, (state) => {
-        state.isNewTaskLoading = false;
+        state.isBoardLoading = false;
       })
       .addCase(createTask.rejected, (state) => {
-        state.isNewTaskLoading = false;
+        state.isBoardLoading = false;
       })
       .addCase(createTask.pending, (state) => {
-        state.isNewTaskLoading = true;
+        state.isBoardLoading = true;
       })
       .addCase(createColumn.fulfilled, (state, action) => {
-        state.isNewColumnLoading = false;
+        state.isBoardLoading = false;
         const { id, title, order } = action.payload;
         state.boardData.columns.push({
           id,
@@ -261,10 +255,28 @@ const boardSlice = createSlice({
         });
       })
       .addCase(createColumn.rejected, (state) => {
-        state.isNewColumnLoading = false;
+        state.isBoardLoading = false;
       })
       .addCase(createColumn.pending, (state) => {
-        state.isNewColumnLoading = true;
+        state.isBoardLoading = true;
+      })
+      .addCase(deleteColumn.fulfilled, (state) => {
+        state.isBoardLoading = false;
+      })
+      .addCase(deleteColumn.rejected, (state) => {
+        state.isBoardLoading = false;
+      })
+      .addCase(deleteColumn.pending, (state) => {
+        state.isBoardLoading = true;
+      })
+      .addCase(deleteTask.fulfilled, (state) => {
+        state.isBoardLoading = false;
+      })
+      .addCase(deleteTask.rejected, (state) => {
+        state.isBoardLoading = false;
+      })
+      .addCase(deleteTask.pending, (state) => {
+        state.isBoardLoading = true;
       });
   },
 });

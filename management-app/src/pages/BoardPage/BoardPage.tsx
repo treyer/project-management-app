@@ -1,5 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Alert, Box, Button, Skeleton, Stack } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Skeleton,
+  Stack,
+  useMediaQuery,
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
@@ -137,8 +145,16 @@ export function BoardPage() {
     }
   };
 
+  const matches1 = useMediaQuery('(max-width:470px)');
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
+      {isBoardLoading && (
+        <CircularProgress
+          color="inherit"
+          sx={{ position: 'fixed', top: '50%' }}
+        />
+      )}
       <Box
         sx={{
           overflowX: 'auto',
@@ -167,7 +183,8 @@ export function BoardPage() {
                   ref={provided.innerRef}
                   // eslint-disable-next-line react/jsx-props-no-spreading
                   {...provided.droppableProps}
-                  direction="row"
+                  //  direction="row"
+                  direction={matches1 ? 'column' : 'row'}
                   spacing={2}
                 >
                   {columns.map((column: TColumnResponse) => (
@@ -185,7 +202,13 @@ export function BoardPage() {
           )}
 
           {!isAddColumnFieldOpen ? (
-            <Button sx={{ height: 100 }} onClick={openAddColumnField}>
+            <Button
+              sx={{
+                maxHeight: 100,
+                flexDirection: `${matches1 ? 'column' : 'row'}`,
+              }}
+              onClick={openAddColumnField}
+            >
               {t('boardPage.addColumnText')}
             </Button>
           ) : (
