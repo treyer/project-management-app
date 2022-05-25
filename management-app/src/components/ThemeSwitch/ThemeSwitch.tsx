@@ -1,8 +1,8 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
-import { store, useAppDispatch, useAppSelector } from '../../store';
-import { changeTheme } from '../../themeSlice';
+import { useAppDispatch } from '../../store';
+import { changeTheme } from '../../themes/themeSlice';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -56,7 +56,6 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 function ThemeSwitch() {
-  const theme = useAppSelector((state) => state.theme);
   const dispatch = useAppDispatch();
 
   return (
