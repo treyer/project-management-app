@@ -195,15 +195,6 @@ const boardSlice = createSlice({
       })
       .addCase(updateColumn.fulfilled, (state) => {
         state.isColumnTitleLoading = false;
-        // if (action.payload) {
-        //   const { id: columnId, title } = action.payload;
-        //   const column = state.boardData.columns.find(
-        //     ({ id }) => id === columnId
-        //   );
-        //   if (column) {
-        //     column.title = title;
-        //   }
-        // }
       })
       .addCase(updateColumn.rejected, (state) => {
         state.isColumnTitleLoading = false;

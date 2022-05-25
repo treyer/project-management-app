@@ -13,6 +13,7 @@ import { getTasksByColumnId } from '../../BoardPage.utils';
 
 import { TTaskResponse } from '../../../../api/types';
 import CreateModal from '../../../../components/CreateModal/CreateModal';
+
 // TODO: use TColumn instead of BoardColumnProps?
 export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
