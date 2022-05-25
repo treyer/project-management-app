@@ -3,12 +3,12 @@ import { useCallback, useState } from 'react';
 import { Box, Button, IconButton, Stack } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
-import { useDrag, useDrop } from 'react-dnd';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { TBoardColumnProps } from './BoardColumn.types';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import {
-  setColumnTitle,
+  updateColumn,
   createTask,
   deleteColumn,
   getBoard,
@@ -64,7 +64,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
 
   const handleClickAway = (titleInput: string) => {
     dispatch(
-      setColumnTitle({
+      updateColumn({
         boardId,
         columnId: id,
         column: { title: titleInput, order },
@@ -86,109 +86,110 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
     dispatch(getBoard(boardId));
   }, [dispatch, boardId, id]);
 
-  const [, drop] = useDrop(() => ({
-    accept: 'taskCard',
-    drop: (item: TTaskResponse, monitor) => {
-      return { id };
-    },
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
-    }),
-  }));
-
-  // TODO: add logic for dnd column
-  const [, drag] = useDrag(() => ({
-    type: 'boardColumn',
-    item: { id, title, order },
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-    end: (item, monitor) => {
-      // eslint-disable-next-line no-console
-      console.log(monitor.getDropResult());
-    },
-  }));
-
   return (
-    <Box id={id} ref={drag} sx={{ minWidth: 250, maxWidth: 250 }}>
-      <Box
-        ref={drop}
-        sx={{
-          borderRadius: 2,
-          backgroundColor: '#eee',
-          cursor: 'grabbing',
-          position: 'relative',
-        }}
-      >
-        <IconButton
-          aria-label="delete"
-          size="large"
-          onClick={handleDeleteColumn}
-          sx={{
-            position: 'absolute',
-            top: '0',
-            right: '0',
-          }}
+    <Draggable draggableId={id} index={order - 1}>
+      {(provided) => (
+        <Box
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...provided.draggableProps}
+          ref={provided.innerRef}
+          id={id}
+          sx={{ minWidth: 250, maxWidth: 250 }}
         >
-          <DeleteIcon />
-        </IconButton>
-        <Stack spacing={2}>
-          <ColumnTitle title={title} handleClickAway={handleClickAway} />
-          <Box sx={{ overflow: 'auto', maxHeight: '60vh' }}>
-            {tasks &&
-              tasks.map(
-                (
-                  {
-                    id: taskId,
-                    title,
-                    order,
-                    done,
-                    description,
-                    userId,
-                    files,
-                  }: TTaskResponse,
-                  index: number
-                ) => {
-                  const uniqueKey = index + taskId;
-                  return (
-                    <TaskCard
-                      key={uniqueKey}
-                      columnId={id}
-                      boardId={boardId}
-                      taskInfo={{
-                        id: taskId,
-                        title,
-                        order,
-                        done,
-                        description,
-                        userId,
-                        files,
-                      }}
-                    />
-                  );
-                }
+          <Box
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...provided.dragHandleProps}
+            sx={{
+              borderRadius: 2,
+              backgroundColor: '#eee',
+            }}
+          >
+            <IconButton
+              aria-label="delete"
+              size="large"
+              onClick={handleDeleteColumn}
+              sx={{
+                position: 'absolute',
+                top: '0',
+                right: '0',
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>
+            <Stack spacing={2}>
+              <ColumnTitle title={title} handleClickAway={handleClickAway} />
+              <Droppable droppableId={id} type="task">
+                {(provided) => (
+                  <Box
+                    ref={provided.innerRef}
+                    // eslint-disable-next-line react/jsx-props-no-spreading
+                    {...provided.droppableProps}
+                    sx={{
+                      overflow: 'auto',
+                      maxHeight: '60vh',
+                      cursor: 'grabbing',
+                    }}
+                  >
+                    {tasks.map(
+                      (
+                        {
+                          id: taskId,
+                          title,
+                          order,
+                          done,
+                          description,
+                          userId,
+                          files,
+                        }: TTaskResponse,
+                        index: number
+                      ) => {
+                        const uniqueKey = index + taskId;
+                        return (
+                          <TaskCard
+                            key={uniqueKey}
+                            index={index}
+                            columnId={id}
+                            boardId={boardId}
+                            taskInfo={{
+                              id: taskId,
+                              title,
+                              order,
+                              done,
+                              description,
+                              userId,
+                              files,
+                            }}
+                          />
+                        );
+                      }
+                    )}
+
+                    {provided.placeholder}
+                  </Box>
+                )}
+              </Droppable>
+              {!isAddTaskFieldOpen ? (
+                <Button onClick={openAddTaskField}>
+                  {t('boardPage.addTaskText')}
+                </Button>
+              ) : (
+                <CreateModal
+                  isModalOpen={isAddTaskFieldOpen}
+                  titleModal={t('taskModal.titleModal')}
+                  inputName={t('taskModal.inputName')}
+                  labelName={t('taskModal.labelName')}
+                  btnName={t('taskModal.btnName')}
+                  onSubmit={addNewTask}
+                  onClose={exitAddTaskField}
+                  isRenderDescription={isRenderDescription}
+                  descriptionName={t('taskModal.descriptionName')}
+                  labelDescription={t('taskModal.labelDescription')}
+                />
               )}
+            </Stack>
           </Box>
-          {!isAddTaskFieldOpen ? (
-            <Button onClick={openAddTaskField}>
-              {t('boardPage.addTaskText')}
-            </Button>
-          ) : (
-            <CreateModal
-              isModalOpen={isAddTaskFieldOpen}
-              titleModal={t('taskModal.titleModal')}
-              inputName={t('taskModal.inputName')}
-              labelName={t('taskModal.labelName')}
-              btnName={t('taskModal.btnName')}
-              onSubmit={addNewTask}
-              onClose={exitAddTaskField}
-              isRenderDescription={isRenderDescription}
-              descriptionName={t('taskModal.descriptionName')}
-              labelDescription={t('taskModal.labelDescription')}
-            />
-          )}
-        </Stack>
-      </Box>
-    </Box>
+        </Box>
+      )}
+    </Draggable>
   );
 }
