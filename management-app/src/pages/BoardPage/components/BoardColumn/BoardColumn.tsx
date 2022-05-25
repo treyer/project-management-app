@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDrag, useDrop } from 'react-dnd';
@@ -10,12 +10,16 @@ import { setColumnTitle, createTask } from '../../boardSlice';
 import { TaskCard } from '../TaskCard';
 import { ColumnTitle } from '../ColumnTitle';
 import { getTasksByColumnId } from '../../BoardPage.utils';
-import { CreateTaskModal } from '../CreateTaskModal';
+
 import { TTaskResponse } from '../../../../api/types';
+import CreateModal from '../../../../components/CreateModal/CreateModal';
 // TODO: use TColumn instead of BoardColumnProps?
 export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+
+  const [isRenderDescription, setIsRenderDescription] =
+    useState<boolean>(false);
 
   const { id: boardId } = useAppSelector((state) => state.board.boardData);
   // TODO:
@@ -47,6 +51,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
           },
         })
       );
+      setIsAddTaskFieldOpen(false);
     },
     [dispatch, boardId, id, userId]
   );
@@ -67,6 +72,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
 
   const openAddTaskField = () => {
     setIsAddTaskFieldOpen(true);
+    setIsRenderDescription(true);
   };
 
   const [, drop] = useDrop(() => ({
@@ -140,10 +146,17 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
               {t('boardPage.addTaskText')}
             </Button>
           ) : (
-            <CreateTaskModal
-              createTask={addNewTask}
-              onRequestClose={exitAddTaskField}
+            <CreateModal
               isModalOpen={isAddTaskFieldOpen}
+              titleModal={t('taskModal.titleModal')}
+              inputName={t('taskModal.inputName')}
+              labelName={t('taskModal.labelName')}
+              btnName={t('taskModal.btnName')}
+              onSubmit={addNewTask}
+              onClose={exitAddTaskField}
+              isRenderDescription={isRenderDescription}
+              descriptionName={t('taskModal.descriptionName')}
+              labelDescription={t('taskModal.labelDescription')}
             />
           )}
         </Stack>

@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent } from 'react';
+import { ChangeEvent, useCallback, useState, useEffect } from 'react';
 import {
   Button,
   Modal,
@@ -17,10 +17,11 @@ type TCreateModal = {
   inputName: string;
   labelName: string;
   btnName: string;
-  isDisabled: boolean;
   onClose: () => void;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onCreate: (event: MouseEvent | FormEvent) => void;
+  onSubmit: (titleInput: string, taskDescription: string) => void;
+  isRenderDescription?: boolean;
+  descriptionName?: string;
+  labelDescription?: string;
 };
 
 function CreateModal({
@@ -29,11 +30,51 @@ function CreateModal({
   titleModal,
   labelName,
   btnName,
-  isDisabled,
-  onCreate,
+  onSubmit,
   onClose,
-  onChange,
+  isRenderDescription,
+  descriptionName,
+  labelDescription,
 }: TCreateModal) {
+  const [titleInput, setTitleInput] = useState<string>('');
+  const [taskDescription, setTaskDescription] = useState<string>('');
+  const [isDisabled, setDisabled] = useState<boolean>(true);
+
+  const handleInputChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const target = event.target as HTMLInputElement;
+      const value = target.value as string;
+
+      setTitleInput(value);
+    },
+    []
+  );
+
+  const handleChangeDescription = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const target = event.target as HTMLInputElement;
+      const value = target.value as string;
+
+      setTaskDescription(value);
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (titleInput !== '') {
+      setDisabled(false);
+      if (isRenderDescription && taskDescription === '') {
+        setDisabled(true);
+      }
+    } else {
+      setDisabled(true);
+    }
+  }, [titleInput, taskDescription, isRenderDescription]);
+
+  const handelSubmit = useCallback(() => {
+    onSubmit(titleInput, taskDescription);
+  }, [titleInput, onSubmit, taskDescription]);
+
   return (
     <Modal
       open={isModalOpen}
@@ -48,13 +89,12 @@ function CreateModal({
       }}
     >
       <Grid
-        id="transition-modal-title"
         container
         padding={2}
         direction="column"
         justifyContent="center"
         width="300px"
-        height="270px"
+        minHeight="270px"
         sx={{
           border: '1px solid grey',
           borderRadius: '5px',
@@ -84,7 +124,7 @@ function CreateModal({
           {titleModal}
         </Typography>
 
-        <Box component="form" onSubmit={onCreate} sx={{ Width: '600px' }}>
+        <Box component="form" onSubmit={handelSubmit} sx={{ Width: '600px' }}>
           <Typography component="p" gutterBottom>
             {inputName}
           </Typography>
@@ -94,13 +134,29 @@ function CreateModal({
             variant="outlined"
             size="small"
             sx={{ marginBottom: '20px', width: '100%' }}
-            onChange={onChange}
+            onChange={handleInputChange}
           />
+
+          {isRenderDescription && (
+            <>
+              <Typography component="p" gutterBottom>
+                {descriptionName}
+              </Typography>
+              <TextField
+                id="outlined-basic"
+                label={labelDescription}
+                variant="outlined"
+                size="small"
+                sx={{ marginBottom: '20px', width: '100%' }}
+                onChange={handleChangeDescription}
+              />
+            </>
+          )}
         </Box>
         <Button
           variant="contained"
           size="medium"
-          onClick={onCreate}
+          onClick={handelSubmit}
           disabled={isDisabled}
         >
           {btnName}
@@ -109,5 +165,11 @@ function CreateModal({
     </Modal>
   );
 }
+
+CreateModal.defaultProps = {
+  isRenderDescription: false,
+  descriptionName: '',
+  labelDescription: '',
+};
 
 export default CreateModal;
