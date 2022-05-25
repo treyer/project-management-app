@@ -1,12 +1,18 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { useCallback, useState } from 'react';
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Button, IconButton, Stack } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 import { useDrag, useDrop } from 'react-dnd';
 
 import { TBoardColumnProps } from './BoardColumn.types';
 import { useAppDispatch, useAppSelector } from '../../../../store';
-import { setColumnTitle, createTask } from '../../boardSlice';
+import {
+  setColumnTitle,
+  createTask,
+  deleteColumn,
+  getBoard,
+} from '../../boardSlice';
 import { TaskCard } from '../TaskCard';
 import { ColumnTitle } from '../ColumnTitle';
 import { getTasksByColumnId } from '../../BoardPage.utils';
@@ -70,10 +76,15 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
     setIsAddTaskFieldOpen(false);
   }, []);
 
-  const openAddTaskField = () => {
+  const openAddTaskField = useCallback(() => {
     setIsAddTaskFieldOpen(true);
     setIsRenderDescription(true);
-  };
+  }, []);
+
+  const handleDeleteColumn = useCallback(() => {
+    dispatch(deleteColumn({ boardId, columnId: id }));
+    dispatch(getBoard(boardId));
+  }, [dispatch, boardId, id]);
 
   const [, drop] = useDrop(() => ({
     accept: 'taskCard',
@@ -102,8 +113,25 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
     <Box id={id} ref={drag} sx={{ minWidth: 250, maxWidth: 250 }}>
       <Box
         ref={drop}
-        sx={{ borderRadius: 2, backgroundColor: '#eee', cursor: 'grabbing' }}
+        sx={{
+          borderRadius: 2,
+          backgroundColor: '#eee',
+          cursor: 'grabbing',
+          position: 'relative',
+        }}
       >
+        <IconButton
+          aria-label="delete"
+          size="large"
+          onClick={handleDeleteColumn}
+          sx={{
+            position: 'absolute',
+            top: '0',
+            right: '0',
+          }}
+        >
+          <DeleteIcon />
+        </IconButton>
         <Stack spacing={2}>
           <ColumnTitle title={title} handleClickAway={handleClickAway} />
           <Box sx={{ overflow: 'auto', maxHeight: '60vh' }}>

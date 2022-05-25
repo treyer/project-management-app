@@ -12,6 +12,7 @@ import {
   TUpdateTaskResponse,
 } from '../../api/types';
 import { RootState, useAppSelector } from '../../store';
+import { getBoards } from '../MainPage/slice/mainSlice';
 
 type TBoardState = {
   boardData: TBoardResponse;
@@ -134,6 +135,20 @@ export const setColumnTitle = createAsyncThunk(
       });
     }
     throw new Error();
+  }
+);
+
+export const deleteColumn = createAsyncThunk(
+  'main/deleteColumn',
+  async ({
+    boardId,
+    columnId,
+  }: {
+    boardId: string;
+    columnId: string;
+  }): Promise<void> => {
+    const token = localStorage.getItem('token') as string;
+    await columnsAPI.deleteColumn({ boardId, columnId, token });
   }
 );
 
