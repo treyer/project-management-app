@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Alert, CircularProgress, Grid } from '@mui/material';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import AddBoardBtn from './components/AddBoardBtn/AddBoardBtn';
@@ -18,6 +18,9 @@ import CreateModal from '../../components/CreateModal/CreateModal';
 import ConfirmMessage from '../../components/ConfirmMessage/ConfirmMessage';
 
 function MainPage() {
+  const [isRenderDescription, setIsRenderDescription] =
+    useState<boolean>(false);
+
   const navigate = useNavigate();
   const { isDialogOpen } = useAppSelector((state) => state.main);
 
@@ -38,6 +41,7 @@ function MainPage() {
 
   const handleOpenBoardModal = useCallback(() => {
     dispatch(openBoardModal());
+    setIsRenderDescription(true);
   }, [dispatch]);
 
   const handleCloseBoardModel = useCallback(() => {
@@ -45,8 +49,10 @@ function MainPage() {
   }, [dispatch]);
 
   const handleSubmitBoard = useCallback(
-    (titleBoard: string) => {
-      dispatch(createBoard({ title: titleBoard, description: 'description' }));
+    (titleBoard: string, titleDescription: string) => {
+      dispatch(
+        createBoard({ title: titleBoard, description: titleDescription })
+      );
     },
     [dispatch]
   );
@@ -110,6 +116,9 @@ function MainPage() {
           btnName={t('mainPage.AddBoardBtn')}
           onSubmit={handleSubmitBoard}
           onClose={handleCloseBoardModel}
+          isRenderDescription={isRenderDescription}
+          descriptionName={t('taskModal.descriptionName')}
+          labelDescription={t('taskModal.labelDescription')}
         />
       </Grid>
     </>
