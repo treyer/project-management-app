@@ -1,5 +1,6 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-shadow */
-import { useCallback, useState } from 'react';
+import { useCallback, useState, MouseEvent } from 'react';
 import { Box, Button, IconButton, Stack } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
@@ -7,18 +8,15 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { TBoardColumnProps } from './BoardColumn.types';
 import { useAppDispatch, useAppSelector } from '../../../../store';
-import {
-  updateColumn,
-  createTask,
-  deleteColumn,
-  getBoard,
-} from '../../boardSlice';
+import { updateColumn, createTask, deleteColumn } from '../../boardSlice';
 import { TaskCard } from '../TaskCard';
 import { ColumnTitle } from '../ColumnTitle';
 import { getTasksByColumnId } from '../../BoardPage.utils';
 
 import { TTaskResponse } from '../../../../api/types';
 import CreateModal from '../../../../components/CreateModal/CreateModal';
+import ConfirmMessage from '../../../../components/ConfirmMessage/ConfirmMessage';
+
 // TODO: use TColumn instead of BoardColumnProps?
 export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
@@ -43,6 +41,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   tasks = [...tasksForSort];
 
   const [isAddTaskFieldOpen, setIsAddTaskFieldOpen] = useState(false);
+  const [isDialogOpen, setDialogOpen] = useState(false);
 
   const addNewTask = useCallback(
     (taskTitleInput: string, taskDescription: string) => {
@@ -81,9 +80,18 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
     setIsRenderDescription(true);
   }, []);
 
-  const handleDeleteColumn = useCallback(() => {
+  const handleDeleteColumn = useCallback((event: MouseEvent) => {
+    event.preventDefault();
+    setDialogOpen(true);
+  }, []);
+
+  const handleDecline = useCallback(() => {
+    setDialogOpen(false);
+  }, []);
+
+  const handleConfirm = useCallback(() => {
     dispatch(deleteColumn({ boardId, columnId: id }));
-    dispatch(getBoard(boardId));
+    setDialogOpen(false);
   }, [dispatch, boardId, id]);
 
   return (
@@ -96,12 +104,21 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
           id={id}
           sx={{ minWidth: 250, maxWidth: 250 }}
         >
+          {isDialogOpen && (
+            <ConfirmMessage
+              openDialog={isDialogOpen}
+              text={t('mainPage.ifDeleteBoardMessage')}
+              onConfirm={handleConfirm}
+              onDecline={handleDecline}
+            />
+          )}
           <Box
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...provided.dragHandleProps}
             sx={{
               borderRadius: 2,
               backgroundColor: '#eee',
+              position: 'absolute',
             }}
           >
             <IconButton

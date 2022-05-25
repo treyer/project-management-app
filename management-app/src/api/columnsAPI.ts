@@ -78,7 +78,6 @@ class ColumnsAPI extends BaseAPI {
       Authorization: `Bearer ${token}`,
     }).then((result) => {
       BaseAPI.handleError(result, BOARDS_API_ERRORS);
-      return result.json();
     });
   }
 }

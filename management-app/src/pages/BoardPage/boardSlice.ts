@@ -144,16 +144,20 @@ export const updateColumn = createAsyncThunk(
 );
 
 export const deleteColumn = createAsyncThunk(
-  'main/deleteColumn',
-  async ({
-    boardId,
-    columnId,
-  }: {
-    boardId: string;
-    columnId: string;
-  }): Promise<void> => {
+  'board/deleteColumn',
+  async (
+    {
+      boardId,
+      columnId,
+    }: {
+      boardId: string;
+      columnId: string;
+    },
+    { dispatch }
+  ): Promise<void> => {
     const token = localStorage.getItem('token') as string;
     await columnsAPI.deleteColumn({ boardId, columnId, token });
+    dispatch(getBoard(boardId));
   }
 );
 

@@ -39,9 +39,8 @@ export function BoardPage() {
   }, [dispatch, boardId, t]);
 
   // TODO: find a way to store columns in the right order instead of using sort
-  let columns = useAppSelector(
-    (state: RootState) => state.board.boardData.columns
-  );
+
+  let columns = useAppSelector((state) => state.board.boardData.columns);
   const columnsForSort = [...columns];
   columnsForSort.sort((a, b) => {
     return a.order > b.order ? 1 : -1;
