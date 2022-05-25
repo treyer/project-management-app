@@ -60,7 +60,6 @@ export type TColumnResponse = {
 
 export type TTaskBase = {
   title: string;
-  order: number;
   description: string;
   userId: string;
 };
@@ -97,11 +96,18 @@ export type TToken = {
 };
 
 export type TCreateTaskResponse = {
+  id: string;
+  title: string;
+  description: string;
+  userId: string;
+};
+
+export type TUpdateTaskResponse = {
+  id: string;
   title: string;
   order: number;
   description: string;
   userId: string;
-  id: string;
   boardId: string;
   columnId: string;
 };
