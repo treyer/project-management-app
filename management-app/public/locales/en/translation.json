@@ -65,7 +65,9 @@
     "confirmMessageText": "Confirm message",
     "yes": "Yes",
     "no": "No",
-    "numberOfColumns": "Number of columns"
+    "numberOfColumns": "Number of columns",
+    "descriptionName": "Description",
+    "labelDescription": "Add description"
   },
   "boardPage": {
     "unknownError": "Unknown Error",

@@ -65,7 +65,9 @@
     "confirmMessageText": "Подтвердите действие",
     "yes": "Да",
     "no": "Нет",
-    "numberOfColumns": "Количество колонок"
+    "numberOfColumns": "Количество колонок",
+    "descriptionName": "Описание доски",
+    "labelDescription": "Добавьте описание доски"
   },
   "boardPage": {
     "unknownError": "Неизвестная ошибка",

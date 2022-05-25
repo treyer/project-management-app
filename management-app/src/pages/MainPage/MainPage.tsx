@@ -117,8 +117,8 @@ function MainPage() {
           onSubmit={handleSubmitBoard}
           onClose={handleCloseBoardModel}
           isRenderDescription={isRenderDescription}
-          descriptionName={t('taskModal.descriptionName')}
-          labelDescription={t('taskModal.labelDescription')}
+          descriptionName={t('mainPage.descriptionName')}
+          labelDescription={t('mainPage.labelDescription')}
         />
       </Grid>
     </>
