@@ -2,18 +2,17 @@
 import React, { useCallback, useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useDrag, useDrop } from 'react-dnd';
-import { Droppable } from 'react-beautiful-dnd';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { TBoardColumnProps } from './BoardColumn.types';
 import { useAppDispatch, useAppSelector } from '../../../../store';
-import { setColumnTitle, createTask } from '../../boardSlice';
+import { updateColumn, createTask } from '../../boardSlice';
 import { TaskCard } from '../TaskCard';
 import { ColumnTitle } from '../ColumnTitle';
 import { getTasksByColumnId } from '../../BoardPage.utils';
 import { CreateTaskModal } from '../CreateTaskModal';
 import { TTaskResponse } from '../../../../api/types';
-// import { TaskList } from '../TaskList';
+
 // TODO: use TColumn instead of BoardColumnProps?
 export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
@@ -55,7 +54,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
 
   const handleClickAway = (titleInput: string) => {
     dispatch(
-      setColumnTitle({
+      updateColumn({
         boardId,
         columnId: id,
         column: { title: titleInput, order },
@@ -71,66 +70,41 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
     setIsAddTaskFieldOpen(true);
   };
 
-  const [, drop] = useDrop(() => ({
-    accept: 'taskCard',
-    drop: (item: TTaskResponse, monitor) => {
-      return { id };
-    },
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
-    }),
-  }));
-
-  // TODO: add logic for dnd column
-  const [, drag] = useDrag(() => ({
-    type: 'boardColumn',
-    item: { id, title, order },
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-    end: (item, monitor) => {
-      // eslint-disable-next-line no-console
-      console.log(monitor.getDropResult());
-    },
-  }));
-
   return (
-    <Box id={id} ref={drag} sx={{ minWidth: 250, maxWidth: 250 }}>
-      <Box
-        ref={drop}
-        sx={{ borderRadius: 2, backgroundColor: '#eee', cursor: 'grabbing' }}
-      >
-        <Stack spacing={2}>
-          <ColumnTitle title={title} handleClickAway={handleClickAway} />
-          <Droppable droppableId={id}>
-            {(provided) => (
-              <Box
-                ref={provided.innerRef}
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                {...provided.droppableProps}
-                sx={{ overflow: 'auto', maxHeight: '60vh' }}
-              >
-                {tasks.map(
-                  (
-                    {
-                      id: taskId,
-                      title,
-                      order,
-                      done,
-                      description,
-                      userId,
-                      files,
-                    }: TTaskResponse,
-                    index: number
-                  ) => {
-                    const uniqueKey = index + taskId;
-                    return (
-                      <TaskCard
-                        key={uniqueKey}
-                        index={index}
-                        columnId={id}
-                        boardId={boardId}
-                        taskInfo={{
+    <Draggable draggableId={id} index={order - 1}>
+      {(provided) => (
+        <Box
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...provided.draggableProps}
+          ref={provided.innerRef}
+          id={id}
+          sx={{ minWidth: 250, maxWidth: 250 }}
+        >
+          <Box
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...provided.dragHandleProps}
+            sx={{
+              borderRadius: 2,
+              backgroundColor: '#eee',
+            }}
+          >
+            <Stack spacing={2}>
+              <ColumnTitle title={title} handleClickAway={handleClickAway} />
+              <Droppable droppableId={id} type="task">
+                {(provided) => (
+                  <Box
+                    ref={provided.innerRef}
+                    // eslint-disable-next-line react/jsx-props-no-spreading
+                    {...provided.droppableProps}
+                    sx={{
+                      overflow: 'auto',
+                      maxHeight: '60vh',
+                      cursor: 'grabbing',
+                    }}
+                  >
+                    {tasks.map(
+                      (
+                        {
                           id: taskId,
                           title,
                           order,
@@ -138,28 +112,48 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
                           description,
                           userId,
                           files,
-                        }}
-                      />
-                    );
-                  }
-                )}
+                        }: TTaskResponse,
+                        index: number
+                      ) => {
+                        const uniqueKey = index + taskId;
+                        return (
+                          <TaskCard
+                            key={uniqueKey}
+                            index={index}
+                            columnId={id}
+                            boardId={boardId}
+                            taskInfo={{
+                              id: taskId,
+                              title,
+                              order,
+                              done,
+                              description,
+                              userId,
+                              files,
+                            }}
+                          />
+                        );
+                      }
+                    )}
 
-                {provided.placeholder}
-              </Box>
-            )}
-          </Droppable>
-          {!isAddTaskFieldOpen && (
-            <Button onClick={openAddTaskField}>
-              {t('boardPage.addTaskText')}
-            </Button>
-          )}
-          <CreateTaskModal
-            createTask={addNewTask}
-            onRequestClose={exitAddTaskField}
-            isModalOpen={isAddTaskFieldOpen}
-          />
-        </Stack>
-      </Box>
-    </Box>
+                    {provided.placeholder}
+                  </Box>
+                )}
+              </Droppable>
+              {!isAddTaskFieldOpen && (
+                <Button onClick={openAddTaskField}>
+                  {t('boardPage.addTaskText')}
+                </Button>
+              )}
+              <CreateTaskModal
+                createTask={addNewTask}
+                onRequestClose={exitAddTaskField}
+                isModalOpen={isAddTaskFieldOpen}
+              />
+            </Stack>
+          </Box>
+        </Box>
+      )}
+    </Draggable>
   );
 }

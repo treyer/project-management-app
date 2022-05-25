@@ -1,11 +1,10 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { Alert, Box, Button, Skeleton, Stack } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useDrop } from 'react-dnd';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import { useParams } from 'react-router-dom';
-import { createColumn, getBoard, updateTask } from './boardSlice';
+import { createColumn, getBoard, updateColumn, updateTask } from './boardSlice';
 import { RootState, useAppDispatch, useAppSelector } from '../../store';
 
 import { BoardColumn } from './components/BoardColumn';
@@ -94,20 +93,10 @@ export function BoardPage() {
     setIsAddColumnFieldOpen(true);
   };
 
-  // TODO: add logic for dnd column
-  // const [, drop] = useDrop(() => ({
-  //   accept: 'boardColumn',
-  //   drop: (item: TColumn, monitor) => {
-  //     return { item };
-  //   },
-  //   collect: (monitor) => ({
-  //     isOver: !!monitor.isOver(),
-  //   }),
-  // }));
-
-  const onDragEnd = (result) => {
-    // TODO: use order instead of index
-    const { destination, source, draggableId } = result;
+  // TODO: find a way to get rid of 'any'
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onDragEnd = (result: Record<string, any>) => {
+    const { destination, source, draggableId, type } = result;
 
     if (!destination) {
       return;
@@ -118,8 +107,25 @@ export function BoardPage() {
     ) {
       return;
     }
+
+    if (type === 'column') {
+      const column = getColumnById(columns, draggableId);
+
+      if (boardId && column) {
+        dispatch(
+          updateColumn({
+            boardId,
+            columnId: draggableId,
+            column: {
+              title: column.title,
+              order: destination.index + 1,
+            },
+          })
+        );
+      }
+    }
+
     const sourceColumn = getColumnById(columns, source.droppableId);
-    // const destinationColumn = getColumnById(columns, destination.droppableId);
 
     if (sourceColumn) {
       const draggableTask = getTaskById(sourceColumn, draggableId);
@@ -145,8 +151,12 @@ export function BoardPage() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Box
-        // ref={drop}
-        sx={{ overflowX: 'auto', p: 3, width: '100%', justifySelf: 'start' }}
+        sx={{
+          overflowX: 'auto',
+          p: 3,
+          width: '100%',
+          justifySelf: 'start',
+        }}
       >
         {error && <Alert severity="error">{error}</Alert>}
         <Stack direction="row" spacing={2}>
@@ -158,16 +168,31 @@ export function BoardPage() {
               );
             })
           ) : (
-            <Stack direction="row" spacing={2}>
-              {columns.map((column: TColumnResponse) => (
-                <BoardColumn
-                  key={column.id}
-                  id={column.id}
-                  title={column.title}
-                  order={column.order}
-                />
-              ))}
-            </Stack>
+            <Droppable
+              droppableId="all-columns"
+              direction="horizontal"
+              type="column"
+            >
+              {(provided) => (
+                <Stack
+                  ref={provided.innerRef}
+                  // eslint-disable-next-line react/jsx-props-no-spreading
+                  {...provided.droppableProps}
+                  direction="row"
+                  spacing={2}
+                >
+                  {columns.map((column: TColumnResponse) => (
+                    <BoardColumn
+                      key={column.id}
+                      id={column.id}
+                      title={column.title}
+                      order={column.order}
+                    />
+                  ))}
+                  {provided.placeholder}
+                </Stack>
+              )}
+            </Droppable>
           )}
 
           {!isAddColumnFieldOpen ? (
