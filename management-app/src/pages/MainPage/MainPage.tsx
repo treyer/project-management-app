@@ -18,8 +18,7 @@ import CreateModal from '../../components/CreateModal/CreateModal';
 import ConfirmMessage from '../../components/ConfirmMessage/ConfirmMessage';
 
 function MainPage() {
-  const [isRenderDescription, setIsRenderDescription] =
-    useState<boolean>(false);
+  const [isRenderDescription, setIsRenderDescription] = useState<boolean>(true);
 
   const navigate = useNavigate();
   const { isDialogOpen } = useAppSelector((state) => state.main);

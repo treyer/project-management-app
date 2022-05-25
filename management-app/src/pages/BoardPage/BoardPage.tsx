@@ -16,7 +16,7 @@ export function BoardPage() {
   const { boardId } = useParams();
 
   const { isBoardLoading } = useAppSelector((state: RootState) => state.board);
-
+  const [isRenderDescription, setIsRenderDescription] = useState<boolean>(true);
   const [isAddColumnFieldOpen, setIsAddColumnFieldOpen] = useState(false);
   const [error, setError] = useState('');
 
@@ -79,6 +79,7 @@ export function BoardPage() {
 
   const openAddColumnField = () => {
     setIsAddColumnFieldOpen(true);
+    setIsRenderDescription(false);
   };
 
   // TODO: add logic for dnd column
@@ -128,6 +129,7 @@ export function BoardPage() {
             btnName={t('columnModal.btnName')}
             onSubmit={addNewColumn}
             onClose={exitAddColumnField}
+            isRenderDescription={isRenderDescription}
           />
         )}
       </Stack>
