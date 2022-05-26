@@ -134,7 +134,21 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
             >
               <DeleteIcon />
             </IconButton>
-            <Stack spacing={2}>
+            <Stack
+              spacing={2}
+              sx={[
+                {
+                  '&:hover': {
+                    backgroundColor: '#e5eff8',
+                  },
+                },
+                {
+                  '&:active': {
+                    backgroundColor: '#ffffff',
+                  },
+                },
+              ]}
+            >
               <ColumnTitle title={title} handleClickAway={handleClickAway} />
               <Droppable droppableId={id} type="task">
                 {(provided) => (

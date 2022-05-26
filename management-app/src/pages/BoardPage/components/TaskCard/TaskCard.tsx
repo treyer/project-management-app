@@ -49,16 +49,28 @@ export function TaskCard({
           ref={provided.innerRef}
           data-column-id={columnId}
           data-board-id={boardId}
-          sx={{
-            borderRadius: 2,
-            bgcolor: '#fff',
-            margin: 2,
-            boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
-            cursor: 'grabbing',
-            position: 'relative',
-            minHeight: '100px',
-            minWidth: '250px',
-          }}
+          sx={[
+            {
+              borderRadius: 2,
+              bgcolor: '#fff',
+              margin: 2,
+              boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+              cursor: 'grabbing',
+              position: 'relative',
+              minHeight: '100px',
+              minWidth: '250px',
+            },
+            {
+              '&:hover': {
+                backgroundColor: '#ffffff',
+              },
+            },
+            {
+              '&:active': {
+                backgroundColor: '#e5eff8',
+              },
+            },
+          ]}
         >
           {isDialogOpen && (
             <ConfirmMessage

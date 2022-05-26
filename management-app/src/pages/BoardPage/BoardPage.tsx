@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   CircularProgress,
-  Skeleton,
   Stack,
   useMediaQuery,
 } from '@mui/material';
@@ -161,7 +160,7 @@ export function BoardPage() {
           overflowX: 'auto',
           p: 3,
           width: '100%',
-          justifyContent: 'flex-start',
+          justifySelf: 'start',
         }}
       >
         {error && <Alert severity="error">{error}</Alert>}

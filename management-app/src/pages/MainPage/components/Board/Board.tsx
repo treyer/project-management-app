@@ -55,7 +55,7 @@ function Board({ titleBoard, id, columnNum }: TBoardProps) {
         <Card
           sx={[
             {
-              minWidth: '65vw',
+              width: '70vw',
               height: '200px',
               backgroundImage: 'url(./assets/svg/board.svg)',
               backgroundRepeat: 'no-repeat',
