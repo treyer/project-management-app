@@ -12,11 +12,11 @@ import {
   TUpdateTaskResponse,
 } from '../../api/types';
 import { RootState, useAppSelector } from '../../store';
-import { getBoards } from '../MainPage/slice/mainSlice';
 
 type TBoardState = {
   boardData: TBoardResponse;
   isBoardLoading: boolean;
+  isColumnLoading: boolean;
 };
 const initialState: TBoardState = {
   boardData: {
@@ -26,6 +26,7 @@ const initialState: TBoardState = {
     columns: [],
   } as TBoardResponse,
   isBoardLoading: false,
+  isColumnLoading: false,
 };
 
 export const getBoard = createAsyncThunk('board/getBoard', (id: string) => {
@@ -227,18 +228,27 @@ const boardSlice = createSlice({
         state.isBoardLoading = true;
       })
       .addCase(updateColumn.fulfilled, (state) => {
-        state.isBoardLoading = false;
+        state.isColumnLoading = false;
       })
       .addCase(updateColumn.rejected, (state) => {
-        state.isBoardLoading = false;
+        state.isColumnLoading = false;
       })
       .addCase(updateColumn.pending, (state) => {
-        state.isBoardLoading = true;
+        state.isColumnLoading = true;
       })
       .addCase(createTask.fulfilled, (state) => {
         state.isBoardLoading = false;
       })
       .addCase(createTask.rejected, (state) => {
+        state.isBoardLoading = false;
+      })
+      .addCase(updateTask.pending, (state) => {
+        state.isBoardLoading = true;
+      })
+      .addCase(updateTask.fulfilled, (state) => {
+        state.isBoardLoading = false;
+      })
+      .addCase(updateTask.rejected, (state) => {
         state.isBoardLoading = false;
       })
       .addCase(createTask.pending, (state) => {

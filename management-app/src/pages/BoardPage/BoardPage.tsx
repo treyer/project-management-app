@@ -25,6 +25,7 @@ export function BoardPage() {
   const { boardId } = useParams();
 
   const { isBoardLoading } = useAppSelector((state: RootState) => state.board);
+  const { isColumnLoading } = useAppSelector((state: RootState) => state.board);
   const [isRenderDescription, setIsRenderDescription] = useState<boolean>(true);
   const [isAddColumnFieldOpen, setIsAddColumnFieldOpen] = useState(false);
   const [error, setError] = useState('');
@@ -149,10 +150,10 @@ export function BoardPage() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      {isBoardLoading && (
+      {isBoardLoading && !isColumnLoading && (
         <CircularProgress
           color="inherit"
-          sx={{ position: 'fixed', top: '50%' }}
+          sx={{ position: 'fixed', top: '50%', zIndex: 2 }}
         />
       )}
       <Box
@@ -160,18 +161,16 @@ export function BoardPage() {
           overflowX: 'auto',
           p: 3,
           width: '100%',
-          justifySelf: 'start',
+          justifyContent: 'flex-start',
         }}
       >
         {error && <Alert severity="error">{error}</Alert>}
-        <Stack direction="row" spacing={2}>
-          {isBoardLoading ? (
-            [...Array(3)].map((elem, index) => {
-              return (
-                // eslint-disable-next-line react/no-array-index-key
-                <Skeleton key={index} variant="rectangular" height={400} />
-              );
-            })
+        <Stack spacing={2} direction={matches1 ? 'column' : 'row'}>
+          {isColumnLoading ? (
+            <CircularProgress
+              color="inherit"
+              sx={{ position: 'fixed', top: '50%', right: '50%' }}
+            />
           ) : (
             <Droppable
               droppableId="all-columns"
@@ -181,9 +180,8 @@ export function BoardPage() {
               {(provided) => (
                 <Stack
                   ref={provided.innerRef}
-                  // eslint-disable-next-line react/jsx-props-no-spreading
+                  //  eslint-disable-next-line react/jsx-props-no-spreading
                   {...provided.droppableProps}
-                  //  direction="row"
                   direction={matches1 ? 'column' : 'row'}
                   spacing={2}
                 >
@@ -204,8 +202,8 @@ export function BoardPage() {
           {!isAddColumnFieldOpen ? (
             <Button
               sx={{
-                maxHeight: 100,
-                flexDirection: `${matches1 ? 'column' : 'row'}`,
+                maxHeight: '100px',
+                minWidth: '200px',
               }}
               onClick={openAddColumnField}
             >
