@@ -1,7 +1,15 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { Alert, Box, Stack, TextField, Typography, Fade } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Stack,
+  TextField,
+  Typography,
+  Fade,
+  useTheme,
+} from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useTranslation } from 'react-i18next';
 
@@ -22,6 +30,7 @@ function SignInForm() {
   const [signInError, setSignInError] = useState('');
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const theme = useTheme();
 
   const loginValidationSchema = useMemo(
     () =>
@@ -60,8 +69,19 @@ function SignInForm() {
   });
 
   return (
-    <Box component="form" onSubmit={formik.handleSubmit} sx={{ width: 600 }}>
-      <Box sx={{ maxWidth: 600 }}>
+    <Box
+      component="form"
+      onSubmit={formik.handleSubmit}
+      sx={{
+        width: 600,
+        padding: '8px',
+      }}
+    >
+      <Box
+        sx={{
+          maxWidth: 600,
+        }}
+      >
         <Typography variant="h3" gutterBottom>
           {t('signInForm.signIn')}
         </Typography>

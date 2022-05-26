@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Typography } from '@mui/material';
+import { Grid, Typography, useTheme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import style from './Logo.module.css';
 
-function Logo() {
+type TType = {
+  isActive: boolean;
+};
+
+function Logo({ isActive }: TType) {
   const [mouseOver, setMouseOver] = useState(false);
+  const theme = useTheme();
 
   const matches = useMediaQuery('(min-width:720px)');
   const matches1 = useMediaQuery('(max-width:585px)');
@@ -12,6 +17,8 @@ function Logo() {
   const imageSrcArr: string[] = [
     '/assets/img/logo.png',
     '/assets/img/logo_hover.png',
+    '/assets/img/logo_dark_mode.png',
+    '/assets/img/logo_dark_mode_hover.png',
   ];
 
   useEffect(() => {
@@ -38,7 +45,14 @@ function Logo() {
           className={style.image}
           style={{ display: 'block' }}
           src={
-            mouseOver ? '/assets/img/logo_hover.png' : '/assets/img/logo.png'
+            // eslint-disable-next-line no-nested-ternary
+            mouseOver || isActive
+              ? theme.palette.mode === 'dark'
+                ? '/assets/img/logo_dark_mode_hover.png'
+                : '/assets/img/logo_hover.png'
+              : theme.palette.mode === 'dark'
+              ? '/assets/img/logo_dark_mode.png'
+              : '/assets/img/logo.png'
           }
           alt="Logo img"
         />
@@ -48,11 +62,10 @@ function Logo() {
           <Typography
             variant="h5"
             component="h1"
-            style={
-              mouseOver
-                ? { fontWeight: '500', color: '#cccccc' }
-                : { fontWeight: '900', color: '#ffffff' }
-            }
+            sx={{
+              fontWeight: mouseOver || isActive ? '500' : '900',
+              color: mouseOver || isActive ? '#cccccc' : '#fff',
+            }}
           >
             Manage App
           </Typography>

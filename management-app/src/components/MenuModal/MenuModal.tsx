@@ -73,6 +73,14 @@ function MenuModal({ display, close, type }: TProps) {
       {type === MenuModalType.User && isLoggedIn && (
         <ButtonGroup orientation="vertical">
           <NavButton
+            title={t('menuModal.goToMainPage')}
+            onClick={() => {
+              close();
+              navigate('/main');
+            }}
+            isMarginBottom
+          />
+          <NavButton
             title={t('menuModal.LogOut')}
             onClick={() => {
               close();

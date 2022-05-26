@@ -16,70 +16,75 @@ function Footer() {
     <footer>
       <Box
         sx={{
-          maxWidth: 1200,
-          minHeight: 56,
           backgroundColor: 'primary.main',
-          margin: '0 auto',
+          minHeight: 56,
         }}
       >
-        <Grid
-          container
-          justifyContent={matches ? 'center' : 'space-between'}
-          alignItems="center"
-          flexDirection={matches2 ? 'column' : 'row'}
+        <Box
+          sx={{
+            maxWidth: 1200,
+            margin: '0 auto',
+          }}
         >
-          <Grid container item style={{ width: 'auto' }}>
-            {matches1 && (
-              <Grid item>
-                <Typography
-                  sx={{
-                    padding: '8px',
-                    fontSize: 14,
-                    color: 'primary.contrastText',
-                  }}
-                >
-                  © 2022
-                </Typography>
-              </Grid>
-            )}
-            <Grid
-              container
-              item
-              style={{ width: 'auto' }}
-              justifyContent={matches ? 'center' : 'space-between'}
-              flexDirection={matches2 ? 'column' : 'row'}
-            >
-              <Grid item>
-                <GitLink
-                  linkSrc="https://github.com/MarinaPresmytskaia"
-                  text={t('footer.Marina')}
-                />
-              </Grid>
-              <Grid item>
-                <GitLink
-                  linkSrc="https://github.com/ElenaBezro"
-                  text={t('footer.Lena')}
-                />
-              </Grid>
-              <Grid item>
-                <GitLink
-                  linkSrc="https://github.com/treyer"
-                  text={t('footer.Andrei')}
-                />
+          <Grid
+            container
+            justifyContent={matches ? 'center' : 'space-between'}
+            alignItems="center"
+            flexDirection={matches2 ? 'column' : 'row'}
+          >
+            <Grid container item style={{ width: 'auto' }}>
+              {matches1 && (
+                <Grid item>
+                  <Typography
+                    sx={{
+                      padding: '8px',
+                      fontSize: 14,
+                      color: 'primary.contrastText',
+                    }}
+                  >
+                    © 2022
+                  </Typography>
+                </Grid>
+              )}
+              <Grid
+                container
+                item
+                style={{ width: 'auto' }}
+                justifyContent={matches ? 'center' : 'space-between'}
+                flexDirection={matches2 ? 'column' : 'row'}
+              >
+                <Grid item>
+                  <GitLink
+                    linkSrc="https://github.com/MarinaPresmytskaia"
+                    text={t('footer.Marina')}
+                  />
+                </Grid>
+                <Grid item>
+                  <GitLink
+                    linkSrc="https://github.com/ElenaBezro"
+                    text={t('footer.Lena')}
+                  />
+                </Grid>
+                <Grid item>
+                  <GitLink
+                    linkSrc="https://github.com/treyer"
+                    text={t('footer.Andrei')}
+                  />
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
 
-          <Grid item>
-            <Link
-              href="https://rs.school/index.html"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <RssLogo />
-            </Link>
+            <Grid item>
+              <Link
+                href="https://rs.school/index.html"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <RssLogo />
+              </Link>
+            </Grid>
           </Grid>
-        </Grid>
+        </Box>
       </Box>
     </footer>
   );

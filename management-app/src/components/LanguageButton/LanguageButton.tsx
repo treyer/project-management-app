@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import { Button, useTheme } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 
 type TParam = {
@@ -18,14 +18,18 @@ const Btn = styled(Button)({
 });
 
 function LanguageButton({ text, isActive, onClick }: TParam) {
+  const theme = useTheme();
+
   return (
     <Btn
       size="small"
-      style={
-        isActive
-          ? { backgroundColor: 'rgba(255, 255, 255, 0.2)' }
-          : { backgroundColor: 'rgba(0, 0, 0, 0.3)' }
-      }
+      sx={{
+        backgroundColor: isActive
+          ? 'rgba(0, 0, 0, 0.3)'
+          : 'rgba(255, 255, 255, 0.2)',
+        color:
+          theme.palette.mode === 'dark' ? 'primary.contrastText' : '#ffffff',
+      }}
       disabled={isActive}
       onClick={onClick}
     >

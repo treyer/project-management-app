@@ -7,7 +7,6 @@ import { MenuModalType } from '../../types';
 
 const Icon = styled(AccountCircleRoundedIcon)({
   position: 'relative',
-  color: '#ffffff',
   marginTop: '6px',
   cursor: 'pointer',
   '&:hover': {
@@ -28,7 +27,11 @@ function UserMenu() {
 
   return (
     <>
-      <Icon fontSize="large" onClick={handleIconClick} />
+      <Icon
+        fontSize="large"
+        onClick={handleIconClick}
+        sx={{ color: 'primary.contrastText' }}
+      />
       <MenuModal
         display={isModalOpen}
         close={closeModal}

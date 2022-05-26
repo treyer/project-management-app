@@ -9,6 +9,10 @@ export const lightTheme = createTheme({
       dark: '#02507f',
       contrastText: '#ffffff',
     },
+    secondary: {
+      main: '#033756',
+      contrastText: '#ffffff',
+    },
   },
 });
 
@@ -20,6 +24,31 @@ export const darkTheme = createTheme({
       main: '#20232a',
       dark: '#16181d',
       contrastText: '#61dafb',
+    },
+    secondary: {
+      main: '#4d4f55',
+      contrastText: '#ffffff',
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#61dafb',
+          color: '#000000',
+          '&:hover': {
+            backgroundColor: '#ffffff',
+          },
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#ffffff',
+          color: '#000000',
+        },
+      },
     },
   },
 });
