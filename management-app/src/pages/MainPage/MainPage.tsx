@@ -90,7 +90,7 @@ function MainPage() {
         container
         spacing={3}
         gap={2.5}
-        direction="row"
+        direction="column"
         alignContent="flex-start"
         margin="0 auto"
         padding="25px"
