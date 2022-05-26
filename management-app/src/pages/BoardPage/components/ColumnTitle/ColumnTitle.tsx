@@ -28,7 +28,10 @@ export function ColumnTitle({ title, handleClickAway }: TColumnTitleProps) {
       <ClickAwayListener onClickAway={onClickAway}>
         <Typography variant="h6">
           {!isTitleEditMode ? (
-            <Box onClick={toggleTitleEditMode} sx={{ cursor: 'pointer' }}>
+            <Box
+              onClick={toggleTitleEditMode}
+              sx={{ cursor: 'pointer', paddingTop: '10px' }}
+            >
               {title}
             </Box>
           ) : (

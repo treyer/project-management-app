@@ -16,9 +16,7 @@ import { RootState, useAppSelector } from '../../store';
 type TBoardState = {
   boardData: TBoardResponse;
   isBoardLoading: boolean;
-  isColumnTitleLoading: boolean;
-  isNewTaskLoading: boolean;
-  isNewColumnLoading: boolean;
+  isColumnLoading: boolean;
 };
 const initialState: TBoardState = {
   boardData: {
@@ -28,9 +26,7 @@ const initialState: TBoardState = {
     columns: [],
   } as TBoardResponse,
   isBoardLoading: false,
-  isColumnTitleLoading: false,
-  isNewTaskLoading: false,
-  isNewColumnLoading: false,
+  isColumnLoading: false,
 };
 
 export const getBoard = createAsyncThunk('board/getBoard', (id: string) => {
@@ -142,6 +138,24 @@ export const updateColumn = createAsyncThunk(
   }
 );
 
+export const deleteColumn = createAsyncThunk(
+  'board/deleteColumn',
+  async (
+    {
+      boardId,
+      columnId,
+    }: {
+      boardId: string;
+      columnId: string;
+    },
+    { dispatch }
+  ): Promise<void> => {
+    const token = localStorage.getItem('token') as string;
+    await columnsAPI.deleteColumn({ boardId, columnId, token });
+    dispatch(getBoard(boardId));
+  }
+);
+
 export const updateTask = createAsyncThunk(
   'board/updateTask',
   async (
@@ -171,6 +185,26 @@ export const updateTask = createAsyncThunk(
   }
 );
 
+export const deleteTask = createAsyncThunk(
+  'board/deleteTask',
+  async (
+    {
+      boardId,
+      columnId,
+      taskId,
+    }: {
+      boardId: string;
+      columnId: string;
+      taskId: string;
+    },
+    { dispatch }
+  ): Promise<void> => {
+    const token = localStorage.getItem('token') as string;
+    await tasksAPI.deleteTask({ boardId, columnId, taskId, token });
+    dispatch(getBoard(boardId));
+  }
+);
+
 const boardSlice = createSlice({
   name: 'board',
   initialState,
@@ -194,25 +228,34 @@ const boardSlice = createSlice({
         state.isBoardLoading = true;
       })
       .addCase(updateColumn.fulfilled, (state) => {
-        state.isColumnTitleLoading = false;
+        state.isColumnLoading = false;
       })
       .addCase(updateColumn.rejected, (state) => {
-        state.isColumnTitleLoading = false;
+        state.isColumnLoading = false;
       })
       .addCase(updateColumn.pending, (state) => {
-        state.isColumnTitleLoading = true;
+        state.isColumnLoading = true;
       })
       .addCase(createTask.fulfilled, (state) => {
-        state.isNewTaskLoading = false;
+        state.isBoardLoading = false;
       })
       .addCase(createTask.rejected, (state) => {
-        state.isNewTaskLoading = false;
+        state.isBoardLoading = false;
+      })
+      .addCase(updateTask.pending, (state) => {
+        state.isBoardLoading = true;
+      })
+      .addCase(updateTask.fulfilled, (state) => {
+        state.isBoardLoading = false;
+      })
+      .addCase(updateTask.rejected, (state) => {
+        state.isBoardLoading = false;
       })
       .addCase(createTask.pending, (state) => {
-        state.isNewTaskLoading = true;
+        state.isBoardLoading = true;
       })
       .addCase(createColumn.fulfilled, (state, action) => {
-        state.isNewColumnLoading = false;
+        state.isBoardLoading = false;
         const { id, title, order } = action.payload;
         state.boardData.columns.push({
           id,
@@ -222,10 +265,28 @@ const boardSlice = createSlice({
         });
       })
       .addCase(createColumn.rejected, (state) => {
-        state.isNewColumnLoading = false;
+        state.isBoardLoading = false;
       })
       .addCase(createColumn.pending, (state) => {
-        state.isNewColumnLoading = true;
+        state.isBoardLoading = true;
+      })
+      .addCase(deleteColumn.fulfilled, (state) => {
+        state.isBoardLoading = false;
+      })
+      .addCase(deleteColumn.rejected, (state) => {
+        state.isBoardLoading = false;
+      })
+      .addCase(deleteColumn.pending, (state) => {
+        state.isBoardLoading = true;
+      })
+      .addCase(deleteTask.fulfilled, (state) => {
+        state.isBoardLoading = false;
+      })
+      .addCase(deleteTask.rejected, (state) => {
+        state.isBoardLoading = false;
+      })
+      .addCase(deleteTask.pending, (state) => {
+        state.isBoardLoading = true;
       });
   },
 });

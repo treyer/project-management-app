@@ -74,7 +74,7 @@ class TasksAPI extends BaseAPI {
     columnId: string;
     taskId: string;
     token: string;
-  }): Promise<TTask> {
+  }): Promise<void> {
     return this.delete(
       `boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
       {
@@ -82,7 +82,6 @@ class TasksAPI extends BaseAPI {
       }
     ).then((result) => {
       BaseAPI.handleError(result, TASKS_API_ERRORS);
-      return result.json();
     });
   }
 
