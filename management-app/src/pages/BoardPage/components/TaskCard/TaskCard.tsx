@@ -3,13 +3,16 @@ import { useState, useCallback, MouseEvent } from 'react';
 import { t } from 'i18next';
 import { Draggable } from 'react-beautiful-dnd';
 
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 import { TTaskCardProps } from './TaskCard.types';
 import ConfirmMessage from '../../../../components/ConfirmMessage/ConfirmMessage';
-import { deleteTask } from '../../boardSlice';
+import { deleteTask, updateTask } from '../../boardSlice';
 import { useAppDispatch } from '../../../../store';
+import CreateModal from '../../../../components/CreateModal/CreateModal';
 
 // TODO: use TColumn instead of BoardColumnProps?
 export function TaskCard({
@@ -18,15 +21,26 @@ export function TaskCard({
   columnId,
   boardId,
 }: TTaskCardProps) {
-  const { title, id } = taskInfo;
+  const { title, id, description } = taskInfo;
   const [isDialogOpen, setDialogOpen] = useState(false);
-  // const { columns } = useAppSelector((state) => state.board.boardData);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [showUpdateTaskMenu, setShowUpdateTaskMenu] = useState(false);
+  const [isRenderDescription, setIsRenderDescription] =
+    useState<boolean>(false);
 
   const dispatch = useAppDispatch();
 
-  const handleDeleteColumn = useCallback((event: MouseEvent) => {
+  const handleDeleteTask = useCallback((event: MouseEvent) => {
     event.preventDefault();
     setDialogOpen(true);
+    setAnchorEl(null);
+  }, []);
+
+  const handleEditTask = useCallback((event: MouseEvent) => {
+    event.preventDefault();
+    setShowUpdateTaskMenu(true);
+    setIsRenderDescription(true);
+    setAnchorEl(null);
   }, []);
 
   const handleDecline = useCallback(() => {
@@ -37,6 +51,41 @@ export function TaskCard({
     dispatch(deleteTask({ boardId, columnId, taskId: id }));
     setDialogOpen(false);
   }, [boardId, columnId, id, dispatch]);
+
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const exitAddTaskField = useCallback(() => {
+    setShowUpdateTaskMenu(false);
+  }, []);
+
+  const handleUpdateTask = useCallback(
+    (titleTask: string, descriptionTask: string) => {
+      setAnchorEl(null);
+      dispatch(
+        updateTask({
+          boardId,
+          columnId,
+          taskId: id,
+          task: {
+            title: titleTask,
+            order: taskInfo.order,
+            description: descriptionTask,
+            userId: taskInfo.userId,
+            boardId,
+            columnId,
+          },
+        })
+      );
+    },
+    [boardId, columnId, id, dispatch, taskInfo.order, taskInfo.userId]
+  );
 
   return (
     <Draggable draggableId={id} index={index}>
@@ -80,20 +129,58 @@ export function TaskCard({
               onDecline={handleDecline}
             />
           )}
+          {showUpdateTaskMenu && (
+            <CreateModal
+              isModalOpen={showUpdateTaskMenu}
+              titleModal={t('taskModal.titleModal')}
+              inputName={t('taskModal.inputName')}
+              labelName={t('taskModal.labelName')}
+              btnName={t('taskModal.btnName')}
+              onSubmit={handleUpdateTask}
+              onClose={exitAddTaskField}
+              isRenderDescription={isRenderDescription}
+              descriptionName={t('taskModal.descriptionName')}
+              labelDescription={t('taskModal.labelDescription')}
+            />
+          )}
           <>
             <IconButton
-              aria-label="delete"
-              size="small"
-              onClick={handleDeleteColumn}
+              aria-label="more"
+              id="long-button"
+              aria-controls={open ? 'long-menu' : undefined}
+              aria-expanded={open ? 'true' : undefined}
+              aria-haspopup="true"
+              onClick={handleClick}
               sx={{
                 position: 'absolute',
                 top: '0',
                 right: '0',
               }}
             >
-              <DeleteIcon />
+              <MoreHorizIcon />
             </IconButton>
+            <Menu
+              id="long-menu"
+              MenuListProps={{
+                'aria-labelledby': 'long-button',
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleEditTask} disableRipple>
+                <EditIcon />
+                Edit
+              </MenuItem>
+              <MenuItem onClick={handleDeleteTask} disableRipple>
+                <DeleteIcon />
+                Delete
+              </MenuItem>
+            </Menu>
             <Typography variant="subtitle1">{title}</Typography>
+            <Typography variant="body2" color="text.secondary">
+              {description}
+            </Typography>
           </>
         </Box>
       )}
