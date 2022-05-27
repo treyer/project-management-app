@@ -40,25 +40,18 @@ function CreateModal({
   const [taskDescription, setTaskDescription] = useState<string>('');
   const [isDisabled, setDisabled] = useState<boolean>(true);
 
-  const handleInputChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const target = event.target as HTMLInputElement;
-      const value = target.value as string;
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
+    const value = target.value as string;
 
-      setTitleInput(value);
-    },
-    []
-  );
+    setTitleInput(value);
+  };
+  const handleChangeDescription = (event: ChangeEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
+    const value = target.value as string;
 
-  const handleChangeDescription = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const target = event.target as HTMLInputElement;
-      const value = target.value as string;
-
-      setTaskDescription(value);
-    },
-    []
-  );
+    setTaskDescription(value);
+  };
 
   useEffect(() => {
     if (titleInput !== '') {

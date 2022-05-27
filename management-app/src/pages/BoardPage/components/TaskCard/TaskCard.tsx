@@ -28,11 +28,16 @@ export function TaskCard({
 
   const dispatch = useAppDispatch();
 
-  const handleDeleteTask = useCallback((event: MouseEvent) => {
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleDeleteTask = (event: MouseEvent) => {
     event.preventDefault();
     setDialogOpen(true);
     setAnchorEl(null);
-  }, []);
+  };
 
   const handleEditTask = useCallback((event: MouseEvent) => {
     event.preventDefault();
@@ -49,18 +54,13 @@ export function TaskCard({
     setDialogOpen(false);
   }, [boardId, columnId, id, dispatch]);
 
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const exitAddTaskField = useCallback(() => {
+  const exitEditTaskField = () => {
     setShowUpdateTaskMenu(false);
-  }, []);
+  };
 
   const handleUpdateTask = useCallback(
     (titleTask: string, descriptionTask: string) => {
@@ -163,7 +163,7 @@ export function TaskCard({
               labelDescriptionName={t('editTaskModal.labelDescription')}
               btnName={t('editTaskModal.btnName')}
               onSubmit={handleUpdateTask}
-              onClose={exitAddTaskField}
+              onClose={exitEditTaskField}
               defaultTaskTitle={taskInfo.title}
               defaultTaskDescription={taskInfo.description}
             />

@@ -71,19 +71,19 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
     );
   };
 
-  const exitAddTaskField = useCallback(() => {
+  const exitAddTaskField = () => {
     setIsAddTaskFieldOpen(false);
-  }, []);
+  };
 
   const openAddTaskField = useCallback(() => {
     setIsAddTaskFieldOpen(true);
     setIsRenderDescription(true);
   }, []);
 
-  const handleDeleteColumn = useCallback((event: MouseEvent) => {
+  const handleDeleteColumn = (event: MouseEvent) => {
     event.preventDefault();
     setDialogOpen(true);
-  }, []);
+  };
 
   const handleDecline = useCallback(() => {
     setDialogOpen(false);
