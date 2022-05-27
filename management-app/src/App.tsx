@@ -2,7 +2,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
-import { Box } from '@mui/material';
+// import { Box } from '@mui/material';
 import { ROUTES } from './routes';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -24,13 +24,11 @@ function App() {
             backgroundColor: theme.darkTheme ? '#8796a5' : '#fff',
           }}
         >
-          <Box>
-            <Routes>
-              {ROUTES.map((el) => (
-                <Route key={el.id} path={el.routePath} element={el.element} />
-              ))}
-            </Routes>
-          </Box>
+          <Routes>
+            {ROUTES.map((el) => (
+              <Route key={el.id} path={el.routePath} element={el.element} />
+            ))}
+          </Routes>
         </main>
         <Footer />
       </div>
