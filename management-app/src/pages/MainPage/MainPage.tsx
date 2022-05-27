@@ -98,10 +98,11 @@ function MainPage() {
         maxWidth="1200px"
         width="100%"
       >
-        {boards.map(({ id, title, columns }) => (
+        {boards.map(({ id, title, description, columns }) => (
           <Board
             key={id}
             id={id}
+            description={description}
             titleBoard={title}
             columnNum={columns.length}
           />
