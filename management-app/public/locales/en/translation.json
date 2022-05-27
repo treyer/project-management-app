@@ -95,6 +95,8 @@
     "btnName": "Add task"
   },
   "editTaskModal": {
+    "edit": "Edit",
+    "delete": "Delete",
     "titleModal": "Edit task",
     "inputName": "Task name",
     "labelName": "Edit task name",
