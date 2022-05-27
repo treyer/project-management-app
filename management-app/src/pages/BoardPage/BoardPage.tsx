@@ -1,5 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Alert, Box, Button, Skeleton, Stack } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Stack,
+  useMediaQuery,
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
@@ -17,7 +24,8 @@ export function BoardPage() {
   const { boardId } = useParams();
 
   const { isBoardLoading } = useAppSelector((state: RootState) => state.board);
-
+  const { isColumnLoading } = useAppSelector((state: RootState) => state.board);
+  const [isRenderDescription, setIsRenderDescription] = useState<boolean>(true);
   const [isAddColumnFieldOpen, setIsAddColumnFieldOpen] = useState(false);
   const [error, setError] = useState('');
 
@@ -39,9 +47,8 @@ export function BoardPage() {
   }, [dispatch, boardId, t]);
 
   // TODO: find a way to store columns in the right order instead of using sort
-  let columns = useAppSelector(
-    (state: RootState) => state.board.boardData.columns
-  );
+
+  let columns = useAppSelector((state) => state.board.boardData.columns);
   const columnsForSort = [...columns];
   columnsForSort.sort((a, b) => {
     return a.order > b.order ? 1 : -1;
@@ -80,6 +87,7 @@ export function BoardPage() {
 
   const openAddColumnField = () => {
     setIsAddColumnFieldOpen(true);
+    setIsRenderDescription(false);
   };
 
   // TODO: find a way to get rid of 'any'
@@ -137,8 +145,16 @@ export function BoardPage() {
     }
   };
 
+  const matches1 = useMediaQuery('(max-width:470px)');
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
+      {isBoardLoading && !isColumnLoading && (
+        <CircularProgress
+          color="inherit"
+          sx={{ position: 'fixed', top: '50%', zIndex: 2 }}
+        />
+      )}
       <Box
         sx={{
           overflowX: 'auto',
@@ -148,14 +164,12 @@ export function BoardPage() {
         }}
       >
         {error && <Alert severity="error">{error}</Alert>}
-        <Stack direction="row" spacing={2}>
-          {isBoardLoading ? (
-            [...Array(3)].map((elem, index) => {
-              return (
-                // eslint-disable-next-line react/no-array-index-key
-                <Skeleton key={index} variant="rectangular" height={400} />
-              );
-            })
+        <Stack spacing={2} direction={matches1 ? 'column' : 'row'}>
+          {isColumnLoading ? (
+            <CircularProgress
+              color="inherit"
+              sx={{ position: 'fixed', top: '50%', right: '50%' }}
+            />
           ) : (
             <Droppable
               droppableId="all-columns"
@@ -165,9 +179,9 @@ export function BoardPage() {
               {(provided) => (
                 <Stack
                   ref={provided.innerRef}
-                  // eslint-disable-next-line react/jsx-props-no-spreading
+                  //  eslint-disable-next-line react/jsx-props-no-spreading
                   {...provided.droppableProps}
-                  direction="row"
+                  direction={matches1 ? 'column' : 'row'}
                   spacing={2}
                 >
                   {columns.map((column: TColumnResponse) => (
@@ -185,7 +199,13 @@ export function BoardPage() {
           )}
 
           {!isAddColumnFieldOpen ? (
-            <Button sx={{ height: 100 }} onClick={openAddColumnField}>
+            <Button
+              sx={{
+                maxHeight: '100px',
+                minWidth: '200px',
+              }}
+              onClick={openAddColumnField}
+            >
               {t('boardPage.addColumnText')}
             </Button>
           ) : (
@@ -197,6 +217,7 @@ export function BoardPage() {
               btnName={t('columnModal.btnName')}
               onSubmit={addNewColumn}
               onClose={exitAddColumnField}
+              isRenderDescription={isRenderDescription}
             />
           )}
         </Stack>

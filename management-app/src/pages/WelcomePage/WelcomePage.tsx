@@ -21,21 +21,17 @@ function WelcomePage() {
         </Card>
         <Card
           className={style.card}
-          sx={{ minWidth: '400px', maxWidth: '500px', height: '500px' }}
+          sx={{ minWidth: '370px', maxWidth: '500px', height: '500px' }}
         >
           <CardContent>
-            <Typography
-              variant="h2"
-              paddingTop={15}
-              className={style.infoTitle}
-            >
+            <Typography variant="h2" paddingTop={4} className={style.infoTitle}>
               Manage App
             </Typography>
             <Typography
               className={style.info}
               component="p"
-              paddingTop={5}
-              paddingBottom={8}
+              paddingTop={4}
+              paddingBottom={4}
               fontSize={18}
               sx={{ textAlign: 'justify' }}
             >
@@ -43,9 +39,9 @@ function WelcomePage() {
             </Typography>
             <Typography
               component="p"
-              fontSize={16}
+              fontSize={14}
               fontWeight={600}
-              sx={{ textAlign: 'justify' }}
+              sx={{ textAlign: 'left' }}
             >
               {t('welcomePage.registerText')}
             </Typography>

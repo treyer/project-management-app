@@ -53,14 +53,27 @@ function Board({ titleBoard, id, columnNum }: TBoardProps) {
       )}
       <NavLink to={`/boards/${id}`} style={{ textDecoration: 'none' }}>
         <Card
-          sx={{
-            width: '270px',
-            height: '200px',
-            backgroundImage: 'url(./assets/svg/board.svg)',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'bottom',
-            position: 'relative',
-          }}
+          sx={[
+            {
+              width: '70vw',
+              height: '200px',
+              backgroundImage: 'url(./assets/svg/board.svg)',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'bottom',
+              backgroundPositionX: 'left',
+              position: 'relative',
+            },
+            {
+              '&:hover': {
+                backgroundColor: '#e5eff8',
+              },
+            },
+            {
+              '&:active': {
+                backgroundColor: '#ffffff',
+              },
+            },
+          ]}
         >
           <CardHeader
             sx={{ textAlign: 'left' }}

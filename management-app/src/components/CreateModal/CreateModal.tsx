@@ -167,7 +167,7 @@ function CreateModal({
 }
 
 CreateModal.defaultProps = {
-  isRenderDescription: false,
+  isRenderDescription: true,
   descriptionName: '',
   labelDescription: '',
 };

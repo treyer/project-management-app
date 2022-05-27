@@ -77,7 +77,9 @@
     "enterTitleForColumnText": "Ввести заголовок для этой колонки...",
     "addColumnBtn": "Добавить колонку",
     "enterTaskTitleText": "Ввести заголовок для данной задачи...",
-    "addTaskBtn": "Добавить задачу"
+    "addTaskBtn": "Добавить задачу",
+    "ifDeleteColumnMessage": "Вы хотите удалить колонку?",
+    "ifDeleteTaskMessage": "Вы хотите удалить задачу?"
   },
   "columnModal": {
     "titleModal": "Добавить колонку",

@@ -1,18 +1,21 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-shadow */
-import { useCallback, useState } from 'react';
-import { Box, Button, Stack } from '@mui/material';
+import { useCallback, useState, MouseEvent } from 'react';
+import { Box, Button, IconButton, Stack } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { TBoardColumnProps } from './BoardColumn.types';
 import { useAppDispatch, useAppSelector } from '../../../../store';
-import { updateColumn, createTask } from '../../boardSlice';
+import { updateColumn, createTask, deleteColumn } from '../../boardSlice';
 import { TaskCard } from '../TaskCard';
 import { ColumnTitle } from '../ColumnTitle';
 import { getTasksByColumnId } from '../../BoardPage.utils';
 
 import { TTaskResponse } from '../../../../api/types';
 import CreateModal from '../../../../components/CreateModal/CreateModal';
+import ConfirmMessage from '../../../../components/ConfirmMessage/ConfirmMessage';
 
 // TODO: use TColumn instead of BoardColumnProps?
 export function BoardColumn({ id, title, order }: TBoardColumnProps) {
@@ -38,6 +41,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   tasks = [...tasksForSort];
 
   const [isAddTaskFieldOpen, setIsAddTaskFieldOpen] = useState(false);
+  const [isDialogOpen, setDialogOpen] = useState(false);
 
   const addNewTask = useCallback(
     (taskTitleInput: string, taskDescription: string) => {
@@ -71,10 +75,24 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
     setIsAddTaskFieldOpen(false);
   }, []);
 
-  const openAddTaskField = () => {
+  const openAddTaskField = useCallback(() => {
     setIsAddTaskFieldOpen(true);
     setIsRenderDescription(true);
-  };
+  }, []);
+
+  const handleDeleteColumn = useCallback((event: MouseEvent) => {
+    event.preventDefault();
+    setDialogOpen(true);
+  }, []);
+
+  const handleDecline = useCallback(() => {
+    setDialogOpen(false);
+  }, []);
+
+  const handleConfirm = useCallback(() => {
+    dispatch(deleteColumn({ boardId, columnId: id }));
+    setDialogOpen(false);
+  }, [dispatch, boardId, id]);
 
   return (
     <Draggable draggableId={id} index={order - 1}>
@@ -84,17 +102,53 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
           {...provided.draggableProps}
           ref={provided.innerRef}
           id={id}
-          sx={{ minWidth: 250, maxWidth: 250 }}
         >
+          {isDialogOpen && (
+            <ConfirmMessage
+              openDialog={isDialogOpen}
+              text={t('boardPage.ifDeleteColumnMessage')}
+              onConfirm={handleConfirm}
+              onDecline={handleDecline}
+            />
+          )}
           <Box
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...provided.dragHandleProps}
             sx={{
               borderRadius: 2,
               backgroundColor: '#eee',
+              position: 'relative',
+              minWidth: '330px',
+              height: '80vh',
             }}
           >
-            <Stack spacing={2}>
+            <IconButton
+              aria-label="delete"
+              size="large"
+              onClick={handleDeleteColumn}
+              sx={{
+                position: 'absolute',
+                top: '0',
+                right: '0',
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>
+            <Stack
+              spacing={2}
+              sx={[
+                {
+                  '&:hover': {
+                    backgroundColor: '#e5eff8',
+                  },
+                },
+                {
+                  '&:active': {
+                    backgroundColor: '#ffffff',
+                  },
+                },
+              ]}
+            >
               <ColumnTitle title={title} handleClickAway={handleClickAway} />
               <Droppable droppableId={id} type="task">
                 {(provided) => (
