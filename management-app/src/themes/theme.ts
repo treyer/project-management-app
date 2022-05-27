@@ -45,8 +45,24 @@ export const darkTheme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          backgroundColor: '#ffffff',
-          color: '#000000',
+          backgroundColor: '#8796a5',
+          borderColor: '#61dafb',
+          '& input': {
+            color: '#000000',
+          },
+          '& label': {
+            color: '#000000',
+          },
+          '& P': {
+            backgroundColor: '#8796a5',
+            marginRight: 0,
+            marginLeft: 0,
+            paddingRight: 14,
+            paddingLeft: 14,
+          },
+          '& .Mui-error': {
+            color: '#f04408',
+          },
         },
       },
     },

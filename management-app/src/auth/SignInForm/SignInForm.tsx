@@ -1,15 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import {
-  Alert,
-  Box,
-  Stack,
-  TextField,
-  Typography,
-  Fade,
-  useTheme,
-} from '@mui/material';
+import { Alert, Box, Stack, TextField, Typography, Fade } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useTranslation } from 'react-i18next';
 
@@ -30,7 +22,6 @@ function SignInForm() {
   const [signInError, setSignInError] = useState('');
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const theme = useTheme();
 
   const loginValidationSchema = useMemo(
     () =>
@@ -112,6 +103,7 @@ function SignInForm() {
               helperText={
                 formik.touched[elem.fieldName] && formik.errors[elem.fieldName]
               }
+              autoComplete="off"
             />
           ))}
           <LoadingButton
