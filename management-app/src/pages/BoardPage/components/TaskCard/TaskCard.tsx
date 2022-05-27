@@ -13,6 +13,7 @@ import ConfirmMessage from '../../../../components/ConfirmMessage/ConfirmMessage
 import { deleteTask, updateTask } from '../../boardSlice';
 import { useAppDispatch } from '../../../../store';
 import CreateModal from '../../../../components/CreateModal/CreateModal';
+import EditTaskModal from '../EditTaskModal/EditTaskModal';
 
 // TODO: use TColumn instead of BoardColumnProps?
 export function TaskCard({
@@ -25,8 +26,6 @@ export function TaskCard({
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [showUpdateTaskMenu, setShowUpdateTaskMenu] = useState(false);
-  const [isRenderDescription, setIsRenderDescription] =
-    useState<boolean>(false);
 
   const dispatch = useAppDispatch();
 
@@ -39,7 +38,6 @@ export function TaskCard({
   const handleEditTask = useCallback((event: MouseEvent) => {
     event.preventDefault();
     setShowUpdateTaskMenu(true);
-    setIsRenderDescription(true);
     setAnchorEl(null);
   }, []);
 
@@ -130,7 +128,7 @@ export function TaskCard({
             />
           )}
           {showUpdateTaskMenu && (
-            <CreateModal
+            <EditTaskModal
               isModalOpen={showUpdateTaskMenu}
               titleModal={t('taskModal.titleModal')}
               inputName={t('taskModal.inputName')}
@@ -138,9 +136,8 @@ export function TaskCard({
               btnName={t('taskModal.btnName')}
               onSubmit={handleUpdateTask}
               onClose={exitAddTaskField}
-              isRenderDescription={isRenderDescription}
-              descriptionName={t('taskModal.descriptionName')}
-              labelDescription={t('taskModal.labelDescription')}
+              defaultTaskTitle={taskInfo.title}
+              defaltTaskDescription={taskInfo.description}
             />
           )}
           <>
@@ -168,17 +165,22 @@ export function TaskCard({
               open={open}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleEditTask} disableRipple>
+              <MenuItem onClick={handleEditTask}>
                 <EditIcon />
                 Edit
               </MenuItem>
-              <MenuItem onClick={handleDeleteTask} disableRipple>
+              <MenuItem onClick={handleDeleteTask}>
                 <DeleteIcon />
                 Delete
               </MenuItem>
             </Menu>
             <Typography variant="subtitle1">{title}</Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              textAlign="left"
+              paddingLeft="10px"
+            >
               {description}
             </Typography>
           </>
