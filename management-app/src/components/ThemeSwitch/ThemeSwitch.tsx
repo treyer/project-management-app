@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 import { useAppDispatch } from '../../store';
 import { changeTheme } from '../../themes/themeSlice';
@@ -57,11 +57,13 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 function ThemeSwitch() {
   const dispatch = useAppDispatch();
+  const theme = useTheme();
 
   return (
     <MaterialUISwitch
       sx={{ m: 1, margin: '8px 0' }}
       onChange={() => dispatch(changeTheme())}
+      checked={theme.palette.mode === 'dark'}
     />
   );
 }
