@@ -15,24 +15,28 @@ type TCreateModal = {
   isModalOpen: boolean;
   titleModal: string;
   inputName: string;
+  descriptionName: string;
+  labelDescriptionName: string;
   labelName: string;
   btnName: string;
   onClose: () => void;
   onSubmit: (titleInput: string, taskDescription: string) => void;
   defaultTaskTitle: string;
-  defaltTaskDescription: string;
+  defaultTaskDescription: string;
 };
 
 function EditTaskModal({
   isModalOpen,
   inputName,
+  descriptionName,
+  labelDescriptionName,
   titleModal,
   labelName,
   btnName,
   onSubmit,
   onClose,
   defaultTaskTitle,
-  defaltTaskDescription,
+  defaultTaskDescription,
 }: TCreateModal) {
   const [titleInput, setTitleInput] = useState<string>('');
   const [taskDescription, setTaskDescription] = useState<string>('');
@@ -133,12 +137,15 @@ function EditTaskModal({
             sx={{ marginBottom: '20px', width: '100%' }}
             onChange={handleInputChange}
           />
+          <Typography component="p" gutterBottom>
+            {descriptionName}
+          </Typography>
           <TextField
             id="outlined-multiline-static"
-            label="Multiline"
+            label={labelDescriptionName}
             multiline
             rows={4}
-            defaultValue={defaltTaskDescription}
+            defaultValue={defaultTaskDescription}
             onChange={handleChangeDescription}
             sx={{ marginBottom: '20px', width: '100%' }}
           />

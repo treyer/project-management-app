@@ -93,5 +93,13 @@
     "descriptionName": "Description",
     "labelDescription": "Add description",
     "btnName": "Add task"
+  },
+  "editTaskModal": {
+    "titleModal": "Edit task",
+    "inputName": "Task name",
+    "labelName": "Edit task name",
+    "descriptionName": "Description",
+    "labelDescription": "Edit description",
+    "btnName": "Save"
   }
 }

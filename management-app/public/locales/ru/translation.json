@@ -93,5 +93,13 @@
     "descriptionName": "Описание задачи",
     "labelDescription": "Добавьте описание задачи",
     "btnName": "Добавить задачу"
+  },
+  "editTaskModal": {
+    "titleModal": "Редактирование задачи",
+    "inputName": "Заголовок задачи",
+    "labelName": "Исправить заголовок задачи",
+    "descriptionName": "Описание задачи",
+    "labelDescription": "Исправить описание задачи",
+    "btnName": "Сохранить изменения"
   }
 }

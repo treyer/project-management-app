@@ -130,14 +130,16 @@ export function TaskCard({
           {showUpdateTaskMenu && (
             <EditTaskModal
               isModalOpen={showUpdateTaskMenu}
-              titleModal={t('taskModal.titleModal')}
-              inputName={t('taskModal.inputName')}
-              labelName={t('taskModal.labelName')}
-              btnName={t('taskModal.btnName')}
+              titleModal={t('editTaskModal.titleModal')}
+              inputName={t('editTaskModal.inputName')}
+              labelName={t('editTaskModal.labelName')}
+              descriptionName={t('editTaskModal.descriptionName')}
+              labelDescriptionName={t('editTaskModal.labelDescription')}
+              btnName={t('editTaskModal.btnName')}
               onSubmit={handleUpdateTask}
               onClose={exitAddTaskField}
               defaultTaskTitle={taskInfo.title}
-              defaltTaskDescription={taskInfo.description}
+              defaultTaskDescription={taskInfo.description}
             />
           )}
           <>
