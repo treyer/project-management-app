@@ -38,8 +38,10 @@ function EditTaskModal({
   defaultTaskTitle,
   defaultTaskDescription,
 }: TCreateModal) {
-  const [titleInput, setTitleInput] = useState<string>('');
-  const [taskDescription, setTaskDescription] = useState<string>('');
+  const [titleInput, setTitleInput] = useState<string>(defaultTaskTitle);
+  const [taskDescription, setTaskDescription] = useState<string>(
+    defaultTaskDescription
+  );
   const [isDisabled, setDisabled] = useState<boolean>(false);
 
   const handleInputChange = useCallback(
@@ -133,7 +135,7 @@ function EditTaskModal({
             label={labelName}
             variant="outlined"
             size="small"
-            defaultValue={defaultTaskTitle}
+            value={titleInput}
             sx={{ marginBottom: '20px', width: '100%' }}
             onChange={handleInputChange}
           />
@@ -145,7 +147,7 @@ function EditTaskModal({
             label={labelDescriptionName}
             multiline
             rows={4}
-            defaultValue={defaultTaskDescription}
+            value={taskDescription}
             onChange={handleChangeDescription}
             sx={{ marginBottom: '20px', width: '100%' }}
           />

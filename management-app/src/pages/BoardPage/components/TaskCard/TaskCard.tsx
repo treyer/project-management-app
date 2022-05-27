@@ -12,7 +12,6 @@ import { TTaskCardProps } from './TaskCard.types';
 import ConfirmMessage from '../../../../components/ConfirmMessage/ConfirmMessage';
 import { deleteTask, updateTask } from '../../boardSlice';
 import { useAppDispatch } from '../../../../store';
-import CreateModal from '../../../../components/CreateModal/CreateModal';
 import EditTaskModal from '../EditTaskModal/EditTaskModal';
 
 // TODO: use TColumn instead of BoardColumnProps?
@@ -66,23 +65,50 @@ export function TaskCard({
   const handleUpdateTask = useCallback(
     (titleTask: string, descriptionTask: string) => {
       setAnchorEl(null);
-      dispatch(
-        updateTask({
-          boardId,
-          columnId,
-          taskId: id,
-          task: {
-            title: titleTask,
-            order: taskInfo.order,
-            description: descriptionTask,
-            userId: taskInfo.userId,
+      if (titleTask && descriptionTask) {
+        dispatch(
+          updateTask({
             boardId,
             columnId,
-          },
-        })
-      );
+            taskId: id,
+            task: {
+              title: titleTask,
+              order: taskInfo.order,
+              description: descriptionTask,
+              userId: taskInfo.userId,
+              boardId,
+              columnId,
+            },
+          })
+        );
+      } else {
+        dispatch(
+          updateTask({
+            boardId,
+            columnId,
+            taskId: id,
+            task: {
+              title: taskInfo.title,
+              order: taskInfo.order,
+              description: taskInfo.description,
+              userId: taskInfo.userId,
+              boardId,
+              columnId,
+            },
+          })
+        );
+      }
     },
-    [boardId, columnId, id, dispatch, taskInfo.order, taskInfo.userId]
+    [
+      boardId,
+      columnId,
+      id,
+      dispatch,
+      taskInfo.order,
+      taskInfo.userId,
+      taskInfo.description,
+      taskInfo.title,
+    ]
   );
 
   return (
@@ -168,12 +194,16 @@ export function TaskCard({
               onClose={handleClose}
             >
               <MenuItem onClick={handleEditTask}>
-                <EditIcon />
-                Edit
+                <>
+                  <EditIcon />
+                  {t('editTaskModal.edit')}
+                </>
               </MenuItem>
               <MenuItem onClick={handleDeleteTask}>
-                <DeleteIcon />
-                Delete
+                <>
+                  <DeleteIcon />
+                  {t('editTaskModal.delete')}
+                </>
               </MenuItem>
             </Menu>
             <Typography variant="subtitle1">{title}</Typography>
