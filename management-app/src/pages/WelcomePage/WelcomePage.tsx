@@ -1,4 +1,10 @@
-import { Card, CardMedia, CardContent, Typography } from '@mui/material';
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import TeamInfoCard from './components/TeamInfoCard';
 import { TEAM_INFO } from './constants';
@@ -7,9 +13,15 @@ import style from './WelcomePage.module.css';
 
 function WelcomePage() {
   const { t } = useTranslation();
+  const theme = useTheme();
 
   return (
-    <div className={style.main}>
+    <div
+      className={style.main}
+      style={{
+        backgroundColor: theme.palette.mode === 'dark' ? '#8796a5' : '#fff',
+      }}
+    >
       <div className={style.sectionStart}>
         <Card className={style.card && style.hidden}>
           <CardMedia
@@ -51,7 +63,7 @@ function WelcomePage() {
       <div
         className={style.containerParal}
         style={{
-          backgroundImage: `url(/assets/img/london5.png)`,
+          backgroundImage: `url(/assets/img/office.png)`,
         }}
       />
       <div className={style.container}>

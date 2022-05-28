@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode } from 'react';
 import { Button } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 
@@ -7,6 +7,7 @@ type TType = {
   onClick?: () => void;
   startIcon?: ReactNode;
   isMarginBottom?: boolean;
+  isActive?: boolean;
 };
 
 const Item = styled(Button)({
@@ -16,30 +17,26 @@ const Item = styled(Button)({
   fontWeight: '400',
 });
 
-function NavButton({ title, onClick, startIcon, isMarginBottom }: TType) {
-  const [mouseOver, setMouseOver] = useState(false);
-
-  let style;
-  if (mouseOver && isMarginBottom)
-    style = { backgroundColor: '#3588b9', marginBottom: '5px' };
-  if (mouseOver && !isMarginBottom) {
-    style = { backgroundColor: '#3588b9' };
-  }
-  if (!mouseOver && isMarginBottom)
-    style = { backgroundColor: '#02507f', marginBottom: '5px' };
-  if (!mouseOver && !isMarginBottom) {
-    style = { backgroundColor: '#02507f' };
-  }
-
+function NavButton({
+  title,
+  onClick,
+  startIcon,
+  isMarginBottom,
+  isActive,
+}: TType) {
   return (
     <Item
-      onMouseOver={() => setMouseOver(true)}
-      onFocus={() => setMouseOver(true)}
-      onMouseOut={() => setMouseOver(false)}
-      onBlur={() => setMouseOver(false)}
       onClick={onClick}
-      style={style}
       startIcon={startIcon}
+      sx={{
+        boxSizing: 'border-box',
+        marginBottom: isMarginBottom ? '5px' : 'auto',
+        backgroundColor: isActive ? 'secondary.main' : 'primary.dark',
+        color: isActive ? 'secondary.contrastText' : 'primary.contrastText',
+        '&:hover': {
+          backgroundColor: 'primary.light',
+        },
+      }}
     >
       {title}
     </Item>
@@ -50,6 +47,7 @@ NavButton.defaultProps = {
   onClick: () => false,
   startIcon: null,
   isMarginBottom: false,
+  isActive: false,
 };
 
 export default NavButton;

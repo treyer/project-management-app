@@ -60,8 +60,19 @@ function SignInForm() {
   });
 
   return (
-    <Box component="form" onSubmit={formik.handleSubmit} sx={{ width: 600 }}>
-      <Box sx={{ maxWidth: 600 }}>
+    <Box
+      component="form"
+      onSubmit={formik.handleSubmit}
+      sx={{
+        width: 600,
+        padding: '8px',
+      }}
+    >
+      <Box
+        sx={{
+          maxWidth: 600,
+        }}
+      >
         <Typography variant="h3" gutterBottom>
           {t('signInForm.signIn')}
         </Typography>
@@ -92,6 +103,7 @@ function SignInForm() {
               helperText={
                 formik.touched[elem.fieldName] && formik.errors[elem.fieldName]
               }
+              autoComplete="off"
             />
           ))}
           <LoadingButton

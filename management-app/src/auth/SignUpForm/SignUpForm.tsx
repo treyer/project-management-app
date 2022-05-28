@@ -102,6 +102,7 @@ function SignUpForm() {
               helperText={
                 formik.touched[elem.fieldName] && formik.errors[elem.fieldName]
               }
+              autoComplete="off"
             />
           ))}
           <LoadingButton

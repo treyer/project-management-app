@@ -15,7 +15,8 @@
     "LogIn": "Log In",
     "SignUp": "Sign Up",
     "LogOut": "Log out",
-    "EditProfile": "Edit Profile"
+    "EditProfile": "Edit Profile",
+    "goToMainPage": "Go to Main Page"
   },
   "welcomePage": {
     "aboutAppText": "Managing resources, teams, deadlines or project budgets will be easy with all the professional Manage App features. With features for all project phases you can get your projects done from start-to-end smoothly.",
