@@ -16,11 +16,12 @@ import ConfirmMessage from '../../../../components/ConfirmMessage/ConfirmMessage
 
 type TBoardProps = {
   titleBoard: string;
+  description: string;
   id: string;
   columnNum: number;
 };
 
-function Board({ titleBoard, id, columnNum }: TBoardProps) {
+function Board({ titleBoard, description, id, columnNum }: TBoardProps) {
   const [isDialogOpen, setDialogOpen] = useState(false);
   const { t } = useTranslation();
 
@@ -89,6 +90,13 @@ function Board({ titleBoard, id, columnNum }: TBoardProps) {
             title={titleBoard}
           />
           <CardContent>
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              sx={{ textAlign: 'left' }}
+            >
+              {description}
+            </Typography>
             <Typography
               variant="body2"
               color="text.secondary"

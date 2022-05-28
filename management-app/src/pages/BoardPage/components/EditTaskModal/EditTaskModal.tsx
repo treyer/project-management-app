@@ -15,58 +15,67 @@ type TCreateModal = {
   isModalOpen: boolean;
   titleModal: string;
   inputName: string;
+  descriptionName: string;
+  labelDescriptionName: string;
   labelName: string;
   btnName: string;
   onClose: () => void;
   onSubmit: (titleInput: string, taskDescription: string) => void;
-  isRenderDescription?: boolean;
-  descriptionName?: string;
-  labelDescription?: string;
+  defaultTaskTitle: string;
+  defaultTaskDescription: string;
 };
 
-function CreateModal({
+function EditTaskModal({
   isModalOpen,
   inputName,
+  descriptionName,
+  labelDescriptionName,
   titleModal,
   labelName,
   btnName,
   onSubmit,
   onClose,
-  isRenderDescription,
-  descriptionName,
-  labelDescription,
+  defaultTaskTitle,
+  defaultTaskDescription,
 }: TCreateModal) {
-  const [titleInput, setTitleInput] = useState<string>('');
-  const [taskDescription, setTaskDescription] = useState<string>('');
-  const [isDisabled, setDisabled] = useState<boolean>(true);
+  const [titleInput, setTitleInput] = useState<string>(defaultTaskTitle);
+  const [taskDescription, setTaskDescription] = useState<string>(
+    defaultTaskDescription
+  );
+  const [isDisabled, setDisabled] = useState<boolean>(false);
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const target = event.target as HTMLInputElement;
-    const value = target.value as string;
+  const handleInputChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const target = event.target as HTMLInputElement;
+      const value = target.value as string;
 
-    setTitleInput(value);
-  };
-  const handleChangeDescription = (event: ChangeEvent<HTMLInputElement>) => {
-    const target = event.target as HTMLInputElement;
-    const value = target.value as string;
+      setTitleInput(value);
+    },
+    []
+  );
 
-    setTaskDescription(value);
-  };
+  const handleChangeDescription = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const target = event.target as HTMLInputElement;
+      const value = target.value as string;
+
+      setTaskDescription(value);
+    },
+    []
+  );
 
   useEffect(() => {
-    if (titleInput !== '') {
-      setDisabled(false);
-      if (isRenderDescription && taskDescription === '') {
-        setDisabled(true);
-      }
-    } else {
+    if (titleInput === '' || taskDescription === '') {
       setDisabled(true);
+    } else {
+      setDisabled(false);
     }
-  }, [titleInput, taskDescription, isRenderDescription]);
+  }, [titleInput, taskDescription]);
 
   const handelSubmit = useCallback(() => {
     onSubmit(titleInput, taskDescription);
-  }, [titleInput, onSubmit, taskDescription]);
+    onClose();
+  }, [titleInput, onSubmit, taskDescription, onClose]);
 
   return (
     <Modal
@@ -126,25 +135,22 @@ function CreateModal({
             label={labelName}
             variant="outlined"
             size="small"
+            value={titleInput}
             sx={{ marginBottom: '20px', width: '100%' }}
             onChange={handleInputChange}
           />
-
-          {isRenderDescription && (
-            <>
-              <Typography component="p" gutterBottom>
-                {descriptionName}
-              </Typography>
-              <TextField
-                id="outlined-basic"
-                label={labelDescription}
-                variant="outlined"
-                size="small"
-                sx={{ marginBottom: '20px', width: '100%' }}
-                onChange={handleChangeDescription}
-              />
-            </>
-          )}
+          <Typography component="p" gutterBottom>
+            {descriptionName}
+          </Typography>
+          <TextField
+            id="outlined-multiline-static"
+            label={labelDescriptionName}
+            multiline
+            rows={4}
+            value={taskDescription}
+            onChange={handleChangeDescription}
+            sx={{ marginBottom: '20px', width: '100%' }}
+          />
         </Box>
         <Button
           variant="contained"
@@ -159,10 +165,4 @@ function CreateModal({
   );
 }
 
-CreateModal.defaultProps = {
-  isRenderDescription: true,
-  descriptionName: '',
-  labelDescription: '',
-};
-
-export default CreateModal;
+export default EditTaskModal;
