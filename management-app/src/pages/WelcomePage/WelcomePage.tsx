@@ -33,10 +33,10 @@ function WelcomePage() {
         </Card>
         <Card
           className={style.card}
-          sx={{ minWidth: '370px', maxWidth: '500px', height: '500px' }}
+          sx={{ minWidth: '300px', maxWidth: '500px', minHeight: '500px' }}
         >
           <CardContent>
-            <Typography variant="h2" paddingTop={4} className={style.infoTitle}>
+            <Typography variant="h2" paddingTop={3} className={style.infoTitle}>
               Manage App
             </Typography>
             <Typography
