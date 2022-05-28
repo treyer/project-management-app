@@ -181,8 +181,7 @@ export function BoardPage() {
             fontSize: '30px',
             textTransform: 'uppercase',
             color: '#808080',
-            borderBottom: '1px solid',
-            marginBottom: '15px',
+            paddingBottom: '15px',
           }}
         >
           {title}
