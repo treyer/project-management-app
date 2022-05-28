@@ -56,6 +56,21 @@
     "ConfirmPasswordLabel": "Confirm Password",
     "loadingIndicator": "...Loading"
   },
+  "editProfileForm": {
+    "editProfileText": "Edit Profile",
+    "errNameRequired": "Name is required",
+    "errLoginMinLength": "Login should be of minimum 2 characters length",
+    "errLoginRequired": "Login is required",
+    "errPasswordMinLength": "Password should be of minimum 8 characters length",
+    "errPasswordRequired": "Password is required",
+    "errPasswordDoNotMatch": "Your passwords do not match",
+    "NameLabel": "Name",
+    "LoginLabel": "Login",
+    "PasswordLabel": "Password",
+    "ConfirmPasswordLabel": "Confirm Password",
+    "loadingIndicator": "...Loading",
+    "editProfileSubmit": "Edit user data"
+  },
   "mainPage": {
     "errSomethingWentWrong": "Something went wrong!",
     "AddBoardBtn": "Add board",

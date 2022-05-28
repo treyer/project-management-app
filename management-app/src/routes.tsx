@@ -2,7 +2,7 @@ import React from 'react';
 import { SignInForm } from './auth/SignInForm';
 import { SignUpForm } from './auth/SignUpForm';
 import { BoardPage } from './pages/BoardPage';
-import EditProfile from './pages/EditProfile';
+import { EditProfilePage } from './pages/EditProfilePage';
 import MainPage from './pages/MainPage';
 import NotFoundPage from './pages/NotFoundPage';
 import WelcomePage from './pages/WelcomePage/WelcomePage';
@@ -48,7 +48,7 @@ export const ROUTES: TPath[] = [
     id: RouteID.EditProfile,
     routePath: '/editprofile',
     title: 'EditProfile',
-    element: <EditProfile />,
+    element: <EditProfilePage />,
     isShownWhenLoggedIn: true,
   },
   {

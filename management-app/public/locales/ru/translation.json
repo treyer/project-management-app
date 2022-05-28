@@ -56,6 +56,21 @@
     "ConfirmPasswordLabel": "Повтор пароля",
     "loadingIndicator": "...Загрузка"
   },
+  "editProfileForm": {
+    "editProfileText": "Редактирование профиля",
+    "errNameRequired": "Поле 'имя' обязательно для заполнения",
+    "errLoginMinLength": "Поле 'логин' должно содержать минимум 2 символа",
+    "errLoginRequired": "Поле 'логин' обязательно для заполнения",
+    "errPasswordMinLength": "Поле 'пароль' должно содержать не менее 8 символов",
+    "errPasswordRequired": "Поле 'пароль' обязательно для заполнения",
+    "errPasswordDoNotMatch": "Повторный ввод пароля не совпадает с полем 'пароль'",
+    "NameLabel": "Имя",
+    "LoginLabel": "Логин",
+    "PasswordLabel": "Пароль",
+    "ConfirmPasswordLabel": "Повтор пароля",
+    "loadingIndicator": "...Загрузка",
+    "editProfileSubmit": "Изменить данные"
+  },
   "mainPage": {
     "errSomethingWentWrong": "Что-то пошло не так!",
     "AddBoardBtn": "Добавить доску",
