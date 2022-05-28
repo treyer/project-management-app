@@ -29,6 +29,8 @@ function MainPage() {
   const isBoardModalOpen = useAppSelector(
     (state) => state.main.isBoardModalOpen
   );
+
+  const { isLoggedIn } = useAppSelector((state) => state.auth);
   const isLoading = useAppSelector((state) => state.main.isLoading);
   const isError = useAppSelector((state) => state.main.isError);
   const dispatch = useAppDispatch();
@@ -37,6 +39,12 @@ function MainPage() {
   useEffect(() => {
     dispatch(getBoards());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn, navigate]);
 
   const handleOpenBoardModal = useCallback(() => {
     dispatch(openBoardModal());
