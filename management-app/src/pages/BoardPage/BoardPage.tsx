@@ -10,7 +10,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { createColumn, getBoard, updateColumn, updateTask } from './boardSlice';
 import { RootState, useAppDispatch, useAppSelector } from '../../store';
 
@@ -23,12 +23,14 @@ export function BoardPage() {
   const { t } = useTranslation();
   const { boardId } = useParams();
 
+  const { isLoggedIn } = useAppSelector((state) => state.auth);
   const { isBoardLoading } = useAppSelector((state: RootState) => state.board);
   const { isColumnLoading } = useAppSelector((state: RootState) => state.board);
   const [isRenderDescription, setIsRenderDescription] = useState<boolean>(true);
   const [isAddColumnFieldOpen, setIsAddColumnFieldOpen] = useState(false);
   const [error, setError] = useState('');
 
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -45,6 +47,12 @@ export function BoardPage() {
         });
     }
   }, [dispatch, boardId, t]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn, navigate]);
 
   // TODO: find a way to store columns in the right order instead of using sort
 

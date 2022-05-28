@@ -3,7 +3,7 @@ import { USERS_API_ERRORS } from './errors';
 import { TUser, TUserBase, TUserData, TToken } from './types';
 
 class UsersAPI extends BaseAPI {
-  updateUser(userId: string, token: string, user: TUser): Promise<TUser> {
+  updateUser(userId: string, token: string, user: TUser): Promise<TUserData> {
     return this.put(`users/${userId}`, user, {
       Authorization: `Bearer ${token}`,
     }).then((result) => {

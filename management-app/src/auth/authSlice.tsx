@@ -23,6 +23,18 @@ export const signIn = createAsyncThunk('auth/signIn', (userBase: TUserBase) =>
   UsersAPI.createToken(userBase)
 );
 
+export const updateUser = createAsyncThunk(
+  'auth/updateUser',
+  (userData: TUser) => {
+    const token = localStorage.getItem('token') as string;
+    const userId = localStorage.getItem('userId') as string;
+    if (token && userId) {
+      return UsersAPI.updateUser(userId, token, userData);
+    }
+    throw new Error();
+  }
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -61,6 +73,17 @@ const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(signIn.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        const { name, id, login } = action.payload;
+        state.userData = { name, id, login };
+        state.isLoading = false;
+      })
+      .addCase(updateUser.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(updateUser.pending, (state) => {
         state.isLoading = true;
       });
   },
