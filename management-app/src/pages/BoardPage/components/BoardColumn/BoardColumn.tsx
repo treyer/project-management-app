@@ -118,8 +118,10 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
               borderRadius: 2,
               backgroundColor: '#eee',
               position: 'relative',
-              minWidth: '330px',
-              height: '80vh',
+              minWidth: '290px',
+              maxWidth: '290px',
+              minHeight: '75vh',
+              maxHeight: '75vh',
             }}
           >
             <IconButton

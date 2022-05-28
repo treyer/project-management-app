@@ -127,11 +127,13 @@ export function TaskCard({
               borderRadius: 2,
               bgcolor: '#fff',
               margin: 2,
+              padding: 2,
               boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
               cursor: 'grabbing',
               position: 'relative',
               minHeight: '100px',
-              minWidth: '250px',
+              minWidth: '200px',
+              maxWidth: '250px',
             },
             {
               '&:hover': {
@@ -212,6 +214,8 @@ export function TaskCard({
               color="text.secondary"
               textAlign="left"
               paddingLeft="10px"
+              width="100%"
+              height="100%"
             >
               {description}
             </Typography>
