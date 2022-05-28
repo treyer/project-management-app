@@ -10,6 +10,7 @@ import { MenuModalType, RouteID } from '../../types';
 import { ROUTES } from '../../routes';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { logOut } from '../../auth/authSlice';
+import { openBoardModal } from '../../pages/MainPage/slice/mainSlice';
 
 type TProps = {
   display: boolean;
@@ -113,8 +114,9 @@ function MenuModal({ display, close, type }: TProps) {
             title={t('header.addBoard')}
             startIcon={<AddIcon />}
             onClick={() => {
+              navigate(`/main`);
+              dispatch(openBoardModal());
               close();
-              // navigate(ROUTES[RouteID.EditProfile].routePath);
             }}
             isMarginBottom
           />
