@@ -5,6 +5,7 @@ import {
   Button,
   CircularProgress,
   Stack,
+  Typography,
   useMediaQuery,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -24,6 +25,7 @@ export function BoardPage() {
   const { boardId } = useParams();
 
   const { isBoardLoading } = useAppSelector((state: RootState) => state.board);
+  const { title } = useAppSelector((state: RootState) => state.board.boardData);
   const { isColumnLoading } = useAppSelector((state: RootState) => state.board);
   const [isRenderDescription, setIsRenderDescription] = useState<boolean>(true);
   const [isAddColumnFieldOpen, setIsAddColumnFieldOpen] = useState(false);
@@ -159,11 +161,24 @@ export function BoardPage() {
         sx={{
           overflowX: 'auto',
           p: 3,
+          pt: 0,
           width: '100%',
           justifySelf: 'start',
         }}
       >
         {error && <Alert severity="error">{error}</Alert>}
+        <Typography
+          component="p"
+          sx={{
+            fontSize: '30px',
+            textTransform: 'uppercase',
+            color: '#808080',
+            borderBottom: '1px solid',
+            marginBottom: '15px',
+          }}
+        >
+          {title}
+        </Typography>
         <Stack spacing={2} direction={matches1 ? 'column' : 'row'}>
           {isColumnLoading ? (
             <CircularProgress
