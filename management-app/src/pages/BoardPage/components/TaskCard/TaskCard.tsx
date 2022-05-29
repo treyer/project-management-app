@@ -132,6 +132,8 @@ export function TaskCard({
               cursor: 'grabbing',
               position: 'relative',
               minHeight: '100px',
+              maxHeight: '115px',
+              overflow: 'hidden',
               minWidth: '200px',
               maxWidth: '250px',
             },
