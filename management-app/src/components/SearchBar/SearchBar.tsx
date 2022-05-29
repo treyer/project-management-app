@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { experimentalStyled as styled, useTheme } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
+import SearchModal from '../SearchModal/SearchModal';
+import BackLayer from '../BackLayer/BackLayer';
 
 const Input = styled('input')({
   border: '1px solid rgba(255, 255, 255, 0.25)',
@@ -25,6 +27,7 @@ function SearchBar() {
   const [inputFocus, setInputFocus] = useState(false);
   const { t } = useTranslation();
   const theme = useTheme();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const imageSrcArr: string[] = [
     '/assets/svg/icon-search-white.svg',
@@ -38,41 +41,59 @@ function SearchBar() {
     });
   });
 
+  const handleOnFocus = () => {
+    setInputFocus(true);
+    setIsModalOpen(true);
+  };
+
+  const handleOnBlur = () => {
+    setInputFocus(false);
+    setIsModalOpen(false);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <label htmlFor="search-input" style={{ position: 'relative' }}>
-      <Input
-        id="search-input"
-        type="search"
-        placeholder={t('searchBar.placeHolder')}
-        // className={style.input}
-        onFocus={() => setInputFocus(true)}
-        onBlur={() => setInputFocus(false)}
-        sx={{
-          backgroundColor:
-            theme.palette.mode === 'light' ? 'primary.light' : '#61dafb',
-          '&::placeholder': {
-            color: theme.palette.mode === 'dark' ? '#000000' : '#ffffff',
-          },
-          '&:focus': {
-            backgroundColor: '#ffffff',
+    <div style={{ position: 'relative', zIndex: 100 }}>
+      <label htmlFor="search-input" style={{ position: 'relative' }}>
+        <Input
+          id="search-input"
+          type="search"
+          placeholder={t('searchBar.placeHolder')}
+          onFocus={handleOnFocus}
+          onBlur={handleOnBlur}
+          sx={{
+            backgroundColor:
+              theme.palette.mode === 'light' ? 'primary.light' : '#61dafb',
             '&::placeholder': {
-              color: '#000000',
+              color: theme.palette.mode === 'dark' ? '#000000' : '#ffffff',
             },
-          },
-        }}
-      />
-      <IconImage
-        src={
-          // eslint-disable-next-line no-nested-ternary
-          theme.palette.mode === 'dark'
-            ? '/assets/svg/icon-search-black.svg'
-            : inputFocus
-            ? '/assets/svg/icon-search-black.svg'
-            : '/assets/svg/icon-search-white.svg'
-        }
-        alt="Search icon"
-      />
-    </label>
+            '&:focus': {
+              backgroundColor: '#ffffff',
+              '&::placeholder': {
+                color: '#000000',
+              },
+            },
+          }}
+          autoComplete="off"
+        />
+        <IconImage
+          src={
+            // eslint-disable-next-line no-nested-ternary
+            theme.palette.mode === 'dark'
+              ? '/assets/svg/icon-search-black.svg'
+              : inputFocus
+              ? '/assets/svg/icon-search-black.svg'
+              : '/assets/svg/icon-search-white.svg'
+          }
+          alt="Search icon"
+        />
+      </label>
+      <SearchModal display={isModalOpen} close={closeModal} />
+      <BackLayer display={isModalOpen} close={closeModal} />
+    </div>
   );
 }
 
