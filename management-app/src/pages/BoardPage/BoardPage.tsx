@@ -166,6 +166,7 @@ export function BoardPage() {
         />
       )}
       <Box
+        height="calc(100vh - 130px) !important"
         sx={{
           overflowX: 'auto',
           p: 3,
