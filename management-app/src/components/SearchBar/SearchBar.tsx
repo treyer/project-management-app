@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { experimentalStyled as styled, useTheme } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
-import SearchModal from '../SearchModal/SearchModal';
-import BackLayer from '../BackLayer/BackLayer';
+import SearchModal from '../../search/SearchModal/SearchModal';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { getBoards } from '../../pages/MainPage/slice/mainSlice';
+import { searchByString } from '../../search/utils';
+import { TSearchResult } from '../../search/types';
 
 const Input = styled('input')({
   border: '1px solid rgba(255, 255, 255, 0.25)',
@@ -25,14 +28,30 @@ const IconImage = styled('img')({
 
 function SearchBar() {
   const [inputFocus, setInputFocus] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchString, setSearchString] = useState('');
+  const [searchResult, setSearchResult] = useState<TSearchResult>({
+    boardsMatch: [],
+    columnsMatch: [],
+    tasksMatch: [],
+  });
+  const [isSearchStringMatch, setIsSearchStringMatch] = useState(false);
   const { t } = useTranslation();
   const theme = useTheme();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  const { isLoggedIn } = useAppSelector((state) => state.auth);
+  const boards = useAppSelector((state) => state.main.boards);
 
   const imageSrcArr: string[] = [
     '/assets/svg/icon-search-white.svg',
     '/assets/svg/icon-search-black.svg',
   ];
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(getBoards());
+    }
+  }, [dispatch, isLoggedIn]);
 
   useEffect(() => {
     imageSrcArr.forEach((imgSrc) => {
@@ -48,7 +67,23 @@ function SearchBar() {
 
   const handleOnBlur = () => {
     setInputFocus(false);
-    setIsModalOpen(false);
+    // setIsModalOpen(false);
+  };
+
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchString(event.target.value);
+    if (event.target.value.length > 2) {
+      setIsSearchStringMatch(true);
+    } else {
+      setIsSearchStringMatch(false);
+    }
+
+    if (event.target) {
+      if (event.target.value.length > 2 && boards.length > 0) {
+        const res = searchByString(event.target.value, boards);
+        setSearchResult(res);
+      }
+    }
   };
 
   const closeModal = () => {
@@ -56,7 +91,7 @@ function SearchBar() {
   };
 
   return (
-    <div style={{ position: 'relative', zIndex: 100 }}>
+    <div style={{ position: 'relative' }}>
       <label htmlFor="search-input" style={{ position: 'relative' }}>
         <Input
           id="search-input"
@@ -64,6 +99,7 @@ function SearchBar() {
           placeholder={t('searchBar.placeHolder')}
           onFocus={handleOnFocus}
           onBlur={handleOnBlur}
+          onChange={(event) => handleOnChange(event)}
           sx={{
             backgroundColor:
               theme.palette.mode === 'light' ? 'primary.light' : '#61dafb',
@@ -76,6 +112,7 @@ function SearchBar() {
                 color: '#000000',
               },
             },
+            zIndex: 999,
           }}
           autoComplete="off"
         />
@@ -91,8 +128,13 @@ function SearchBar() {
           alt="Search icon"
         />
       </label>
-      <SearchModal display={isModalOpen} close={closeModal} />
-      <BackLayer display={isModalOpen} close={closeModal} />
+      <SearchModal
+        display={isModalOpen}
+        close={closeModal}
+        searchString={searchString}
+        isSearchStringMatch={isSearchStringMatch}
+        searchResult={searchResult}
+      />
     </div>
   );
 }
