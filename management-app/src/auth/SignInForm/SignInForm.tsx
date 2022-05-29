@@ -46,6 +46,7 @@ function SignInForm() {
     initialValues,
     validationSchema: loginValidationSchema,
     onSubmit: ({ login, password }) => {
+      localStorage.setItem('password', password);
       dispatch(signIn({ login, password }))
         .unwrap()
         .then(() => setSignInError(''))

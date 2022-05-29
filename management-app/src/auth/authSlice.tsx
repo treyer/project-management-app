@@ -5,12 +5,14 @@ import UsersAPI from '../api/usersAPI';
 
 type TAuthState = {
   userData: TUserData;
+  user: TUser;
   isLoading: boolean;
   isLoggedIn: boolean;
 };
 
 const initialState: TAuthState = {
   userData: {} as TUserData,
+  user: {} as TUser,
   isLoading: false,
   isLoggedIn: !!localStorage.getItem('token'),
 };
@@ -32,6 +34,16 @@ export const updateUser = createAsyncThunk(
       return UsersAPI.updateUser(userId, token, userData);
     }
     throw new Error();
+  }
+);
+
+export const getUser = createAsyncThunk(
+  'auth/getUser',
+  async (): Promise<TUser> => {
+    const token = localStorage.getItem('token') as string;
+    const userId = localStorage.getItem('userId') as string;
+    const result = await UsersAPI.getUser(userId, token);
+    return result;
   }
 );
 
@@ -84,6 +96,14 @@ const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(updateUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        const { name, password, login } = action.payload;
+        state.user = { name, password, login };
+        state.isLoading = false;
+      })
+      .addCase(getUser.pending, (state) => {
         state.isLoading = true;
       });
   },
