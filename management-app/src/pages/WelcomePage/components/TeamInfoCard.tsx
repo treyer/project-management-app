@@ -18,7 +18,7 @@ function TeamInfoCard({ name, src, info, path }: TTeamInfoCardProps) {
       style={{ color: '#ffffff' }}
       underline="none"
     >
-      <Card sx={{ maxWidth: 300 }} className={style.card}>
+      <Card sx={{ maxWidth: 270 }} className={style.card}>
         <CardMedia
           component="img"
           alt="img"

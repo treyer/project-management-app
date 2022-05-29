@@ -114,12 +114,13 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
           <Box
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...provided.dragHandleProps}
+            height="calc(100vh - 230px) !important"
             sx={{
               borderRadius: 2,
               backgroundColor: '#eee',
               position: 'relative',
-              minWidth: '330px',
-              height: '80vh',
+              minWidth: '290px',
+              maxWidth: '290px',
             }}
           >
             <IconButton
@@ -136,6 +137,8 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
             </IconButton>
             <Stack
               spacing={2}
+              borderRadius={3}
+              height="100%"
               sx={[
                 {
                   '&:hover': {
@@ -158,7 +161,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
                     {...provided.droppableProps}
                     sx={{
                       overflow: 'auto',
-                      maxHeight: '60vh',
+                      maxHeight: '100%',
                       cursor: 'grabbing',
                     }}
                   >
