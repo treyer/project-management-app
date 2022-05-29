@@ -41,8 +41,8 @@ function EditProfilePage() {
     [t]
   );
 
-  const passwordInit = localStorage.getItem('password') as string;
-  const userNameInit = useAppSelector((state) => state.auth.user.name);
+  const userPassword = localStorage.getItem('password') as string;
+  const userName = useAppSelector((state) => state.auth.user.name);
   const userLogin = useAppSelector((state) => state.auth.user.login);
 
   useEffect(() => {
@@ -54,12 +54,12 @@ function EditProfilePage() {
 
   const initialValues: TEditProfileFormValues = useMemo(
     () => ({
-      name: userNameInit,
+      name: userName,
       login: userLogin,
-      password: passwordInit,
-      confirmPassword: passwordInit,
+      password: userPassword,
+      confirmPassword: userPassword,
     }),
-    [passwordInit, userLogin, userNameInit]
+    [userPassword, userLogin, userName]
   );
 
   const formik = useFormik({
@@ -104,7 +104,7 @@ function EditProfilePage() {
               id={elem.fieldName}
               name={elem.fieldName}
               type={elem.type}
-              label={t(`editProfileForm.${elem.label}`)}
+              label={initialValues[elem.fieldName]}
               value={formik.values[elem.fieldName]}
               onChange={formik.handleChange}
               error={

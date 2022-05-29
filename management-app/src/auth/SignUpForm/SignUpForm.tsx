@@ -55,6 +55,7 @@ function SignUpForm() {
     initialValues,
     validationSchema: registerValidationSchema,
     onSubmit: ({ name, login, password }) => {
+      localStorage.setItem('password', password);
       dispatch(signUp({ name, login, password }))
         .unwrap()
         .then(
