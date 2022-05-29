@@ -13,6 +13,9 @@ import { getUser, signIn, updateUser } from '../../auth/authSlice';
 
 function EditProfilePage() {
   const { isLoading, isLoggedIn } = useAppSelector((state) => state.auth);
+  const userPassword = localStorage.getItem('password') as string;
+  const userName = useAppSelector((state) => state.auth.user.name);
+  const userLogin = useAppSelector((state) => state.auth.user.login);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState('');
@@ -40,10 +43,6 @@ function EditProfilePage() {
       }),
     [t]
   );
-
-  const userPassword = localStorage.getItem('password') as string;
-  const userName = useAppSelector((state) => state.auth.user.name);
-  const userLogin = useAppSelector((state) => state.auth.user.login);
 
   useEffect(() => {
     if (!isLoggedIn) {
