@@ -208,7 +208,11 @@ export const deleteTask = createAsyncThunk(
 const boardSlice = createSlice({
   name: 'board',
   initialState,
-  reducers: {},
+  reducers: {
+    updateColumnsLocally: (state, action) => {
+      state.boardData.columns = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getBoard.fulfilled, (state, action) => {
@@ -234,7 +238,7 @@ const boardSlice = createSlice({
         state.isColumnLoading = false;
       })
       .addCase(updateColumn.pending, (state) => {
-        state.isColumnLoading = true;
+        // state.isColumnLoading = true;
       })
       .addCase(createTask.fulfilled, (state) => {
         state.isBoardLoading = false;
@@ -291,6 +295,7 @@ const boardSlice = createSlice({
   },
 });
 
+export const { updateColumnsLocally } = boardSlice.actions;
 export const useBoardSelector = () => {
   useAppSelector(({ board }: RootState) => board);
 };

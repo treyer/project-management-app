@@ -9,10 +9,16 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import { useNavigate, useParams } from 'react-router-dom';
-import { createColumn, getBoard, updateColumn, updateTask } from './boardSlice';
+import {
+  createColumn,
+  getBoard,
+  updateColumn,
+  updateColumnsLocally,
+  updateTask,
+} from './boardSlice';
 import { RootState, useAppDispatch, useAppSelector } from '../../store';
 
 import { BoardColumn } from './components/BoardColumn';
@@ -58,12 +64,11 @@ export function BoardPage() {
 
   // TODO: find a way to store columns in the right order instead of using sort
 
-  let columns = useAppSelector((state) => state.board.boardData.columns);
-  const columnsForSort = [...columns];
-  columnsForSort.sort((a, b) => {
-    return a.order > b.order ? 1 : -1;
-  });
-  columns = [...columnsForSort];
+  const columns = useAppSelector((state) =>
+    [...state.board.boardData.columns].sort((a, b) =>
+      a.order > b.order ? 1 : -1
+    )
+  );
 
   const addNewColumn = useCallback(
     (titleInput: string) => {
@@ -100,9 +105,7 @@ export function BoardPage() {
     setIsRenderDescription(false);
   };
 
-  // TODO: find a way to get rid of 'any'
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onDragEnd = (result: Record<string, any>) => {
+  const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId, type } = result;
 
     if (!destination) {
@@ -119,6 +122,14 @@ export function BoardPage() {
       const column = getColumnById(columns, draggableId);
 
       if (boardId && column) {
+        const localColumns = columns.map((c) => ({ ...c }));
+        localColumns.splice(source.index, 1);
+        localColumns.splice(destination.index, 0, { ...column });
+        localColumns.forEach((localColumn, index) => {
+          localColumn.order = index + 1;
+        });
+        dispatch(updateColumnsLocally(localColumns));
+
         dispatch(
           updateColumn({
             boardId,
