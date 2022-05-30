@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import boardsAPI from '../../api/boardsAPI';
 import columnsAPI from '../../api/columnsAPI';
 import tasksAPI from '../../api/tasksAPI';
@@ -8,6 +8,7 @@ import {
   TColumnBase,
   TTask,
   TTaskBase,
+  TTaskResponse,
   TUpdateTaskRequestBody,
   TUpdateTaskResponse,
 } from '../../api/types';
@@ -208,7 +209,22 @@ export const deleteTask = createAsyncThunk(
 const boardSlice = createSlice({
   name: 'board',
   initialState,
-  reducers: {},
+  reducers: {
+    updateColumnsLocally: (state, action) => {
+      state.boardData.columns = action.payload;
+    },
+    updateTasksLocally: (
+      state,
+      action: PayloadAction<{ columnId: string; tasks: TTaskResponse[] }>
+    ) => {
+      const currentColumn = state.boardData.columns.find(
+        (column) => column.id === action.payload.columnId
+      );
+      if (currentColumn) {
+        currentColumn.tasks = action.payload.tasks;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getBoard.fulfilled, (state, action) => {
@@ -234,7 +250,7 @@ const boardSlice = createSlice({
         state.isColumnLoading = false;
       })
       .addCase(updateColumn.pending, (state) => {
-        state.isColumnLoading = true;
+        // state.isColumnLoading = true;
       })
       .addCase(createTask.fulfilled, (state) => {
         state.isBoardLoading = false;
@@ -291,6 +307,7 @@ const boardSlice = createSlice({
   },
 });
 
+export const { updateColumnsLocally, updateTasksLocally } = boardSlice.actions;
 export const useBoardSelector = () => {
   useAppSelector(({ board }: RootState) => board);
 };

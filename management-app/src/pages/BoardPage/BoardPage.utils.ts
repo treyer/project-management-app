@@ -1,20 +1,20 @@
-import { TColumnResponse, TCreateTaskResponse } from '../../api/types';
+import {
+  TColumnResponse,
+  TCreateTaskResponse,
+  TFileResponse,
+  TTaskResponse,
+} from '../../api/types';
 import { RootState } from '../../store';
 
 const getTasksByColumnId = (state: RootState, columnId: string) => {
-  const currentColumn = state.board.boardData.columns.find(
-    (column) => column.id === columnId
+  const column = state.board.boardData.columns.find(
+    ({ id }) => id === columnId
   );
-  if (currentColumn) {
-    return currentColumn;
-  }
-  return {} as TColumnResponse;
+  return column?.tasks ?? [];
 };
 
-const getColumnById = (columnsToFilter: TColumnResponse[], id: string) => {
-  const result = columnsToFilter.find((column) => column.id === id);
-  return result;
-};
+const getColumnById = (columns: TColumnResponse[], id: string) =>
+  columns.find((column) => column.id === id);
 
 const getTaskById = (
   column: TColumnResponse,
@@ -36,4 +36,29 @@ const getTaskById = (
   } as TCreateTaskResponse;
 };
 
-export { getTasksByColumnId, getColumnById, getTaskById };
+const getFullTaskInfoById = (column: TColumnResponse, id: string) => {
+  const task = column.tasks.find((columnTask) => columnTask.id === id);
+  if (task) {
+    const resultTask = {
+      id: task.id,
+      title: task.title,
+      order: task.order,
+      done: task.done,
+      description: task.description,
+      userId: task.userId,
+      files: [] as TFileResponse[],
+    };
+    return resultTask;
+  }
+  return {
+    id: '',
+    title: '',
+    order: 0,
+    done: false,
+    description: '',
+    userId: '',
+    files: [] as TFileResponse[],
+  } as TTaskResponse;
+};
+
+export { getTasksByColumnId, getColumnById, getTaskById, getFullTaskInfoById };
