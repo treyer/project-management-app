@@ -9,16 +9,28 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import { useNavigate, useParams } from 'react-router-dom';
-import { createColumn, getBoard, updateColumn, updateTask } from './boardSlice';
+import {
+  createColumn,
+  getBoard,
+  updateColumn,
+  updateColumnsLocally,
+  updateTask,
+  updateTasksLocally,
+} from './boardSlice';
 import { RootState, useAppDispatch, useAppSelector } from '../../store';
 
 import { BoardColumn } from './components/BoardColumn';
 import CreateModal from '../../components/CreateModal/CreateModal';
 import { TColumnResponse } from '../../api/types';
-import { getColumnById, getTaskById } from './BoardPage.utils';
+import {
+  getColumnById,
+  getFullTaskInfoById,
+  getTaskById,
+} from './BoardPage.utils';
+import { comparator, reorder } from '../../utils';
 
 export function BoardPage() {
   const { t } = useTranslation();
@@ -58,12 +70,9 @@ export function BoardPage() {
 
   // TODO: find a way to store columns in the right order instead of using sort
 
-  let columns = useAppSelector((state) => state.board.boardData.columns);
-  const columnsForSort = [...columns];
-  columnsForSort.sort((a, b) => {
-    return a.order > b.order ? 1 : -1;
-  });
-  columns = [...columnsForSort];
+  const columns = useAppSelector((state) =>
+    [...state.board.boardData.columns].sort(comparator)
+  );
 
   const addNewColumn = useCallback(
     (titleInput: string) => {
@@ -100,9 +109,7 @@ export function BoardPage() {
     setIsRenderDescription(false);
   };
 
-  // TODO: find a way to get rid of 'any'
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onDragEnd = (result: Record<string, any>) => {
+  const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId, type } = result;
 
     if (!destination) {
@@ -119,10 +126,17 @@ export function BoardPage() {
       const column = getColumnById(columns, draggableId);
 
       if (boardId && column) {
+        const localColumns = reorder(columns, {
+          removeIndex: source.index,
+          insertIndex: destination.index,
+          valueToInsert: column,
+        });
+        dispatch(updateColumnsLocally(localColumns));
+
         dispatch(
           updateColumn({
             boardId,
-            columnId: draggableId,
+            columnId: column.id,
             column: {
               title: column.title,
               order: destination.index + 1,
@@ -132,26 +146,75 @@ export function BoardPage() {
       }
     }
 
-    const sourceColumn = getColumnById(columns, source.droppableId);
+    if (type === 'task') {
+      const sourceColumn = getColumnById(columns, source.droppableId);
+      const destinationColumn = getColumnById(columns, destination.droppableId);
 
-    if (sourceColumn) {
+      if (!sourceColumn || !destinationColumn || !boardId) {
+        return;
+      }
+
       const draggableTask = getTaskById(sourceColumn, draggableId);
+      if (!draggableTask) {
+        return;
+      }
 
-      if (boardId && draggableTask) {
+      const taskFullInfo = getFullTaskInfoById(sourceColumn, draggableId);
+      const sourceTasks = [...sourceColumn.tasks].sort(comparator);
+
+      if (destinationColumn.id === sourceColumn.id) {
+        const localSourceTasks = reorder(sourceTasks, {
+          removeIndex: source.index,
+          insertIndex: destination.index,
+          valueToInsert: taskFullInfo,
+        });
+
         dispatch(
-          updateTask({
-            boardId,
-            columnId: source.droppableId,
-            taskId: draggableId,
-            task: {
-              ...draggableTask,
-              order: destination.index + 1,
-              boardId,
-              columnId: destination.droppableId,
-            },
+          updateTasksLocally({
+            columnId: sourceColumn.id,
+            tasks: localSourceTasks,
+          })
+        );
+      } else {
+        const destinationTasks = destinationColumn.tasks;
+
+        const localSourceTasks = reorder(sourceTasks, {
+          removeIndex: source.index,
+        });
+
+        const localDestinationTasks = reorder(destinationTasks, {
+          insertIndex: destination.index,
+          valueToInsert: taskFullInfo,
+        });
+
+        dispatch(
+          updateTasksLocally({
+            columnId: sourceColumn.id,
+            tasks: localSourceTasks,
+          })
+        );
+
+        dispatch(
+          updateTasksLocally({
+            columnId: destinationColumn.id,
+            tasks: localDestinationTasks,
           })
         );
       }
+
+      dispatch(
+        updateTask({
+          boardId,
+          columnId: source.droppableId,
+          taskId: draggableId,
+          task: {
+            ...draggableTask,
+            order: destination.index + 1,
+            boardId,
+            columnId: destination.droppableId,
+          },
+        })
+      );
     }
   };
 

@@ -16,6 +16,7 @@ import { getTasksByColumnId } from '../../BoardPage.utils';
 import { TTaskResponse } from '../../../../api/types';
 import CreateModal from '../../../../components/CreateModal/CreateModal';
 import ConfirmMessage from '../../../../components/ConfirmMessage/ConfirmMessage';
+import { comparator } from '../../../../utils';
 
 // TODO: use TColumn instead of BoardColumnProps?
 export function BoardColumn({ id, title, order }: TBoardColumnProps) {
@@ -31,14 +32,9 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const { id: userDataId } = useAppSelector((state) => state.auth.userData);
   const userId = userDataId ?? userIdLS;
 
-  let { tasks } =
-    useAppSelector((state) => getTasksByColumnId(state, id)) ?? [];
-
-  const tasksForSort = [...tasks];
-  tasksForSort.sort((a, b) => {
-    return a.order > b.order ? 1 : -1;
-  });
-  tasks = [...tasksForSort];
+  const tasks = useAppSelector((state) =>
+    [...(getTasksByColumnId(state, id) ?? [])].sort(comparator)
+  );
 
   const [isAddTaskFieldOpen, setIsAddTaskFieldOpen] = useState(false);
   const [isDialogOpen, setDialogOpen] = useState(false);
