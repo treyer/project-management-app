@@ -131,6 +131,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
             >
               <DeleteIcon />
             </IconButton>
+
             <Stack
               spacing={2}
               borderRadius={3}
