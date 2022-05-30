@@ -103,7 +103,7 @@ function EditProfilePage() {
               id={elem.fieldName}
               name={elem.fieldName}
               type={elem.type}
-              label={initialValues[elem.fieldName]}
+              label={t(`editProfileForm.${elem.label}`)}
               value={formik.values[elem.fieldName]}
               onChange={formik.handleChange}
               error={
