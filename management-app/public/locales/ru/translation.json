@@ -1,0 +1,140 @@
+{
+  "searchBar": {
+    "placeHolder": "Поиск"
+  },
+  "footer": {
+    "Andrei": "Андрей Кожаненко",
+    "Marina": "Марина Пресмыцкая",
+    "Lena": "Елена Безроднова"
+  },
+  "header": {
+    "Boards": "Доски",
+    "addBoard": "добавить доску"
+  },
+  "menuModal": {
+    "LogIn": "Войти",
+    "SignUp": "Регистрация",
+    "LogOut": "Выйти",
+    "EditProfile": "Редактировать профиль",
+    "goToMainPage": "Перейти на главную"
+  },
+  "welcomePage": {
+    "aboutAppText": "Управлять ресурсами, командами, сроками выполнения или бюджетами проектов будет легко с профессиональным функционалом нашего приложения Manage App. С предоставляемыми вам возможностями для всех этапов работы над проектами вы сможете реализовать свой проект от начала до конца очень лекго и гладко.",
+    "registerText": "* Зарегистрируйтесь, чтобы воспользоваться всеми возможностями приложения",
+    "teamTitle": "Наша команда"
+  },
+  "aboutTeam": {
+    "Lena": "Елена",
+    "Andrey": "Андрей",
+    "Marina": "Марина",
+    "LenaInfo": "Обожаю котиков, собачек и классовые компоненты",
+    "AndreiInfo": "Люблю выпить водочки с селёдочкой, но жена запрещает",
+    "MarinaInfo": "Люблю варить борщ и жарить котлеты. Ненавижу вёрстку и node.js"
+  },
+  "signInForm": {
+    "unknownError": "Неизвестная ошибка",
+    "signIn": "Войти",
+    "loadingIndicatorText": "...Загрузка",
+    "errLoginMinLength": "Поле 'логин' должно содержать минимум 2 символа",
+    "errLoginRequired": "Поле 'логин' обязательно для заполнения",
+    "errPasswordMinLength": "Поле 'пароль' должно содержать не менее 8 символов",
+    "errPasswordRequired": "Поле 'пароль' обязательно для заполнения",
+    "LoginLabel": "Логин",
+    "PasswordLabel": "Пароль"
+  },
+  "signUpForm": {
+    "signUpText": "Регистрация",
+    "errNameRequired": "Поле 'имя' обязательно для заполнения",
+    "errLoginMinLength": "Поле 'логин' должно содержать минимум 2 символа",
+    "errLoginRequired": "Поле 'логин' обязательно для заполнения",
+    "errPasswordMinLength": "Поле 'пароль' должно содержать не менее 8 символов",
+    "errPasswordRequired": "Поле 'пароль' обязательно для заполнения",
+    "errPasswordDoNotMatch": "Повторный ввод пароля не совпадает с полем 'пароль'",
+    "NameLabel": "Имя",
+    "LoginLabel": "Логин",
+    "PasswordLabel": "Пароль",
+    "ConfirmPasswordLabel": "Повтор пароля",
+    "loadingIndicator": "...Загрузка"
+  },
+  "editProfileForm": {
+    "editProfileText": "Редактирование профиля",
+    "errNameRequired": "Поле 'имя' обязательно для заполнения",
+    "errLoginMinLength": "Поле 'логин' должно содержать минимум 2 символа",
+    "errLoginRequired": "Поле 'логин' обязательно для заполнения",
+    "errPasswordMinLength": "Поле 'пароль' должно содержать не менее 8 символов",
+    "errPasswordRequired": "Поле 'пароль' обязательно для заполнения",
+    "errPasswordDoNotMatch": "Повторный ввод пароля не совпадает с полем 'пароль'",
+    "NameLabel": "Имя",
+    "LoginLabel": "Логин",
+    "PasswordLabel": "Пароль",
+    "ConfirmPasswordLabel": "Повтор пароля",
+    "loadingIndicator": "...Загрузка",
+    "editProfileSubmit": "Изменить данные"
+  },
+  "mainPage": {
+    "errSomethingWentWrong": "Что-то пошло не так!",
+    "AddBoardBtn": "Добавить доску",
+    "ifDeleteBoardMessage": "Вы хотите удалить доску?",
+    "ifGoToNewBoardMessage": "Вы хотите перейти на новый Борд?",
+    "boardNameText": "Имя доски",
+    "addBoardNameLabel": "Добавьте имя доски",
+    "confirmMessageText": "Подтвердите действие",
+    "yes": "Да",
+    "no": "Нет",
+    "numberOfColumns": "Количество колонок",
+    "descriptionName": "Описание доски",
+    "labelDescription": "Добавьте описание доски"
+  },
+  "boardPage": {
+    "unknownError": "Неизвестная ошибка",
+    "addColumnText": "+ Добавить колонку",
+    "addTaskText": "+ Добавить задачу",
+    "enterTitleForColumnText": "Ввести заголовок для этой колонки...",
+    "addColumnBtn": "Добавить колонку",
+    "enterTaskTitleText": "Ввести заголовок для данной задачи...",
+    "addTaskBtn": "Добавить задачу",
+    "ifDeleteColumnMessage": "Вы хотите удалить колонку?",
+    "ifDeleteTaskMessage": "Вы хотите удалить задачу?",
+    "submit": "Сохранить",
+    "cancel": "Отменить",
+    "columnTitleLabel": "Введите название колонки"
+  },
+  "columnModal": {
+    "titleModal": "Добавить колонку",
+    "inputName": "Имя колонки",
+    "labelName": "Добавьте имя колонки",
+    "btnName": "Добавить колонку"
+  },
+  "taskModal": {
+    "titleModal": "Добавить задачу",
+    "inputName": "Заголовок задачи",
+    "labelName": "Добавить заголовок задачи",
+    "descriptionName": "Описание задачи",
+    "labelDescription": "Добавьте описание задачи",
+    "btnName": "Добавить задачу"
+  },
+  "editTaskModal": {
+    "edit": "Редактирование",
+    "delete": "Удаление",
+    "titleModal": "Редактирование задачи",
+    "inputName": "Заголовок задачи",
+    "labelName": "Исправить заголовок задачи",
+    "descriptionName": "Описание задачи",
+    "labelDescription": "Исправить описание задачи",
+    "btnName": "Сохранить изменения"
+  },
+  "search": {
+    "onlyAuthWarn": "Поиск доступен только авторизованным пользователям",
+    "minLengthWarn": "Поисковый запрос должен содержать не менее 3 символов",
+    "nothingFound": "Поиск не дал результатов",
+    "ward": "Слово",
+    "contained": "содержится:",
+    "in": "- в ",
+    "title": "названии",
+    "description": "описании",
+    "task": "таска",
+    "column": "колонки",
+    "desk": "доски ",
+    "inColumnName": "- в названии колонки"
+  }
+}
