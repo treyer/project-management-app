@@ -94,7 +94,10 @@
     "enterTaskTitleText": "Ввести заголовок для данной задачи...",
     "addTaskBtn": "Добавить задачу",
     "ifDeleteColumnMessage": "Вы хотите удалить колонку?",
-    "ifDeleteTaskMessage": "Вы хотите удалить задачу?"
+    "ifDeleteTaskMessage": "Вы хотите удалить задачу?",
+    "submit": "Сохранить",
+    "cancel": "Отменить",
+    "columnTitleLabel": "Введите название колонки"
   },
   "columnModal": {
     "titleModal": "Добавить колонку",

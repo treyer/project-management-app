@@ -1,4 +1,5 @@
 import { ChangeEvent, useState, KeyboardEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   ClickAwayListener,
@@ -16,6 +17,8 @@ import { TColumnTitleProps } from './ColumnTitle.types';
 export function ColumnTitle({ title, handleClickAway }: TColumnTitleProps) {
   const [titleInput, setTitleInput] = useState(title);
   const [isTitleEditMode, setIsTitleEditMode] = useState(false);
+
+  const { t } = useTranslation();
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitleInput(e.target.value);
@@ -59,6 +62,9 @@ export function ColumnTitle({ title, handleClickAway }: TColumnTitleProps) {
               <TextField
                 fullWidth
                 name="column title"
+                error={titleInput === ''}
+                id="outlined-error"
+                label={t('boardPage.columnTitleLabel')}
                 value={titleInput}
                 color="primary"
                 onChange={handleOnChange}
@@ -67,8 +73,9 @@ export function ColumnTitle({ title, handleClickAway }: TColumnTitleProps) {
                   background: isTitleEditMode ? '#c2deee' : '',
                 }}
                 onKeyPress={handleKeyDown}
+                autoFocus
               />
-              <Tooltip title="Submit">
+              <Tooltip title={t('boardPage.submit')}>
                 <IconButton
                   onClick={onClickAway}
                   type="submit"
@@ -93,7 +100,7 @@ export function ColumnTitle({ title, handleClickAway }: TColumnTitleProps) {
                 }}
                 orientation="vertical"
               />
-              <Tooltip title="Cancel">
+              <Tooltip title={t('boardPage.cancel')}>
                 <IconButton
                   color="primary"
                   sx={{
