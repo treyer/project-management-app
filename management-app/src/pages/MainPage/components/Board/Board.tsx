@@ -10,6 +10,8 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useAppDispatch } from '../../../../store';
 import { closeDialog, deleteBoard } from '../../slice/mainSlice';
 import ConfirmMessage from '../../../../components/ConfirmMessage/ConfirmMessage';
@@ -24,6 +26,8 @@ type TBoardProps = {
 function Board({ titleBoard, description, id, columnNum }: TBoardProps) {
   const [isDialogOpen, setDialogOpen] = useState(false);
   const { t } = useTranslation();
+  const theme = useTheme();
+  const matches = useMediaQuery('(min-width:395px)');
 
   const dispatch = useAppDispatch();
 
@@ -52,21 +56,21 @@ function Board({ titleBoard, description, id, columnNum }: TBoardProps) {
           onDecline={handleDecline}
         />
       )}
-      <NavLink to={`/boards/${id}`} style={{ textDecoration: 'none' }}>
+      <NavLink
+        to={`/boards/${id}`}
+        style={{ textDecoration: 'none', position: 'relative' }}
+      >
         <Card
           sx={[
             {
               width: '70vw',
               height: '200px',
-              backgroundImage: 'url(./assets/svg/board.svg)',
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'bottom',
-              backgroundPositionX: 'left',
               position: 'relative',
+              backgroundColor: 'primary.light',
             },
             {
               '&:hover': {
-                backgroundColor: '#e5eff8',
+                backgroundColor: 'primary.main',
               },
             },
             {
@@ -77,23 +81,32 @@ function Board({ titleBoard, description, id, columnNum }: TBoardProps) {
           ]}
         >
           <CardHeader
-            sx={{ textAlign: 'left' }}
+            sx={{
+              textAlign: 'left',
+              position: 'relative',
+              zIndex: 10,
+              color: 'text.secondary',
+            }}
             action={
               <IconButton
                 aria-label="delete"
                 size="large"
                 onClick={handleDeleteBoard}
               >
-                <DeleteIcon />
+                <DeleteIcon sx={{ color: 'text.secondary' }} />
               </IconButton>
             }
             title={titleBoard}
           />
-          <CardContent>
+          <CardContent sx={{ color: 'text.secondary' }}>
             <Typography
               variant="body1"
               color="text.secondary"
-              sx={{ textAlign: 'left' }}
+              sx={{
+                textAlign: 'left',
+                position: 'relative',
+                zIndex: 100,
+              }}
             >
               {description}
             </Typography>
@@ -106,6 +119,19 @@ function Board({ titleBoard, description, id, columnNum }: TBoardProps) {
             </Typography>
           </CardContent>
         </Card>
+        {matches && (
+          <img
+            src="./assets/svg/board.svg"
+            alt="Board"
+            style={{
+              position: 'absolute',
+              top: '20px',
+              left: '15px',
+              zIndex: 1,
+              opacity: theme.palette.mode === 'dark' ? '0.1' : '0.3',
+            }}
+          />
+        )}
       </NavLink>
     </>
   );
