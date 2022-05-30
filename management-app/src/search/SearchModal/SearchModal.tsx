@@ -1,7 +1,9 @@
+/* eslint-disable max-len */
 import React from 'react';
 import { Alert, Card } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { experimentalStyled as styled } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 import { TSearchResult } from '../types';
 import { useAppSelector } from '../../store';
 // eslint-disable-next-line max-len
@@ -37,6 +39,7 @@ function SearchModal({
   isSearchStringMatch,
 }: TProps) {
   const { isLoggedIn } = useAppSelector((state) => state.auth);
+  const { t } = useTranslation();
 
   return (
     <Card
@@ -52,21 +55,17 @@ function SearchModal({
     >
       <StyledCloseIcon onClick={close} sx={{ fontSize: 15 }} />
       {!isLoggedIn && (
-        <Alert severity="warning">
-          Поиск доступен только авторизованным пользователям
-        </Alert>
+        <Alert severity="warning">{t('search.onlyAuthWarn')}</Alert>
       )}
       {isLoggedIn && !isSearchStringMatch && (
-        <Alert severity="warning">
-          Поисковый запрос должен содержать не менее 3 символов
-        </Alert>
+        <Alert severity="warning">{t('search.minLengthWarn')}</Alert>
       )}
       {isLoggedIn &&
         isSearchStringMatch &&
         searchResult.boardsMatch.length === 0 &&
         searchResult.columnsMatch.length === 0 &&
         searchResult.tasksMatch.length === 0 && (
-          <Alert severity="warning">Поиск не дал результатов</Alert>
+          <Alert severity="warning">{t('search.nothingFound')}</Alert>
         )}
       {isLoggedIn &&
         isSearchStringMatch &&
@@ -74,7 +73,7 @@ function SearchModal({
           searchResult.columnsMatch.length > 0 ||
           searchResult.tasksMatch.length > 0) && (
           <Alert severity="success">
-            Слово {`"${searchString}"`} содержится:{' '}
+            {t('search.word')} {`"${searchString}"`} {t('search.contained')}
           </Alert>
         )}
       {isLoggedIn &&
@@ -99,7 +98,7 @@ function SearchModal({
           </>
         )}
 
-      {isLoggedIn && isSearchStringMatch && searchResult.tasksMatch.length > 0 && (
+      {isLoggedIn && searchResult.tasksMatch.length > 0 && isSearchStringMatch && (
         <>
           {searchResult.tasksMatch.map((board, index) => (
             <SearchResultTask key={`${board.boardId + index}`} board={board} />

@@ -119,5 +119,19 @@
     "descriptionName": "Description",
     "labelDescription": "Edit description",
     "btnName": "Save"
+  },
+  "search": {
+    "onlyAuthWarn": "Search is available only to authorized users",
+    "minLengthWarn": "Search query must contain at least 3 characters",
+    "nothingFound": "Nothing found",
+    "word": "Word",
+    "contained": "contained:",
+    "in": "- in ",
+    "title": "the title",
+    "description": "the description of",
+    "task": "task",
+    "column": "of column",
+    "desk": "of board ",
+    "inColumnName": "- in the column title"
   }
 }
