@@ -101,7 +101,7 @@ function SearchModal({
       {isLoggedIn && searchResult.tasksMatch.length > 0 && isSearchStringMatch && (
         <>
           {searchResult.tasksMatch.map((board, index) => (
-            <SearchResultTask key={`${board.boardId + index}`} board={board} />
+            <SearchResultTask key={`${board.boardId + index}`} task={board} />
           ))}
         </>
       )}

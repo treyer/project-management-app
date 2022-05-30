@@ -5,30 +5,30 @@ import { useTranslation } from 'react-i18next';
 import { TResultTask } from '../types';
 
 type TType = {
-  board: TResultTask;
+  task: TResultTask;
 };
 
-function SearchResultTask({ board }: TType) {
+function SearchResultTask({ task }: TType) {
   const { t } = useTranslation();
 
   return (
-    <NavLink to={`/boards/${board.boardId}`} style={{ textDecoration: 'none' }}>
+    <NavLink to={`/boards/${task.boardId}`} style={{ textDecoration: 'none' }}>
       <Typography sx={{ fontSize: 14 }} align="left">
         {t('search.in')}{' '}
-        {board.isMatchTitle ? t('search.title') : t('search.description')}{' '}
+        {task.isMatchTitle ? t('search.title') : t('search.description')}{' '}
         {t('search.task')}{' '}
         <Box
           component="span"
           fontWeight="fontWeightMedium"
-        >{`"${board.taskTitle}"`}</Box>
+        >{`"${task.taskTitle}"`}</Box>
         {t('search.column')}{' '}
         <Box
           component="span"
           fontWeight="fontWeightMedium"
-        >{`"${board.columnTitle}"`}</Box>
+        >{`"${task.columnTitle}"`}</Box>
         {t('search.desk')}
         <Box component="span" fontWeight="fontWeightMedium">
-          {`"${board.boardTitle.trim()}"`}
+          {`"${task.boardTitle.trim()}"`}
         </Box>
       </Typography>
     </NavLink>

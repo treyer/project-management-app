@@ -45,23 +45,23 @@ export const searchByString = (
             boardTitle,
             columnTitle,
           });
+        }
 
-          if (column.tasks.length > 0) {
-            column.tasks.forEach((task) => {
-              if (
-                task.title.includes(searchString) ||
-                task.description.includes(searchString)
-              ) {
-                result.tasksMatch.push({
-                  boardId,
-                  boardTitle,
-                  columnTitle,
-                  taskTitle: task.title,
-                  isMatchTitle: task.title.includes(searchString),
-                });
-              }
-            });
-          }
+        if (column.tasks.length > 0) {
+          column.tasks.forEach((task) => {
+            if (
+              task.title.includes(searchString) ||
+              task.description.includes(searchString)
+            ) {
+              result.tasksMatch.push({
+                boardId,
+                boardTitle,
+                columnTitle,
+                taskTitle: task.title,
+                isMatchTitle: task.title.includes(searchString),
+              });
+            }
+          });
         }
       });
     }
