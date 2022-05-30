@@ -25,13 +25,19 @@ export const searchByString = (
     const boardTitle = board.title;
 
     if (
-      board.title.includes(searchString) ||
-      board.description.includes(searchString)
+      board.title
+        .toLocaleLowerCase()
+        .includes(searchString.toLocaleLowerCase()) ||
+      board.description
+        .toLocaleLowerCase()
+        .includes(searchString.toLocaleLowerCase())
     ) {
       result.boardsMatch.push({
         boardId: board.id,
         boardTitle: board.title,
-        isMatchTitle: board.title.includes(searchString),
+        isMatchTitle: board.title
+          .toLocaleLowerCase()
+          .includes(searchString.toLocaleLowerCase()),
       });
     }
 
@@ -39,7 +45,11 @@ export const searchByString = (
       board.columns.forEach((column) => {
         const columnTitle = column.title;
 
-        if (column.title.includes(searchString)) {
+        if (
+          column.title
+            .toLocaleLowerCase()
+            .includes(searchString.toLocaleLowerCase())
+        ) {
           result.columnsMatch.push({
             boardId,
             boardTitle,
@@ -50,15 +60,21 @@ export const searchByString = (
         if (column.tasks.length > 0) {
           column.tasks.forEach((task) => {
             if (
-              task.title.includes(searchString) ||
-              task.description.includes(searchString)
+              task.title
+                .toLocaleLowerCase()
+                .includes(searchString.toLocaleLowerCase()) ||
+              task.description
+                .toLocaleLowerCase()
+                .includes(searchString.toLocaleLowerCase())
             ) {
               result.tasksMatch.push({
                 boardId,
                 boardTitle,
                 columnTitle,
                 taskTitle: task.title,
-                isMatchTitle: task.title.includes(searchString),
+                isMatchTitle: task.title
+                  .toLocaleLowerCase()
+                  .includes(searchString.toLocaleLowerCase()),
               });
             }
           });

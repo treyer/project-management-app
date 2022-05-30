@@ -10,8 +10,12 @@ export const lightTheme = createTheme({
       contrastText: '#ffffff',
     },
     secondary: {
+      light: '#61c9ff',
       main: '#033756',
       contrastText: '#ffffff',
+    },
+    text: {
+      secondary: '#000000',
     },
   },
 });
@@ -26,8 +30,12 @@ export const darkTheme = createTheme({
       contrastText: '#61dafb',
     },
     secondary: {
+      light: '#C0C0C0',
       main: '#4d4f55',
       contrastText: '#ffffff',
+    },
+    text: {
+      secondary: '#61dafb',
     },
   },
   components: {
