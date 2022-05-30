@@ -220,7 +220,38 @@ export function BoardPage() {
     }
   };
 
-  const matches1 = useMediaQuery('(max-width:470px)');
+  const matches5 = useMediaQuery('(max-width:380px)');
+  const matches0 = useMediaQuery('(max-width:430px)');
+  const matches1 = useMediaQuery('(max-width:445px)');
+  const matches2 = useMediaQuery('(max-width:470px)');
+  const matches3 = useMediaQuery('(max-width:510px)');
+  const matches4 = useMediaQuery('(max-width:585px)');
+  let mainHeight = '';
+
+  switch (true) {
+    case matches5:
+      mainHeight = 'calc(100vh - 329px)';
+      break;
+    case matches0:
+      mainHeight = 'calc(100vh - 329px)';
+      break;
+    case matches1:
+      mainHeight = 'calc(100vh - 329px)';
+      break;
+    case matches2:
+      mainHeight = 'calc(100vh - 261px)';
+      break;
+    case matches3:
+      mainHeight = 'calc(100vh - 221px)';
+      break;
+    case matches4:
+      mainHeight = 'calc(100vh - 225px)';
+      break;
+    default:
+      mainHeight = 'calc(100vh - 130px)';
+  }
+
+  const titleFontsize = matches2 ? '18px' : '30px';
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -231,7 +262,7 @@ export function BoardPage() {
         />
       )}
       <Box
-        height="calc(100vh - 130px) !important"
+        height={mainHeight}
         sx={{
           overflowX: 'auto',
           p: 3,
@@ -243,8 +274,8 @@ export function BoardPage() {
         {error && <Alert severity="error">{error}</Alert>}
         <Typography
           component="p"
+          fontSize={titleFontsize}
           sx={{
-            fontSize: '30px',
             textTransform: 'uppercase',
             color: '#808080',
             paddingBottom: '15px',
@@ -252,7 +283,7 @@ export function BoardPage() {
         >
           {title}
         </Typography>
-        <Stack spacing={2} direction={matches1 ? 'column' : 'row'}>
+        <Stack spacing={2} direction={matches2 ? 'column' : 'row'}>
           {isColumnLoading ? (
             <CircularProgress
               color="inherit"
@@ -273,7 +304,7 @@ export function BoardPage() {
                   ref={provided.innerRef}
                   //  eslint-disable-next-line react/jsx-props-no-spreading
                   {...provided.droppableProps}
-                  direction={matches1 ? 'column' : 'row'}
+                  direction={matches2 ? 'column' : 'row'}
                   spacing={2}
                 >
                   {columns.map((column: TColumnResponse) => (

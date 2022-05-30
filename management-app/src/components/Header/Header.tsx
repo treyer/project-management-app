@@ -42,7 +42,7 @@ function Header() {
   const matches2 = useMediaQuery('(max-width:430px)');
 
   return (
-    <header style={{ position: 'sticky', top: 0 }}>
+    <header>
       <Box sx={{ backgroundColor: 'primary.main' }}>
         <Box sx={{ maxWidth: 1200, margin: '0 auto' }}>
           <StyledGrid
