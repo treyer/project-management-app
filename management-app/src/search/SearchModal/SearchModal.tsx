@@ -46,7 +46,7 @@ function SearchModal({
       sx={{
         position: 'absolute',
         top: `${display ? '55px' : '-500px'}`,
-        backgroundColor: '#ffffff',
+        backgroundColor: 'primary.light',
         padding: '5px 14px 0 5px',
         minWidth: '300px',
         zIndex: '100',
@@ -55,24 +55,30 @@ function SearchModal({
     >
       <StyledCloseIcon onClick={close} sx={{ fontSize: 15 }} />
       {!isLoggedIn && (
-        <Alert severity="warning">{t('search.onlyAuthWarn')}</Alert>
+        <Alert severity="warning" sx={{ marginBottom: '5px' }}>
+          {t('search.onlyAuthWarn')}
+        </Alert>
       )}
       {isLoggedIn && !isSearchStringMatch && (
-        <Alert severity="warning">{t('search.minLengthWarn')}</Alert>
+        <Alert severity="warning" sx={{ marginBottom: '5px' }}>
+          {t('search.minLengthWarn')}
+        </Alert>
       )}
       {isLoggedIn &&
         isSearchStringMatch &&
         searchResult.boardsMatch.length === 0 &&
         searchResult.columnsMatch.length === 0 &&
         searchResult.tasksMatch.length === 0 && (
-          <Alert severity="warning">{t('search.nothingFound')}</Alert>
+          <Alert severity="warning" sx={{ marginBottom: '5px' }}>
+            {t('search.nothingFound')}
+          </Alert>
         )}
       {isLoggedIn &&
         isSearchStringMatch &&
         (searchResult.boardsMatch.length > 0 ||
           searchResult.columnsMatch.length > 0 ||
           searchResult.tasksMatch.length > 0) && (
-          <Alert severity="success">
+          <Alert severity="success" sx={{ marginBottom: '5px' }}>
             {t('search.word')} {`"${searchString}"`} {t('search.contained')}
           </Alert>
         )}
