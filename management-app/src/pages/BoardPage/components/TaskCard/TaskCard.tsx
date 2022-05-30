@@ -134,7 +134,7 @@ export function TaskCard({
               minHeight: '100px',
               maxHeight: '115px',
               overflow: 'hidden',
-              minWidth: '200px',
+              minWidth: '150px',
               maxWidth: '250px',
               backgroundColor: 'primary.main',
             },

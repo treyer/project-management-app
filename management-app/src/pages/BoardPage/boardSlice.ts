@@ -242,6 +242,7 @@ const boardSlice = createSlice({
       })
       .addCase(getBoard.pending, (state) => {
         state.isBoardLoading = true;
+        state.boardData = initialState.boardData;
       })
       .addCase(updateColumn.fulfilled, (state) => {
         state.isColumnLoading = false;

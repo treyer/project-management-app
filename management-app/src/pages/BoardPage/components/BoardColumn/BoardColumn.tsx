@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-shadow */
 import { useCallback, useState, MouseEvent } from 'react';
-import { Box, Button, IconButton, Stack } from '@mui/material';
+import { Box, Button, IconButton, Stack, useMediaQuery } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
@@ -92,6 +92,8 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
     setDialogOpen(false);
   }, [dispatch, boardId, id]);
 
+  const matches2 = useMediaQuery('(max-width:585px)');
+
   return (
     <Draggable draggableId={id} index={order - 1}>
       {(provided) => (
@@ -112,13 +114,12 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
           <Box
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...provided.dragHandleProps}
-            height="calc(100vh - 230px) !important"
+            height={matches2 ? 'calc(100vh - 320px)' : 'calc(100vh - 230px)'}
+            width={matches2 ? '250px' : '290px'}
             sx={{
               borderRadius: 2,
               backgroundColor: 'secondary.light',
               position: 'relative',
-              minWidth: '290px',
-              maxWidth: '290px',
             }}
           >
             <IconButton
