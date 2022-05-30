@@ -46,8 +46,8 @@ function MenuModal({ display, close, type }: TProps) {
         backgroundColor: 'primary.light',
         padding: '5px 14px 0 5px',
         minWidth: '90px',
-        zIndex: '100',
         transition: 'top 1s ease-in-out',
+        zIndex: 999,
       }}
     >
       <StyledCloseIcon onClick={close} sx={{ fontSize: 15 }} />
