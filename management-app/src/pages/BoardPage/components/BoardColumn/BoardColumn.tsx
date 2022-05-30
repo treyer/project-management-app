@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
+import { useTheme } from '@mui/material/styles';
 import { TBoardColumnProps } from './BoardColumn.types';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { updateColumn, createTask, deleteColumn } from '../../boardSlice';
@@ -22,6 +23,7 @@ import { comparator } from '../../../../utils';
 export function BoardColumn({ id, title, order }: TBoardColumnProps) {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const theme = useTheme();
 
   const [isRenderDescription, setIsRenderDescription] =
     useState<boolean>(false);
@@ -113,7 +115,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
             height="calc(100vh - 230px) !important"
             sx={{
               borderRadius: 2,
-              backgroundColor: '#eee',
+              backgroundColor: 'secondary.light',
               position: 'relative',
               minWidth: '290px',
               maxWidth: '290px',
@@ -127,6 +129,7 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
                 position: 'absolute',
                 top: '0',
                 right: '0',
+                color: theme.palette.mode === 'dark' ? '#61dafb' : '#8195a2',
               }}
             >
               <DeleteIcon />
@@ -139,12 +142,14 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
               sx={[
                 {
                   '&:hover': {
-                    backgroundColor: '#e5eff8',
+                    backgroundColor:
+                      theme.palette.mode === 'dark' ? '#ffffff' : '#c9e9ff',
                   },
                 },
                 {
                   '&:active': {
-                    backgroundColor: '#ffffff',
+                    backgroundColor:
+                      theme.palette.mode === 'dark' ? '#ffffff' : '#c9e9ff',
                   },
                 },
               ]}
@@ -201,7 +206,10 @@ export function BoardColumn({ id, title, order }: TBoardColumnProps) {
                 )}
               </Droppable>
               {!isAddTaskFieldOpen ? (
-                <Button onClick={openAddTaskField}>
+                <Button
+                  onClick={openAddTaskField}
+                  sx={{ backgroundColor: '#ffffff' }}
+                >
                   {t('boardPage.addTaskText')}
                 </Button>
               ) : (

@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
 import {
   createColumn,
   getBoard,
@@ -35,6 +36,7 @@ import { comparator, reorder } from '../../utils';
 export function BoardPage() {
   const { t } = useTranslation();
   const { boardId } = useParams();
+  const theme = useTheme();
 
   const { isLoggedIn } = useAppSelector((state) => state.auth);
   const { isBoardLoading } = useAppSelector((state: RootState) => state.board);
@@ -254,7 +256,11 @@ export function BoardPage() {
           {isColumnLoading ? (
             <CircularProgress
               color="inherit"
-              sx={{ position: 'fixed', top: '50%', right: '50%' }}
+              sx={{
+                position: 'fixed',
+                top: '50%',
+                right: '50%',
+              }}
             />
           ) : (
             <Droppable
@@ -289,6 +295,15 @@ export function BoardPage() {
               sx={{
                 maxHeight: '100px',
                 minWidth: '200px',
+                backgroundColor:
+                  theme.palette.mode === 'dark' ? '#61dafb' : 'primary.light',
+                color: theme.palette.mode === 'dark' ? '#000000' : '#ffffff',
+                '&:hover': {
+                  backgroundColor:
+                    theme.palette.mode === 'dark'
+                      ? '#ffffff'
+                      : 'secondary.light',
+                },
               }}
               onClick={openAddColumnField}
             >

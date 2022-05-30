@@ -136,15 +136,16 @@ export function TaskCard({
               overflow: 'hidden',
               minWidth: '200px',
               maxWidth: '250px',
+              backgroundColor: 'primary.main',
             },
             {
               '&:hover': {
-                backgroundColor: '#ffffff',
+                backgroundColor: 'primary.light',
               },
             },
             {
               '&:active': {
-                backgroundColor: '#e5eff8',
+                backgroundColor: 'primary.main',
               },
             },
           ]}
@@ -210,7 +211,9 @@ export function TaskCard({
                 </>
               </MenuItem>
             </Menu>
-            <Typography variant="subtitle1">{title}</Typography>
+            <Typography variant="subtitle1" sx={{ color: '#ffffff' }}>
+              {title}
+            </Typography>
             <Typography
               variant="body2"
               color="text.secondary"

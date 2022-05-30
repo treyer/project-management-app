@@ -75,7 +75,7 @@ function Board({ titleBoard, description, id, columnNum }: TBoardProps) {
             },
             {
               '&:active': {
-                backgroundColor: '#ffffff',
+                backgroundColor: 'primary.light',
               },
             },
           ]}
