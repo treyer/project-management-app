@@ -9,17 +9,13 @@ import { useTranslation } from 'react-i18next';
 import { TEditProfileFormValues } from './EditProfilePage.types';
 import { editProfileFormFields } from './EditProfilePage.utils.';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { signIn, updateUser } from '../../auth/authSlice';
-
-const initialValues: TEditProfileFormValues = {
-  name: '',
-  login: '',
-  password: '',
-  confirmPassword: '',
-};
+import { getUser, signIn, updateUser } from '../../auth/authSlice';
 
 function EditProfilePage() {
   const { isLoading, isLoggedIn } = useAppSelector((state) => state.auth);
+  const userPassword = localStorage.getItem('password') as string;
+  const userName = useAppSelector((state) => state.auth.user.name);
+  const userLogin = useAppSelector((state) => state.auth.user.login);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState('');
@@ -52,12 +48,24 @@ function EditProfilePage() {
     if (!isLoggedIn) {
       navigate('/');
     }
-  }, [isLoggedIn, navigate]);
+    dispatch(getUser());
+  }, [isLoggedIn, navigate, dispatch]);
+
+  const initialValues: TEditProfileFormValues = useMemo(
+    () => ({
+      name: userName,
+      login: userLogin,
+      password: userPassword,
+      confirmPassword: userPassword,
+    }),
+    [userPassword, userLogin, userName]
+  );
 
   const formik = useFormik({
     initialValues,
     validationSchema: editProfileValidationSchema,
     onSubmit: ({ name, login, password }) => {
+      localStorage.setItem('password', password);
       dispatch(updateUser({ name, login, password }))
         .unwrap()
         .then(
