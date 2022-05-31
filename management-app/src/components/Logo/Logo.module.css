@@ -1,0 +1,9 @@
+.logo {
+  cursor: pointer;
+}
+
+.image {
+  height: 36px;
+  width: auto;
+  padding: 6px;
+}
